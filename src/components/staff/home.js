@@ -1,8 +1,9 @@
 import React from 'react';
 import { Navbar, Button, Container, Row, Col, Table } from 'react-bootstrap';
 import "./home.css";
-import ".././custom.css"
+import ".././custom.css";
 // import axios from "axios";
+import fb from "../../Firebase";
 
 function home(props) {
     return (
@@ -6175,28 +6176,25 @@ async function getMenuItems() {
             // console.log(item.menu_item_name);
         })
     })
-    let subsectionsInMenu = [];
+    let subsectionsInMenu = {};
     menuItems.filter(item => {
-        if(!subsectionsInMenu.includes(item.subsection)) subsectionsInMenu.push(item.subsection)
+        subsectionsInMenu[`${item.subsection}`] = [];
     });
-    subsectionsInMenu.map(sub => console.log(sub));
 
-    // const admin = require('firebase-admin');
-    // admin.initializeApp();
-    // const db = admin.firestore();
-
-    // const snapshot = await db.collection('Restaurant').doc('test_restaurant_2').get();
-    // console.log(snapshot);
-
-    // await this.Firebase.db
-    //   .collection("Events")
-    //   .doc("eventsList")
-    //   .update({
-    //     ["eventsList"]: this.state.eventListArrState,
-    //   })
-    //   .catch((err) => console.log(err));
+    menuItems.map(item => {
+        subsectionsInMenu[`${item.subsection}`].push(
+            {
+                "name" : item.name,
+                "description": item.description,
+            });
+    })
+    // subsectionsInMenu.map(sub => console.log(sub));
+    console.log(subsectionsInMenu)
+    fb.postData(subsectionsInMenu);
+;
 
 
+    // Using XYZ api to get menu
     // data.map(result => {
     //     console.log(result.result.data);
     // })

@@ -12,3 +12,11 @@ body::-webkit-scrollbar {
   width: 1em;
   display: none;
 }
+
+
+
+.navbar-color-1 {
+  background-color: #221B45;
+  color: white;
+}
+

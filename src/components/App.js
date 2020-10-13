@@ -6,7 +6,6 @@ import Home from "./customer/CustomerHome.js";
 import Menu from "./customer/Menu.js";
 import Header from "./customer/Header.js";
 import "./App.css";
-import "bootstrap/dist/css/bootstrap.min.css";
 import { MenuItem } from "@material-ui/core";
 
 function App() {

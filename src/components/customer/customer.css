@@ -3,8 +3,85 @@
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  /* justify-content: space-evenly; */
+  height: 100vh;
+  width: auto;
+}
+
+/* 
+Color Theme
+
+Deep Purple: #1d1145
+Trapper Keeper Green: #0db4b9
+Pink boot: #f2a1a1
+Modern Pink Backpack: #e76d89
+*/
+
+.flex-box {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  height: 100%;
+  width: auto;
+}
+
+.languageItem {
+  width: 300px;
 }
 
 .languageButton:focus {
   border: none;
+}
+
+.mainHeader {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+  position: sticky;
+  top: 0;
+}
+
+.headerDiv {
+  padding: 1.5rem;
+  text-align: center;
+}
+
+#qrTitle {
+  font-size: 20px;
+}
+
+#restaurantName {
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 30px;
+  font-size: 25px;
+  /* color: #1d1145; */
+  /* color: #0db4b9; */
+  color: white;
+}
+
+.homeIcon {
+  height: 120px !important;
+  width: 120px !important;
+  border-radius: 12px;
+}
+
+#menuCardsDiv {
+  overflow: hidden;
+}
+
+.itemCard {
+  text-align: center;
+  height: 75px;
+  border: 1px solid #1d1145;
+  border-radius: 12px;
+  margin: 1rem;
+  /* background-color: #1d1145; */
+  background-color: #0db4b9;
+}
+
+.itemText {
+  color: white;
 }

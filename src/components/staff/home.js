@@ -6188,9 +6188,22 @@ async function getMenuItems() {
                 "description": item.description,
             });
     })
+    let subsectionsInMenuObject = {};
+    menuItems.filter(item => {
+        subsectionsInMenuObject[`${item.subsection}`] = {};
+    });
+
+    menuItems.map(item => {
+        subsectionsInMenuObject[`${item.subsection}`][`${item.name}`] = 
+            {
+                "description": item.description,
+                "price" : Math.random()*5,
+            };
+    })
     // subsectionsInMenu.map(sub => console.log(sub));
     console.log(subsectionsInMenu)
     fb.postData(subsectionsInMenu);
+    fb.postDataObject(subsectionsInMenuObject);
 ;
 
 

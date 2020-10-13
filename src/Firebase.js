@@ -35,6 +35,12 @@ class Firebase {
       {["menu"]: incomingData}
       )
   }
+
+  async postDataObject(incomingData) {
+    const data = this.db.collection("Restaurant").doc("test_restaurant_3").update(
+      {["menu"]: incomingData}
+      )
+  }
 }
 
 export default new Firebase();

@@ -36,3 +36,11 @@
     transform: rotate(360deg);
   }
 }
+
+
+
+.navbar-color-1 {
+  background-color: #221B45;
+  color: white;
+}
+

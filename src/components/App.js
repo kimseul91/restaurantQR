@@ -5,8 +5,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Home from "./customer/CustomerHome.js";
 import Menu from "./customer/Menu.js";
 import Header from "./customer/Header.js";
+import MenuItem from "./customer/MenuItem.js";
 import "./App.css";
-import { MenuItem } from "@material-ui/core";
 
 function App() {
   const menu = [
@@ -20,6 +20,10 @@ function App() {
     { name: "Enchiladas", description: "Cheese enchiladas" },
     { name: "Enchiladas", description: "Cheese enchiladas" },
   ];
+
+  const restaurantName = "Tucker's Test Restaurant";
+  // Need to query database to get the menu
+  // and the restaurant name
 
   return (
     <Router>
@@ -35,17 +39,23 @@ function App() {
             <li>
               <Link to="/staff">Staff</Link>
             </li>
+            <li>
+              <Link to="/customer/menu">Menu</Link>
+            </li>
           </ul>
         </nav>
         <Switch>
           <Route exact path="/">
             <></>
           </Route>
-          <Route path="/customer">
+          <Route exact path="/customer">
             <Home name="Test" />
           </Route>
           <Route path="/staff">
             <Staff />
+          </Route>
+          <Route path="/customer/menu">
+            <Menu menuItems={menu} />
           </Route>
         </Switch>
       </div>

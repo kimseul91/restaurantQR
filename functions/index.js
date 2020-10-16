@@ -30,11 +30,12 @@ app.get("/", (req, res) => {
 });
 
 // updates a tables request list
-app.put("/customer/table/:id/order", async (req, res) => {
+app.put("/:restaurantName/customer/table/:id/order", async (req, res) => {
   const tableID = req.params.id;
-  const { restaurantName } = req.body;
+  // const { restaurantName } = req.body;
+  const restaurantName = req.params.restaurantName;
   const newItem = req.body.request;
-  const updateString = `table${tableID}.requests`;
+  const updateString = `tables.table${tableID}.requests`;
 
   try {
     // adds a new request to the list
@@ -42,7 +43,7 @@ app.put("/customer/table/:id/order", async (req, res) => {
       .collection("Restaurant")
       .doc(restaurantName)
       .update({
-        [updateString]: firebase.firestore.FieldValue.arrayUnion(newItem),
+        [updateString]: admin.firestore.FieldValue.arrayUnion(newItem),
       });
   } catch (error) {
     console.error(error);

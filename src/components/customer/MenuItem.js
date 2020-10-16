@@ -2,6 +2,7 @@ import React from "react";
 import "./customer.css";
 import Button from "react-bootstrap/Button";
 import Header from "./Header";
+import axios from "axios";
 
 function MenuItem(props) {
   // props.item == the menu item obj to be displayed
@@ -14,8 +15,14 @@ function MenuItem(props) {
       "A traditional topping of roma tomatoes, fresh basil and extra-virgin olive oil. Served with toasted ciabatta bread.",
   };
 
-  const orderItem = (itemName) => {
+  const orderItem = async (itemName) => {
     // send api request to axios to add item to order
+    await axios.put(
+      "http://localhost:5001/restaurantqr-73126/us-central1/api/test_restaurant_3/customer/table/2/order",
+      {
+        request: itemName,
+      }
+    );
   };
 
   return (
@@ -23,11 +30,11 @@ function MenuItem(props) {
       <Header name={props.name} />
       <div id="menuCardsDiv" className="flex-box">
         <span className="itemDescription" id="itemName">
-          {testItem.name}
+          {props.item[0]}
         </span>
-        <p className="itemDescription">{testItem.description}</p>
+        <p className="itemDescription">{props.item[1].description}</p>
         <span className="itemDescription" id="itemPrice">
-          Price: ${testItem.price}
+          Price: ${props.item[1].price}
         </span>
       </div>
       <div className="button-box">
@@ -39,7 +46,11 @@ function MenuItem(props) {
           {" "}
           Go Back{" "}
         </Button>
-        <Button className="buttonSize" variant="primary" onClick={orderItem()}>
+        <Button
+          className="buttonSize"
+          variant="primary"
+          onClick={() => orderItem(props.item[0])}
+        >
           {" "}
           Order{" "}
         </Button>

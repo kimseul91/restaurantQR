@@ -17,6 +17,15 @@ Pink boot: #f2a1a1
 Modern Pink Backpack: #e76d89
 */
 
+.menuItemWrapperCard .card-header {
+  background-color: #e76d89 !important;
+  color: white !important;
+}
+
+.menuItemWrapperCard .card-body {
+  background-color: #1d1145 !important;
+}
+
 .flex-box {
   display: flex;
   justify-content: center;
@@ -42,6 +51,7 @@ Modern Pink Backpack: #e76d89
   align-items: center;
   position: sticky;
   top: 0;
+  background-color: #1d1145;
 }
 
 .headerDiv {
@@ -69,11 +79,16 @@ Modern Pink Backpack: #e76d89
 }
 
 #menuCardsDiv {
-  overflow: hidden;
+  overflow-y: scroll;
   color: white;
-  margin-top: 15%;
+  margin-top: 5%;
   height: 70vh;
   justify-content: start !important;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+#menuCardsDiv::-webkit-scrollbar {
+  display: none;
 }
 
 .itemDescription {
@@ -99,16 +114,22 @@ Modern Pink Backpack: #e76d89
 
 .itemCard {
   text-align: center;
-  height: 75px;
+  /* height: 75px; */
   border: 1px solid #1d1145;
   border-radius: 12px;
   margin: 1rem;
   /* background-color: #1d1145; */
   background-color: #0db4b9;
+  padding: 0.5rem;
+  color: #1d1145;
 }
 
 .itemText {
   color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 20px;
+  line-height: 25px;
+  text-align: center;
 }
 
 .button-box {
@@ -121,4 +142,23 @@ Modern Pink Backpack: #e76d89
 
 .buttonSize {
   width: 90px;
+}
+
+.menuAccordion {
+  max-height: calc(100vh - 2rem);
+  overflow-y: scroll !important;
+  padding-bottom: 5vh;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.menuAccordion::-webkit-scrollbar {
+  display: none;
+}
+
+.smallDescriptionText {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 17px;
+  line-height: 25px;
+  text-align: center;
 }

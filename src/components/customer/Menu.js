@@ -9,9 +9,11 @@ import Accordion from "react-bootstrap/Accordion";
 function Menu(props) {
   // props.name == the restaurant name;
   // props.menuItems == array of menu items
+  // props.language == the language to translate the menu
   const [fullMenu, setMenu] = useState(null);
   const [itemView, setItemView] = useState(false);
   const [currentItem, setItem] = useState(null);
+  const [searchTerm, setSearch] = useState("");
 
   useEffect(() => {
     (async function () {
@@ -79,6 +81,7 @@ function Menu(props) {
   return (
     <div>
       <Header name={"Tucker's Test Restaurant"} />
+      {/* Put a search bar here to search categories */}
       {/* <div id="menuCardsDiv">
         {props.menuItems.map((item) => (
           <div className="itemCard" onClick={() => getMenuItem(item)}>
@@ -86,7 +89,7 @@ function Menu(props) {
           </div>
         ))}
       </div> */}
-      <Accordion defaultActiveKey="0">
+      <Accordion className="menuAccordion" defaultActiveKey="0">
         {
           // makes sure the menu isn't null
           fullMenu &&
@@ -97,6 +100,7 @@ function Menu(props) {
                 items={menuSectionTuple[1]}
                 accID={index + 1}
                 getMenuItem={getMenuItem}
+                search={searchTerm}
               />
             ))
         }

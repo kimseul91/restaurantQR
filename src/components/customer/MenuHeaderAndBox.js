@@ -6,7 +6,7 @@ function MenuHeaderAndBox(props) {
   // props.sectionName == the name of a menu section
   // props.items == the menu items for that section
   return (
-    <Card>
+    <Card className="menuItemWrapperCard">
       <Accordion.Toggle as={Card.Header} eventKey={props.accID}>
         {props.sectionName}
       </Accordion.Toggle>
@@ -15,7 +15,11 @@ function MenuHeaderAndBox(props) {
           <div id="menuCardsDiv">
             {Object.entries(props.items).map((item) => (
               <div className="itemCard" onClick={() => props.getMenuItem(item)}>
-                <span className="itemText">{`${item[0]}: ${item[1].description}`}</span>
+                {/* <span className="itemText">{`${item[0]}: ${item[1].description}`}</span> */}
+                <span className="itemText">{`${item[0]}`}</span>
+                <span className="smallDescriptionText">{`${
+                  item[1].description !== "" ? ": " : ""
+                }${item[1].description}`}</span>
               </div>
             ))}
           </div>

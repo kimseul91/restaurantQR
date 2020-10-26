@@ -162,3 +162,15 @@ Modern Pink Backpack: #e76d89
   line-height: 25px;
   text-align: center;
 }
+
+.searchDiv {
+  /* display: flex; */
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  margin: 4%;
+}
+
+.inputBox {
+  width: 100%;
+}

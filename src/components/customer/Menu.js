@@ -5,15 +5,18 @@ import MenuItem from "./MenuItem.js";
 import MenuHeaderAndBox from "./MenuHeaderAndBox.js";
 import axios from "axios";
 import Accordion from "react-bootstrap/Accordion";
+import AutoComplete from "./AutoComplete";
 
 function Menu(props) {
   // props.name == the restaurant name;
   // props.menuItems == array of menu items
   // props.language == the language to translate the menu
   const [fullMenu, setMenu] = useState(null);
+  const [originalMenu, setOriginalMenu] = useState(null);
   const [itemView, setItemView] = useState(false);
   const [currentItem, setItem] = useState(null);
   const [searchTerm, setSearch] = useState("");
+  const [menuSearchTerms, setMenuSearchTerms] = useState([]);
 
   useEffect(() => {
     (async function () {
@@ -22,8 +25,22 @@ function Menu(props) {
       );
       const menuData = menuRequest.data.menu;
       setMenu(menuData);
+      setOriginalMenu(menuData);
       // console.log(menuData);
       // console.log(Object.entries(menuData));
+
+      const tempArr = [];
+      // adds all of the menu items to the search term list
+      Object.values(menuData).forEach((eachList) => {
+        // console.log(eachList);
+        Object.keys(eachList).forEach((eachItem) => {
+          tempArr.push(eachItem);
+        });
+      });
+
+      setMenuSearchTerms(tempArr);
+
+      // const termList = Object.values(menuData).reduce((acc, curr) => {}, []);
     })();
   }, []);
 
@@ -54,6 +71,14 @@ function Menu(props) {
     setItemView(false);
   };
 
+  // updates values and headers
+  const updateAfterSearch = (text) => {
+    console.log("yoooo");
+    // need to filter the fullMenu
+    // const currentMenu = originalMenu.filter();
+    setSearch(text);
+  };
+
   // changes to the item view if you click on an item
   if (itemView) {
     return (
@@ -81,6 +106,10 @@ function Menu(props) {
   return (
     <div>
       <Header name={"Tucker's Test Restaurant"} />
+      <AutoComplete
+        onlyMenuItems={menuSearchTerms}
+        updateAfterSearch={updateAfterSearch}
+      />
       {/* Put a search bar here to search categories */}
       {/* <div id="menuCardsDiv">
         {props.menuItems.map((item) => (

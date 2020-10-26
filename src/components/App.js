@@ -8,6 +8,9 @@ import Header from "./customer/Header.js";
 import MenuItem from "./customer/MenuItem.js";
 import "./App.css";
 
+// Make an account for each restaurant
+// on mount of App make a post request to
+
 function App() {
   const menu = [
     { name: "Tacos", description: "Ground beef tacos" },

@@ -33,9 +33,11 @@ function MenuItem(props) {
           {props.item[0]}
         </span>
         <p className="itemDescription">{props.item[1].description}</p>
-        <span className="itemDescription" id="itemPrice">
-          Price: ${props.item[1].price}
-        </span>
+        {props.item[1].price && (
+          <span className="itemDescription" id="itemPrice">
+            Price: ${props.item[1].price}
+          </span>
+        )}
       </div>
       <div className="button-box">
         <Button

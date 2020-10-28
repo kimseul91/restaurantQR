@@ -24,6 +24,19 @@ function Menu(props) {
         "http://localhost:5001/restaurantqr-73126/us-central1/api/test_restaurant_3/menu"
       );
       const menuData = menuRequest.data.menu;
+      // const translatedMenu = menuData.
+      menuData["Service Items"] = {
+        Napkins: { description: "Your sever will bring you more napkins" },
+        "Refill Drinks": {
+          description: "Your sever will refill your drinks",
+        },
+        "Request Server": {
+          description: "Your sever will come to your table",
+        },
+        Check: { description: "Your sever will bring you the check" },
+      };
+
+      // console.log(menuData);
       setMenu(menuData);
       setOriginalMenu(menuData);
       // console.log(menuData);
@@ -37,6 +50,13 @@ function Menu(props) {
           tempArr.push(eachItem);
         });
       });
+
+      // const bro = await axios.post(
+      //   "http://localhost:5001/restaurantqr-73126/us-central1/api/test_restaurant_3/menu",
+      //   {
+      //     data: tempArr,
+      //   }
+      // );
 
       setMenuSearchTerms(tempArr);
 
@@ -102,6 +122,23 @@ function Menu(props) {
    *     },
    * }
    */
+
+  // const menuForHeaderAndBox =
+  //   fullMenu &&
+  //   Object.entries(fullMenu).concat([
+  //     {
+  //       "Service Items": {
+  //         Napkins: { description: "Your sever will bring you more napkins" },
+  //         "Refill Drinks": {
+  //           description: "Your sever will refill your drinks",
+  //         },
+  //         "Request Server": {
+  //           description: "Your sever will come to your table",
+  //         },
+  //         Check: { description: "Your sever will bring you the check" },
+  //       },
+  //     },
+  //   ]);
 
   return (
     <div>

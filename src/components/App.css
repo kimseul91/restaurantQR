@@ -14,10 +14,7 @@ body::-webkit-scrollbar {
   display: none;
 }
 
-
-
 .navbar-color-1 {
-  background-color: #221B45;
-  color: white;
+  background-color: #221b45;
+  /* color: white; */
 }
-

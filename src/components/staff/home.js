@@ -28,7 +28,7 @@ function home(props) {
                         </Navbar.Text>
                         </Navbar.Collapse>
                     </Container>
-                    <Button onClick={getMenuItems}> Json stuff</Button>
+                    {/* <Button onClick={getMenuItems}> Json stuff</Button> */}
                     <Button> Clock In </Button>
                 </Navbar>
             </div>

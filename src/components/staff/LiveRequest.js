@@ -21,7 +21,7 @@ function  LiveRequest(props) {
     return (
         <div>
             <Container fluid>
-                    {getRow(liveRequests)}
+                {getRow(liveRequests)}
             </Container>
         </div>
     );

@@ -6,10 +6,39 @@ import LiveRequest from "./LiveRequest.js";
 // import axios from "axios";
 import fb from "../../Firebase";
 
-function Home(props) {
-    const liveRequests = [];
-    return (
-        <div className="staff-home-full-container">
+
+class Home extends React.Component {
+// function Home(props) {
+    constructor(props) {
+        super()
+        this.state = {
+            time: new Date().toLocaleString()
+        };
+        
+    }
+    //inspired by Kuhan on stackoverflow
+    componentDidMount() {
+        this.intervalID = setInterval(
+            () => this.tick(),
+            1000
+        );
+        // setInterval(this.renderLiveRequest, 5000)
+    }
+    componentWillUnmount() {
+        clearInterval(this.intervalID);
+    }
+    tick() {
+        this.setState({
+            time: new Date().toLocaleString()
+        });
+    }
+    
+    renderLiveRequest() {
+        // console.log("liveRequest rendering")
+        return <LiveRequest/>
+    }
+    render() {
+        return <div className="staff-home-full-container">
             <div>
 
                 <Navbar variant="dark-blue-color" className="staff-navbar">
@@ -26,11 +55,12 @@ function Home(props) {
                     <Container>
                         <Navbar.Collapse className="justify-content-center">
                             <Navbar.Text>
-                                Time now
+                                {this.state.time}
                         </Navbar.Text>
                         </Navbar.Collapse>
                     </Container>
                     {/* <Button onClick={getMenuItems}> Json stuff</Button> */}
+                    <Button> Create QR </Button>
                     <Button> Clock In </Button>
                 </Navbar>
             </div>
@@ -59,9 +89,8 @@ function Home(props) {
                         </Col>
                         <Col xs={12} lg={9} className="staff-right-col">
                             <div style={{ backgroundColor: "#0DB4B9", marginTop: "1vw" }}> 
-                                Insert the request by table or longest
-                                Some content here
-                                <LiveRequest liveRequests={liveRequests}/>
+                                {/* {this.renderLiveRequest()} */}
+                                <LiveRequest/>
                             </div>
 
                         </Col>
@@ -70,10 +99,11 @@ function Home(props) {
             </div>
 
         </div>
-    );
+    }
 
 
 }
+
 /*
 async function getMenuItems() {
     let data = [{

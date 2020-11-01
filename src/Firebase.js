@@ -51,7 +51,7 @@ class Firebase {
       let result = Object.keys(docsnapshot.data().tables).map(key => {
         return [key, docsnapshot.data().tables[key]];
       });
-      console.log(result);
+      // console.log(result);
       return result;
     }, err => {
       console.log(`Encountered error: ${err}`);

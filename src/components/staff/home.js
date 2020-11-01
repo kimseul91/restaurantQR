@@ -2,10 +2,12 @@ import React from 'react';
 import { Navbar, Button, Container, Row, Col, Table } from 'react-bootstrap';
 import "./home.css";
 import ".././custom.css";
+import LiveRequest from "./LiveRequest.js";
 // import axios from "axios";
 import fb from "../../Firebase";
 
-function home(props) {
+function Home(props) {
+    const liveRequests = [];
     return (
         <div className="staff-home-full-container">
             <div>
@@ -56,7 +58,11 @@ function home(props) {
                             </div>
                         </Col>
                         <Col xs={12} lg={9} className="staff-right-col">
-                            <div style={{ backgroundColor: "#0DB4B9", marginTop: "1vw" }}> Some content here</div>
+                            <div style={{ backgroundColor: "#0DB4B9", marginTop: "1vw" }}> 
+                                Insert the request by table or longest
+                                Some content here
+                                <LiveRequest liveRequests={liveRequests}/>
+                            </div>
 
                         </Col>
                     </Row>
@@ -68,6 +74,7 @@ function home(props) {
 
 
 }
+/*
 async function getMenuItems() {
     let data = [{
         "result": {
@@ -6204,7 +6211,7 @@ async function getMenuItems() {
     console.log(subsectionsInMenu)
     fb.postData(subsectionsInMenu);
     fb.postDataObject(subsectionsInMenuObject);
-;
+
 
 
     // Using XYZ api to get menu
@@ -6228,6 +6235,6 @@ async function getMenuItems() {
     // })
 
 }
+*/
 
-
-export default home;
+export default Home;

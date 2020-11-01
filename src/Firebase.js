@@ -41,6 +41,22 @@ class Firebase {
       {["menu"]: incomingData}
       )
   }
+
+  async getRequest() {
+    const doc = this.db.collection("Restaurant").doc("test_restaurant_3");
+    // const data = doc.get();
+    const observer = doc.onSnapshot(docsnapshot => {
+      console.log(`received doc snapshot: ${docsnapshot.data().tables}`);
+      console.log(docsnapshot.data().tables)
+      let result = Object.keys(docsnapshot.data().tables).map(key => {
+        return [key, docsnapshot.data().tables[key]];
+      });
+      console.log(result);
+      return result;
+    }, err => {
+      console.log(`Encountered error: ${err}`);
+    });
+  }
 }
 
 export default new Firebase();

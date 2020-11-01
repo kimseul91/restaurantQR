@@ -1,11 +1,11 @@
 import React from "react";
-import Staff from "./staff/home.js";
+import Staff from "./staff/Home.js";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Home from "./customer/CustomerHome.js";
 import Menu from "./customer/Menu.js";
-import Header from "./customer/Header.js";
-import MenuItem from "./customer/MenuItem.js";
+// import Header from "./customer/Header.js";
+// import MenuItem from "./customer/MenuItem.js";
 import "./App.css";
 
 function App() {
@@ -21,7 +21,7 @@ function App() {
     { name: "Enchiladas", description: "Cheese enchiladas" },
   ];
 
-  const restaurantName = "Tucker's Test Restaurant";
+  // const restaurantName = "Tucker's Test Restaurant";
   // Need to query database to get the menu
   // and the restaurant name
 

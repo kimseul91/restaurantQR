@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Home from "./customer/CustomerHome.js";
 import Menu from "./customer/Menu.js";
+import StaffEdit from "./staff/StaffEdit.js";
 // import Header from "./customer/Header.js";
 // import MenuItem from "./customer/MenuItem.js";
 import "./App.css";
@@ -51,9 +52,12 @@ function App() {
           <Route exact path="/customer">
             <Home name="Test" />
           </Route>
-          <Route path="/staff">
+          <Route exact path="/staff/edit" component={StaffEdit} />
+          <Route exact path="/staff" component={Staff} />
+
+          {/* <Route exact path="/staff">
             <Staff />
-          </Route>
+          </Route> */}
           <Route path="/customer/menu">
             <Menu menuItems={menu} />
           </Route>

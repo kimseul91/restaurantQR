@@ -28,16 +28,16 @@ function  LiveRequest(props) {
 }
 
 function getRow (tableRequests) {
-    console.log("tableRequests");
+    // console.log("tableRequests");
     //converting {object: {object: object}} to 
     // array [tablenumber, [table request]]
     if(tableRequests != null) {
         const arrTables = Object.keys(tableRequests).map((key,val) => {
-            console.log(`key: ${key} | val: ${tableRequests[key].requests}`);
+            // console.log(`key: ${key} | val: ${tableRequests[key].requests}`);
             return [key, tableRequests[key].requests]
         })
-        console.log("array");
-        console.log(arrTables);
+        // console.log("array");
+        // console.log(arrTables);
         return <div>
             <Table striped>
                 <thead>

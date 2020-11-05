@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Staff from "./staff/home.js";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -12,58 +12,52 @@ import "./App.css";
 // on mount of App make a post request to
 
 function App() {
-  const menu = [
-    { name: "Tacos", description: "Ground beef tacos" },
-    { name: "Enchiladas", description: "Cheese enchiladas" },
-    { name: "Enchiladas", description: "Cheese enchiladas" },
-    { name: "Enchiladas", description: "Cheese enchiladas" },
-    { name: "Enchiladas", description: "Cheese enchiladas" },
-    { name: "Enchiladas", description: "Cheese enchiladas" },
-    { name: "Enchiladas", description: "Cheese enchiladas" },
-    { name: "Enchiladas", description: "Cheese enchiladas" },
-    { name: "Enchiladas", description: "Cheese enchiladas" },
-  ];
+  const [name, setName] = useState("");
+  const [tableID, setID] = useState("");
+  const [language, setLanguage] = useState("");
 
-  const restaurantName = "Tucker's Test Restaurant";
+  const languageDictionary = {
+    English: "en",
+    Spanish: "es",
+  };
+
+  const updateApp = (rName, id) => {
+    setName(rName);
+    setID(id);
+  };
+  const updateLanguage = (language) => {
+    setLanguage(languageDictionary[language]);
+  };
+
+  // const restaurantName = "Tucker's Test Restaurant";
   // Need to query database to get the menu
   // and the restaurant name
 
   return (
-    // <Router>
-    //   {/* <div> */}
-    //   {/* <nav>
-    //       <ul>
-    //         <li>
-    //           <Link to="/"> HOME</Link>
-    //         </li>
-    //         <li>
-    //           <Link to="/customer">Customer</Link>
-    //         </li>
-    //         <li>
-    //           <Link to="/staff">Staff</Link>
-    //         </li>
-    //         <li>
-    //           <Link to="/customer/menu">Menu</Link>
-    //         </li>
-    //       </ul>
-    //     </nav> */}
-    //   <Switch>
-    //     <Route exact path="/">
-    //       <></>
-    //     </Route>
-    //     <Route exact path="/customer">
-    //       <CustomerHome name="Test" />
-    //     </Route>
-    //     <Route path="/staff">
-    //       <Staff />
-    //     </Route>
-    //     <Route path="/customer/menu">
-    //       <Menu name={restaurantName} menuItems={menu} />
-    //     </Route>
-    //   </Switch>
-    //   {/* </div> */}
-    // </Router>
-    <Menu name={restaurantName} menuItems={menu} />
+    <div className="App">
+      <Router>
+        <Switch>
+          <Route exact path="/">
+            <></>
+          </Route>
+          <Route exact path="/customer/:restaurantName/:tableID">
+            {/* // www.restaurantQR.com/customer?name=Tucker&tableID=7 */}
+            <CustomerHome
+              updateApp={updateApp}
+              updateLanguage={updateLanguage}
+            />
+          </Route>
+          <Route path="/staff">
+            <Staff />
+          </Route>
+          <Route exact path="/customer/menu">
+            {tableID !== "" && (
+              <Menu name={name} tableID={tableID} language={language} />
+            )}
+          </Route>
+        </Switch>
+      </Router>
+    </div>
   );
 }
 

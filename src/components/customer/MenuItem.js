@@ -18,7 +18,7 @@ function MenuItem(props) {
   const orderItem = async (itemName) => {
     // send api request to axios to add item to order
     await axios.put(
-      "http://localhost:5001/restaurantqr-73126/us-central1/api/test_restaurant_3/customer/table/2/order",
+      `http://localhost:5001/restaurantqr-73126/us-central1/api/${props.name}/customer/table/${props.tableID}/order`,
       {
         request: itemName,
       }

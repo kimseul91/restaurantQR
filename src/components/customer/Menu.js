@@ -18,10 +18,12 @@ function Menu(props) {
   const [searchTerm, setSearch] = useState("");
   const [menuSearchTerms, setMenuSearchTerms] = useState([]);
 
+  // boolean for loading menu
+
   useEffect(() => {
     (async function () {
       const menuRequest = await axios.get(
-        "http://localhost:5001/restaurantqr-73126/us-central1/api/test_restaurant_3/menu"
+        `http://localhost:5001/restaurantqr-73126/us-central1/api/${props.name}/menu`
       );
       const menuData = menuRequest.data.menu;
       // const translatedMenu = menuData.
@@ -36,7 +38,15 @@ function Menu(props) {
         Check: { description: "Your sever will bring you the check" },
       };
 
-      // console.log(menuData);
+      console.log(menuData);
+
+      // const translatedMenu = await axios.post(
+      //   "http://localhost:5001/restaurantqr-73126/us-central1/api/translate",
+      //   {
+      //     menu: menuData,
+      //   }
+      // );
+      // console.log(translatedMenu);
       setMenu(menuData);
       setOriginalMenu(menuData);
       // console.log(menuData);
@@ -104,6 +114,7 @@ function Menu(props) {
     return (
       <MenuItem
         name={props.name}
+        tableID={props.tableID}
         item={currentItem}
         goBackToMenu={changeToMenuView}
       />

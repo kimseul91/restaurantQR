@@ -1,11 +1,14 @@
+
 import React, { useState } from "react";
+import Staff from "./staff/Home.js";
 import Staff from "./staff/home.js";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import CustomerHome from "./customer/CustomerHome.js";
 import Menu from "./customer/Menu.js";
-import Header from "./customer/Header.js";
-import MenuItem from "./customer/MenuItem.js";
+import StaffEdit from "./staff/StaffEdit.js";
+// import Header from "./customer/Header.js";
+// import MenuItem from "./customer/MenuItem.js";
 import "./App.css";
 
 // Make an account for each restaurant
@@ -47,9 +50,8 @@ function App() {
               updateLanguage={updateLanguage}
             />
           </Route>
-          <Route path="/staff">
-            <Staff />
-          </Route>
+          <Route exact path="/staff/edit" component={StaffEdit} />
+          <Route exact path="/staff" component={Staff} />
           <Route exact path="/customer/menu">
             {tableID !== "" && (
               <Menu name={name} tableID={tableID} language={language} />

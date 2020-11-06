@@ -81,6 +81,20 @@ app.get("/:restaurant/menu", async (req, res) => {
   }
 });
 
+app.get("/:restaurant/liverequest", async (req, res) => {
+  const restaurantName = req.params.restaurant;
+
+  try {
+    const data = await firestore
+    .collection("Restaurant")
+    .doc(restaurantName)
+    .get();
+    res.send(data.data());
+  } catch (error) {
+    res.status(500).send();
+  }
+})
+
 app.post("/translate", async (req, res) => {
   // Inspirtation from Amit Agarwal on https://www.labnol.org/code/19909-google-translate-api
 
@@ -127,6 +141,7 @@ const translate = async (text) => {
   );
   return translationResponse;
 };
+
 
 exports.api = functions.https.onRequest(app);
 

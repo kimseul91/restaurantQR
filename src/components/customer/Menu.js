@@ -24,7 +24,7 @@ function Menu(props) {
     (async function () {
       const menuRequest = await axios.get(
         // http://localhost:5001/restaurantqr-73126/us-central1/api
-        `https://restaurantqr-73126.cloudfunctions.net/us-central1/api/${props.name}/menu`
+        `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/${props.name}/menu`
       );
       const menuData = menuRequest.data.menu;
       // const translatedMenu = menuData.

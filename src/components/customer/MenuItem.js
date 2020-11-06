@@ -20,7 +20,7 @@ function MenuItem(props) {
     await axios.put(
       //      `https://restaurantqr-73126.cloudfunctions.net/us-central1/api/${props.name}/menu`
       //      `http://localhost:5001/restaurantqr-73126/us-central1/api/${props.name}/customer/table/${props.tableID}/order`,
-      `https://restaurantqr-73126.cloudfunctions.net/us-central1/api/${props.name}/customer/table/${props.tableID}/order`,
+      `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/${props.name}/customer/table/${props.tableID}/order`,
       {
         request: itemName,
       }

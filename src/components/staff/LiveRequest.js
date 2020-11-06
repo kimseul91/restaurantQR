@@ -9,7 +9,7 @@ function LiveRequest(props) {
 
   useEffect(async () => {
     const liveRequest = await axios.get(
-      "http://localhost:5001/restaurantqr-73126/us-central1/api/test_restaurant_3/liverequest"
+      "https://us-central1-restaurantqr-73126.cloudfunctions.net/api/test_restaurant_3/liverequest"
       // http://localhost:5001/restaurantqr-73126/us-central1/api/
     );
     const requestData = liveRequest.data.tables;

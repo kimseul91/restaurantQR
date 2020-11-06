@@ -1,0 +1,176 @@
+.Home {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  /* justify-content: space-evenly; */
+  height: 100vh;
+  width: auto;
+}
+
+/* 
+Color Theme
+
+Deep Purple: #1d1145
+Trapper Keeper Green: #0db4b9
+Pink boot: #f2a1a1
+Modern Pink Backpack: #e76d89
+*/
+
+.menuItemWrapperCard .card-header {
+  background-color: #e76d89 !important;
+  color: white !important;
+}
+
+.menuItemWrapperCard .card-body {
+  background-color: #1d1145 !important;
+}
+
+.flex-box {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  height: 100%;
+  width: auto;
+}
+
+.languageItem {
+  width: 300px;
+}
+
+.languageButton:focus {
+  border: none;
+}
+
+.mainHeader {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  background-color: #1d1145;
+}
+
+.headerDiv {
+  padding: 1.5rem;
+  text-align: center;
+}
+
+#qrTitle {
+  font-size: 20px;
+}
+
+#restaurantName {
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 30px;
+  font-size: 25px;
+  /* color: #1d1145; */
+  /* color: #0db4b9; */
+  color: white;
+}
+
+.homeIcon {
+  height: 120px !important;
+  width: 120px !important;
+  border-radius: 12px;
+}
+
+#menuCardsDiv {
+  overflow-y: scroll;
+  color: white;
+  margin-top: 5%;
+  height: 70vh;
+  justify-content: start !important;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+#menuCardsDiv::-webkit-scrollbar {
+  display: none;
+}
+
+.itemDescription {
+  width: 100vw;
+  margin: 2rem;
+  padding: 1rem;
+  margin-bottom: 30%;
+}
+
+#itemPrice,
+#itemName {
+  margin-bottom: 5%;
+}
+
+#itemName,
+#itemPrice,
+.itemDescription {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 20px;
+  line-height: 25px;
+  text-align: center;
+}
+
+.itemCard {
+  text-align: center;
+  /* height: 75px; */
+  border: 1px solid #1d1145;
+  border-radius: 12px;
+  margin: 1rem;
+  /* background-color: #1d1145; */
+  background-color: #0db4b9;
+  padding: 0.5rem;
+  color: #1d1145;
+}
+
+.itemText {
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 20px;
+  line-height: 25px;
+  text-align: center;
+}
+
+.button-box {
+  display: flex;
+  margin-top: 5%;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.buttonSize {
+  width: 90px;
+}
+
+.menuAccordion {
+  max-height: calc(100vh - 2rem);
+  overflow-y: scroll !important;
+  padding-bottom: 5vh;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.menuAccordion::-webkit-scrollbar {
+  display: none;
+}
+
+.smallDescriptionText {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 17px;
+  line-height: 25px;
+  text-align: center;
+}
+
+.searchDiv {
+  /* display: flex; */
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  margin: 4%;
+}
+
+.inputBox {
+  width: 100%;
+}

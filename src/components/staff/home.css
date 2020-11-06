@@ -1,0 +1,40 @@
+.staff-home-full-container{
+    height: 100vh;
+    overflow-y: hidden;
+}
+
+.staff-nav-bar {
+    background-color: #221B45 !important;
+}
+
+.staff-the-content-holder {
+    height: 100%;
+}
+
+.staff-left-col {
+    height: 100%;
+}
+
+.staff-right-col {
+    height: 100%;
+}
+
+.staff-container-background-color {
+    background-color: #E8E8E8;
+    height: 100vh;
+}
+
+.staff-table-bg-color {
+    margin-top:1vw;
+    background-color: #0DB4B9;
+}
+
+.staff-content-center {
+    display: flex;
+    justify-content: center;
+  }
+
+.staff-table-th {
+    border-top: 0px !important;
+    border-bottom: 0px !important;
+}

@@ -12,12 +12,13 @@ import fb from "../../Firebase";
 
 class StaffEdit extends React.Component {
 // function Home(props) {
-    constructor(props) {
+    constructor() {
         super()
         
         this.state = {
             time: new Date().toLocaleString(),
         };
+        this.intervalID = null
 
         
     }
@@ -38,10 +39,6 @@ class StaffEdit extends React.Component {
         });
     }
     
-    renderLiveRequest() {
-        // console.log("liveRequest rendering")
-        return <LiveRequest/>
-    }
     render() {
         return <div className="staff-home-full-container">
             <div>
@@ -82,12 +79,12 @@ class StaffEdit extends React.Component {
                                 <Table striped >
                                     <thead>
                                         <tr className="staff-content-center">
-                                            <th className="staff-table-th" >Employees</th>
+                                            <th className="staff-table-th" >Tables</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td>John Doe</td>
+                                            <td> Table 1</td>
                                         </tr>
                                     </tbody>
                                 </Table>

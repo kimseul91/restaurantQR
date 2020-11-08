@@ -6,19 +6,20 @@
 }
 
 .loginForm {
-  height: 300px;
-  width: 300px;
+  min-height: 300px;
+  min-width: 400px;
   justify-content: center;
   align-items: center;
   display: flex;
   border: 2px solid white;
   border-radius: 8px;
+  background-color: #e76d89;
 }
 
 .inputText {
   font-family: Lato, sans-serif;
-  line-height: 25px;
-  font-size: 20px;
+  line-height: 20px;
+  font-size: 18px;
   width: 250px;
   margin: 5px;
 }
@@ -26,12 +27,15 @@
 .loginTextHeader {
   color: white;
   text-align: center;
+  margin-top: 15px;
 }
 
 .outerLogin {
   display: flex;
   justify-content: center;
   align-items: center;
+  /* height: calc(1.5rem - 50%); */
+  margin-top: 15vh;
 }
 
 .overallLogin {
@@ -41,10 +45,31 @@
 
 .loginBtn {
   margin: 5px;
+  background-color: #0db4b9;
+  border: none;
+}
+
+.loginBtn:hover {
+  background-color: #1d1145 !important;
 }
 
 #linkSpan {
+  /* color: #f2a1a1; */
+  /* color: #e76d89; */
   color: white;
   margin: 10px;
   text-align: center;
+}
+
+#loginHeader {
+  padding: 1.5rem;
+  text-align: center;
+  margin-bottom: 2pc;
+  background-color: #0db4b9;
+  font-family: Lato, sans-serif;
+  /* position: fixed; */
+}
+
+.coloredLink {
+  color: #1d1145 !important;
 }

@@ -2,7 +2,7 @@ import React from "react";
 import FastfoodIcon from "@material-ui/icons/Fastfood";
 function LoginHeader(props) {
   return (
-    <div className="headerDiv mainHeader">
+    <div id="loginHeader">
       <span id="restaurantName">
         {" "}
         <FastfoodIcon

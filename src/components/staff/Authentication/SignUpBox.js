@@ -44,7 +44,7 @@ function SignUpBox(props) {
 
       await axios
         .post(
-          "http://localhost:5001/restaurantqr-73126/us-central1/api/restaurant/createAccount",
+          "https://us-central1-restaurantqr-73126.cloudfunctions.net/api/restaurant/createAccount",
           { name: name, uid: Firebase.auth.currentUser.uid, address: address }
         )
         .catch((err) => console.log(err));
@@ -91,7 +91,10 @@ function SignUpBox(props) {
             Sign Up
           </Button>
           <span id="linkSpan">
-            Already have an account? Login <Link to="/">here</Link>{" "}
+            Already have an account? Login{" "}
+            <Link to="/" className="coloredLink">
+              here
+            </Link>{" "}
           </span>
         </div>
       </Form>

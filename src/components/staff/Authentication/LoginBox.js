@@ -47,7 +47,9 @@ function LoginBox(props) {
           </Button>
           <span id="linkSpan">
             Don't have an account? Restaurants sign up{" "}
-            <Link to="/signup">here</Link>{" "}
+            <Link to="/signup" className="coloredLink">
+              here
+            </Link>{" "}
           </span>
         </div>
       </Form>

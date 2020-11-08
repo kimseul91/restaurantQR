@@ -1,0 +1,50 @@
+.inputBoxDiv {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.loginForm {
+  height: 300px;
+  width: 300px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  border: 2px solid white;
+  border-radius: 8px;
+}
+
+.inputText {
+  font-family: Lato, sans-serif;
+  line-height: 25px;
+  font-size: 20px;
+  width: 250px;
+  margin: 5px;
+}
+
+.loginTextHeader {
+  color: white;
+  text-align: center;
+}
+
+.outerLogin {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.overallLogin {
+  height: 100%;
+  width: 100%;
+}
+
+.loginBtn {
+  margin: 5px;
+}
+
+#linkSpan {
+  color: white;
+  margin: 10px;
+  text-align: center;
+}

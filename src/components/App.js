@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import Staff from "./staff/Home.js";
+import Staff from "./staff/home.js";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import CustomerHome from "./customer/CustomerHome.js";
 import Menu from "./customer/Menu.js";
 import StaffEdit from "./staff/StaffEdit.js";
-// import Header from "./customer/Header.js";
-// import MenuItem from "./customer/MenuItem.js";
+import Login from "./staff/Authentication/Login";
+import SignUp from "./staff/Authentication/SignUp";
+
 import "./App.css";
 
 // Make an account for each restaurant
@@ -39,10 +40,12 @@ function App() {
       <Router>
         <Switch>
           <Route exact path="/">
-            <></>
+            <Login />
+          </Route>
+          <Route exact path="/signup">
+            <SignUp />
           </Route>
           <Route exact path="/customer/:restaurantName/:tableID">
-            {/* // www.restaurantQR.com/customer?name=Tucker&tableID=7 */}
             <CustomerHome
               updateApp={updateApp}
               updateLanguage={updateLanguage}

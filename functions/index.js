@@ -86,14 +86,34 @@ app.get("/:restaurant/liverequest", async (req, res) => {
 
   try {
     const data = await firestore
-    .collection("Restaurant")
-    .doc(restaurantName)
-    .get();
+      .collection("Restaurant")
+      .doc(restaurantName)
+      .get();
     res.send(data.data());
   } catch (error) {
     res.status(500).send();
   }
-})
+});
+
+// adds restaurant info to firestore db
+app.post("/restaurant/createAccount", async (req, res) => {
+  const { uid, name, address } = req.body;
+
+  const databaseEntry = {
+    uid: uid,
+    name: name,
+    address: address,
+    menu: {},
+    tables: {},
+    employees: {},
+  };
+
+  console.log(databaseEntry);
+
+  await firestore.collection("Restaurant").doc(name).set(databaseEntry);
+
+  res.status(201).send();
+});
 
 app.post("/translate", async (req, res) => {
   // Inspirtation from Amit Agarwal on https://www.labnol.org/code/19909-google-translate-api
@@ -141,7 +161,6 @@ const translate = async (text) => {
   );
   return translationResponse;
 };
-
 
 exports.api = functions.https.onRequest(app);
 

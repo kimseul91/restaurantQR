@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Staff from "./staff/Home.js";
+import Staff from "./staff/home.js";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import CustomerHome from "./customer/CustomerHome.js";
@@ -41,15 +41,14 @@ function App() {
           <Route exact path="/">
             <></>
           </Route>
+          <Route exact path="/staff/edit" component={StaffEdit} />
+          <Route exact path="/staff" component={Staff} />
           <Route exact path="/customer/:restaurantName/:tableID">
-            {/* // www.restaurantQR.com/customer?name=Tucker&tableID=7 */}
             <CustomerHome
               updateApp={updateApp}
               updateLanguage={updateLanguage}
             />
           </Route>
-          <Route exact path="/staff/edit" component={StaffEdit} />
-          <Route exact path="/staff" component={Staff} />
           <Route exact path="/customer/menu">
             {tableID !== "" && (
               <Menu name={name} tableID={tableID} language={language} />

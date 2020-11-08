@@ -153,8 +153,8 @@ function Menu(props) {
   //   ]);
 
   return (
-    <div>
-      <Header name={"Tucker's Test Restaurant"} />
+    <div id="outerFullMenuDiv">
+      <Header name={props.name} />
       <AutoComplete
         onlyMenuItems={menuSearchTerms}
         updateAfterSearch={updateAfterSearch}

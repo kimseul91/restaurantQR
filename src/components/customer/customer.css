@@ -6,6 +6,15 @@
   /* justify-content: space-evenly; */
   height: 100vh;
   width: auto;
+  color: white;
+}
+
+#homeImgDiv {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 15vh;
+  margin-top: 10vh;
 }
 
 /* 
@@ -28,17 +37,32 @@ Modern Pink Backpack: #e76d89
 
 .flex-box {
   display: flex;
-  justify-content: center;
+  /* justify-content: center; */
   flex-direction: column;
   align-items: center;
-  justify-content: space-around;
+  /* justify-content: space-around;  */
   height: 100%;
   width: auto;
 }
+#languageDropdownDiv {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
 
 .languageItem {
-  width: 300px;
+  width: 180px !important;
+  justify-content: center;
 }
+/* 
+.dropdownItemDiv {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+} */
+/* .languageButton {
+  width: 180px !important;
+} */
 
 .languageButton:focus {
   border: none;
@@ -60,16 +84,17 @@ Modern Pink Backpack: #e76d89
 }
 
 #qrTitle {
-  font-size: 20px;
+  font-size: 25px;
 }
 
 #restaurantName {
-  font-family: Arial, Helvetica, sans-serif;
   line-height: 30px;
   font-size: 25px;
   /* color: #1d1145; */
   /* color: #0db4b9; */
   color: white;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .homeIcon {

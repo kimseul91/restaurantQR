@@ -39,8 +39,8 @@ function Home(props) {
 
   return (
     <div className="Home">
-      <div className="headerDiv">
-        <span id="restaurantName">{restaurantName}</span>
+      <div className="headerDiv wide">
+        <span id="restaurantName">{`Welcome to ${restaurantName}`}</span>
       </div>
       <Container className="flex-box">
         <div id="homeImgDiv">
@@ -53,7 +53,7 @@ function Home(props) {
           <DropdownButton
             className="languageButton"
             title="Select language"
-            variant="primary"
+            // variant="primary"
             size="lg"
           >
             <div className="dropdownItemDiv">

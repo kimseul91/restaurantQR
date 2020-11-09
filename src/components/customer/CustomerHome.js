@@ -39,36 +39,38 @@ function Home(props) {
 
   return (
     <div className="Home">
-      <div className="headerDiv">
-        <span id="qrTitle">restaurantQR</span>
-      </div>
-      <div className="headerDiv">
-        <span id="restaurantName">{restaurantName}</span>
+      <div className="headerDiv wide">
+        <span id="restaurantName">{`Welcome to ${restaurantName}`}</span>
       </div>
       <Container className="flex-box">
         <div id="homeImgDiv">
           <FastfoodIcon className="homeIcon" />
+          <div className="headerDiv">
+            <span id="qrTitle">restaurantQR</span>
+          </div>
         </div>
         <div id="languageDropdownDiv">
           <DropdownButton
             className="languageButton"
             title="Select language"
-            variant="primary"
+            // variant="primary"
             size="lg"
           >
-            {languauges.map((language) => (
-              // Add onClick function to route you to the menu
-              // with the language you clicked on enabled
-              <DropdownItem
-                className="languageItem"
-                href=""
-                onClick={() => {
-                  handleClick(language);
-                }}
-              >
-                {language}
-              </DropdownItem>
-            ))}
+            <div className="dropdownItemDiv">
+              {languauges.map((language) => (
+                // Add onClick function to route you to the menu
+                // with the language you clicked on enabled
+                <DropdownItem
+                  className="languageItem"
+                  href=""
+                  onClick={() => {
+                    handleClick(language);
+                  }}
+                >
+                  {language}
+                </DropdownItem>
+              ))}
+            </div>
           </DropdownButton>
         </div>
       </Container>

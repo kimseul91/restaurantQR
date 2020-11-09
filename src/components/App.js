@@ -5,8 +5,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import CustomerHome from "./customer/CustomerHome.js";
 import Menu from "./customer/Menu.js";
 import StaffEdit from "./staff/StaffEdit.js";
-// import Header from "./customer/Header.js";
-// import MenuItem from "./customer/MenuItem.js";
+import Login from "./staff/Authentication/Login";
+import SignUp from "./staff/Authentication/SignUp";
+
 import "./App.css";
 
 // Make an account for each restaurant
@@ -39,7 +40,10 @@ function App() {
       <Router>
         <Switch>
           <Route exact path="/">
-            <></>
+            <Login />
+          </Route>
+          <Route exact path="/signup">
+            <SignUp />
           </Route>
           <Route exact path="/staff/edit" component={StaffEdit} />
           <Route exact path="/staff" component={Staff} />

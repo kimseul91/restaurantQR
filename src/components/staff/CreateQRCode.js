@@ -9,11 +9,14 @@ function CreateQRCode(props) {
     const [image, setImage] = useState(null);
 
     const sendToSubmit = () => {
-        setImage(handleSubmit(tableNumber));
+        // setImage(handleSubmit(tableNumber));
+        //add to firebase
+        addToFirebase(props.name, tableNumber);
+
     }
     return (
         <div>
-            <h3>CreateQRCode</h3>
+            <h3>Create Table</h3>
             <InputGroup className="mb-3">
                 <FormControl
                 placeholder="Table Number"
@@ -31,6 +34,14 @@ function CreateQRCode(props) {
         </div>
     );
 }
+
+async function addToFirebase(restName, tableNumber) {
+    console.log(restName + " " + tableNumber);
+    const menuRequest = await axios.get(
+        `http://localhost:5001/restaurantqr-73126/us-central1/api/${restName}/staff/edit/table/${tableNumber}/`
+    );
+}
+
 function handleSubmit(tableNumber) {
     console.log("SUBMIT " + tableNumber);
     // const tableURL = `http://www.restaurantQR.com/test_restaurant_3/staff/${tableNumber}`

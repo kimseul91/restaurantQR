@@ -7,10 +7,12 @@ import axios from "axios";
 function LiveRequest(props) {
   const [liveRequests, setRequest] = useState(null);
 
+
   useEffect(async () => {
     const liveRequest = await axios.get(
       "https://us-central1-restaurantqr-73126.cloudfunctions.net/api/test_restaurant_3/liverequest"
       // http://localhost:5001/restaurantqr-73126/us-central1/api/
+
     );
     const requestData = liveRequest.data.tables;
     setRequest(requestData);

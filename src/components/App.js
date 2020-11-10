@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import Staff from "./staff/home.js";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Staff from "./staff/Home.js";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import CustomerHome from "./customer/CustomerHome.js";
 import Menu from "./customer/Menu.js";
@@ -45,14 +45,20 @@ function App() {
           <Route exact path="/signup">
             <SignUp />
           </Route>
-          <Route exact path="/staff/edit" component={StaffEdit} />
-          <Route exact path="/staff" component={Staff} />
+//           <Route exact path="/staff/edit" component={StaffEdit} />
+//           <Route exact path="/staff" component={Staff} />
           <Route exact path="/customer/:restaurantName/:tableID">
             <CustomerHome
               updateApp={updateApp}
               updateLanguage={updateLanguage}
             />
           </Route>
+          <Route exact path="/staff/edit">
+            <StaffEdit name={"test_restaurant_3"} />
+          </Route> 
+          <Route exact path="/staff">
+            <Staff name={"test_restaurant_3"} />
+          </Route> 
           <Route exact path="/customer/menu">
             {tableID !== "" && (
               <Menu name={name} tableID={tableID} language={language} />

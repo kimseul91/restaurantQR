@@ -732,3 +732,20 @@
 [info] i  functions: Finished "api" in ~1s {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"Finished \"api\" in ~1s"}}
 [debug] [2020-11-10T20:24:07.965Z] [worker-api-84c9e332-89da-4d1d-9ffa-2abb9031cdfe]: IDLE {"metadata":{"emulator":{"name":"functions"},"message":"[worker-api-84c9e332-89da-4d1d-9ffa-2abb9031cdfe]: IDLE"}}
 [debug] [2020-11-10T20:24:07.966Z] [work-queue] {"queueLength":0,"workRunningCount":0}
+[debug] [2020-11-10T20:27:15.318Z] [work-queue] {"queueLength":1,"workRunningCount":0}
+[debug] [2020-11-10T20:27:15.318Z] [work-queue] {"queueLength":0,"workRunningCount":1}
+[debug] [2020-11-10T20:27:15.318Z] Accepted request GET /restaurantqr-73126/us-central1/api/test_restaurant_3/liverequest --> api
+[debug] [2020-11-10T20:27:15.318Z] [worker-pool] submitWork(triggerId=api) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] submitWork(triggerId=api)"}}
+[debug] [2020-11-10T20:27:15.319Z] [worker-api-84c9e332-89da-4d1d-9ffa-2abb9031cdfe]: Assigning socketPath: /var/folders/hq/d0g70ytj3y5drylzxqcr38hm0000gn/T/fire_emu_13748.sock {"metadata":{"emulator":{"name":"functions"},"message":"[worker-api-84c9e332-89da-4d1d-9ffa-2abb9031cdfe]: Assigning socketPath: /var/folders/hq/d0g70ytj3y5drylzxqcr38hm0000gn/T/fire_emu_13748.sock"}}
+[debug] [2020-11-10T20:27:15.319Z] [worker-api-84c9e332-89da-4d1d-9ffa-2abb9031cdfe]: BUSY {"metadata":{"emulator":{"name":"functions"},"message":"[worker-api-84c9e332-89da-4d1d-9ffa-2abb9031cdfe]: BUSY"}}
+[debug] [2020-11-10T20:27:15.319Z] [runtime-status] [13748] Trigger "api" has been found, beginning invocation! {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"[runtime-status] [13748] Trigger \"api\" has been found, beginning invocation!"}}
+[info] i  functions: Beginning execution of "api" {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"Beginning execution of \"api\""}}
+[debug] [2020-11-10T20:27:15.320Z] [runtime-status] [13748] triggerDefinition {"httpsTrigger":{},"name":"api","entryPoint":"api"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"[runtime-status] [13748] triggerDefinition {\"httpsTrigger\":{},\"name\":\"api\",\"entryPoint\":\"api\"}"}}
+[debug] [2020-11-10T20:27:15.320Z] [runtime-status] [13748] Running api in mode HTTPS {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"[runtime-status] [13748] Running api in mode HTTPS"}}
+[debug] [2020-11-10T20:27:15.320Z] [runtime-status] [13748] Attempting to listen to socketPath: /var/folders/hq/d0g70ytj3y5drylzxqcr38hm0000gn/T/fire_emu_13748.sock {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"[runtime-status] [13748] Attempting to listen to socketPath: /var/folders/hq/d0g70ytj3y5drylzxqcr38hm0000gn/T/fire_emu_13748.sock"}}
+[debug] [2020-11-10T20:27:15.325Z] [functions] Runtime ready! Sending request! {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Runtime ready! Sending request!"}}
+[debug] [2020-11-10T20:27:15.328Z] [runtime-status] [13748] Ephemeral server handling GET request {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"[runtime-status] [13748] Ephemeral server handling GET request"}}
+[debug] [2020-11-10T20:27:15.329Z] [runtime-status] [13748] Ephemeral server survived. {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"[runtime-status] [13748] Ephemeral server survived."}}
+[info] i  functions: Finished "api" in ~1s {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"Finished \"api\" in ~1s"}}
+[debug] [2020-11-10T20:27:15.417Z] [worker-api-84c9e332-89da-4d1d-9ffa-2abb9031cdfe]: IDLE {"metadata":{"emulator":{"name":"functions"},"message":"[worker-api-84c9e332-89da-4d1d-9ffa-2abb9031cdfe]: IDLE"}}
+[debug] [2020-11-10T20:27:15.417Z] [work-queue] {"queueLength":0,"workRunningCount":0}

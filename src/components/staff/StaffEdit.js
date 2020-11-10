@@ -6,6 +6,7 @@ import ".././custom.css";
 import TableViews from "./TableViews.js";
 import CreateQRCode from "./CreateQRCode.js";
 import ClockView from "./ClockView.js"
+import Employees from "./Employees.js"
 // import CreateQRContainer from "./CreateQRContainer.js";
 // import axios from "axios";
 import fb from "../../Firebase";
@@ -58,6 +59,9 @@ class StaffEdit extends React.Component {
                         <Col xs={12} lg={9} className="staff-right-col">
                             <div style={{ backgroundColor: "#0DB4B9", marginTop: "1vw" }}> 
                                 <CreateQRCode name={this.props.name}/>
+                            </div>
+                            <div style={{ backgroundColor: "#0DB4B9", marginTop: "1vw" }}> 
+                                <Employees name={this.props.name}/>
                             </div>
 
                         </Col>

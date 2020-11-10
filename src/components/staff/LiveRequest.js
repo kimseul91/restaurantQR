@@ -9,8 +9,9 @@ function  LiveRequest(props) {
     
 
     useEffect(async () => {
+        console.log("NAME IS " + props.name)
         const liveRequest = await axios.get(
-            "http://localhost:5001/restaurantqr-73126/us-central1/api/test_restaurant_3/liverequest"
+            `http://localhost:5001/restaurantqr-73126/us-central1/api/${props.name}/liverequest`
         )
         const requestData  = liveRequest.data.tables;
         setRequest(requestData);

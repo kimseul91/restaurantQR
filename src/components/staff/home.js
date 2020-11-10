@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom';
 import "./home.css";
 import ".././custom.css";
 import LiveRequest from "./LiveRequest.js";
+import ClockView from "./ClockView.js";
 import CreateQRCode from "./CreateQRCode.js";
 // import CreateQRContainer from "./CreateQRContainer.js";
 // import axios from "axios";
@@ -13,7 +14,7 @@ import fb from "../../Firebase";
 class Home extends React.Component {
 // function Home(props) {
     constructor(props) {
-        super()
+        super(props)
         
         this.state = {
             time: new Date().toLocaleString(),
@@ -40,7 +41,7 @@ class Home extends React.Component {
     
     renderLiveRequest() {
         // console.log("liveRequest rendering")
-        return <LiveRequest/>
+        return <LiveRequest name={this.props.name}/>
     }
     render() {
         return <div className="staff-home-full-container">
@@ -55,12 +56,12 @@ class Home extends React.Component {
                         className="d-inline-block align-top"
                         alt="React BootStrap logo"
                     />{" "} */}
-                    restaurant_name
+                    {this.props.name}
                 </Navbar.Brand>
                     <Container>
                         <Navbar.Collapse className="justify-content-center">
                             <Navbar.Text>
-                                {this.state.time}
+                                <ClockView />
                         </Navbar.Text>
                         </Navbar.Collapse>
                     </Container>
@@ -99,7 +100,7 @@ class Home extends React.Component {
                         <Col xs={12} lg={9} className="staff-right-col">
                             <div style={{ backgroundColor: "#0DB4B9", marginTop: "1vw" }}> 
                                 {/* {this.renderLiveRequest()} */}
-                                <LiveRequest/>
+                                <LiveRequest name={this.props.name}/>
                                 {/* <CreateQRCode /> */}
                             </div>
 

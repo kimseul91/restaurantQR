@@ -95,6 +95,33 @@ app.get("/:restaurant/liverequest", async (req, res) => {
   }
 })
 
+
+// add a table to the restaurant
+app.put("/:restaurantName/staff/edit/table/:id/", async (req, res) => {
+  const tableID = req.params.id;
+  // const { restaurantName } = req.body;
+  const restaurantName = req.params.restaurantName;
+  const newItem = "JOhnsons"
+  const updateString = `tables.table${tableID}.paid`;
+  console.log(updateString)
+
+  try {
+    // adds a new request to the list
+    await firestore
+      .collection("Restaurant")
+      .doc(restaurantName)
+      .update({
+        // [updateString]: false,
+        [updateString]: admin.firestore.FieldValue.arrayUnion(newItem),
+      });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send();
+  }
+  res.status(200).send();
+});
+
+
 app.post("/translate", async (req, res) => {
   // Inspirtation from Amit Agarwal on https://www.labnol.org/code/19909-google-translate-api
 

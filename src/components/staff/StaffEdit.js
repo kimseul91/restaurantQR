@@ -3,8 +3,9 @@ import { Navbar, Button, Container, Row, Col, Table, Modal, InputGroup, FormCont
 import {Link} from 'react-router-dom';
 import "./home.css";
 import ".././custom.css";
-import LiveRequest from "./LiveRequest.js";
+import TableViews from "./TableViews.js";
 import CreateQRCode from "./CreateQRCode.js";
+import ClockView from "./ClockView.js"
 // import CreateQRContainer from "./CreateQRContainer.js";
 // import axios from "axios";
 import fb from "../../Firebase";
@@ -12,32 +13,10 @@ import fb from "../../Firebase";
 
 class StaffEdit extends React.Component {
 // function Home(props) {
-    constructor() {
-        super()
-        
-        this.state = {
-            time: new Date().toLocaleString(),
-        };
-        this.intervalID = null
-
-        
+    constructor(props) {
+        super(props)
     }
-    //inspired by Kuhan on stackoverflow
-    componentDidMount() {
-        this.intervalID = setInterval(
-            () => this.tick(),
-            1000
-        );
-        // setInterval(this.renderLiveRequest, 5000)
-    }
-    componentWillUnmount() {
-        clearInterval(this.intervalID);
-    }
-    tick() {
-        this.setState({
-            time: new Date().toLocaleString()
-        });
-    }
+    
     
     render() {
         return <div className="staff-home-full-container">
@@ -52,12 +31,12 @@ class StaffEdit extends React.Component {
                         className="d-inline-block align-top"
                         alt="React BootStrap logo"
                     />{" "} */}
-                    restaurant_name Edit mode
+                    {this.props.name} Edit mode
                 </Navbar.Brand>
                     <Container>
                         <Navbar.Collapse className="justify-content-center">
                             <Navbar.Text>
-                                {this.state.time}
+                                <ClockView />
                         </Navbar.Text>
                         </Navbar.Collapse>
                     </Container>
@@ -73,28 +52,12 @@ class StaffEdit extends React.Component {
                 <Container fluid >
                     <Row className="staff-the-content-holder">
                         <Col xs={12} lg={3} className="staff-left-col">
-                            {/* <div style={{ backgroundColor: "black" }}> Some content here</div> */}
-                            <div className="staff-table-bg-color">
-
-                                <Table striped >
-                                    <thead>
-                                        <tr className="staff-content-center">
-                                            <th className="staff-table-th" >Tables</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td> Table 1</td>
-                                        </tr>
-                                    </tbody>
-                                </Table>
-                            </div>
+                            <TableViews name={this.props.name}/>
+                            
                         </Col>
                         <Col xs={12} lg={9} className="staff-right-col">
                             <div style={{ backgroundColor: "#0DB4B9", marginTop: "1vw" }}> 
-                                {/* {this.renderLiveRequest()} */}
-                                {/* <LiveRequest/> */}
-                                <CreateQRCode />
+                                <CreateQRCode name={this.props.name}/>
                             </div>
 
                         </Col>

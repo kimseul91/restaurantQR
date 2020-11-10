@@ -23,7 +23,8 @@ function Menu(props) {
   useEffect(() => {
     (async function () {
       const menuRequest = await axios.get(
-        `http://localhost:5001/restaurantqr-73126/us-central1/api/${props.name}/menu`
+        // http://localhost:5001/restaurantqr-73126/us-central1/api
+        `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/${props.name}/menu`
       );
       const menuData = menuRequest.data.menu;
       // const translatedMenu = menuData.
@@ -152,8 +153,8 @@ function Menu(props) {
   //   ]);
 
   return (
-    <div>
-      <Header name={"Tucker's Test Restaurant"} />
+    <div id="outerFullMenuDiv">
+      <Header name={props.name} />
       <AutoComplete
         onlyMenuItems={menuSearchTerms}
         updateAfterSearch={updateAfterSearch}

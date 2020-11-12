@@ -104,7 +104,7 @@ function Menu(props) {
 
   // updates values and headers
   const updateAfterSearch = (text) => {
-    console.log("yoooo");
+    // console.log("yoooo");
     // need to filter the fullMenu
     // const currentMenu = originalMenu.filter();
     setSearch(text);

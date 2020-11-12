@@ -45,8 +45,6 @@ function App() {
           <Route exact path="/signup">
             <SignUp />
           </Route>
-//           <Route exact path="/staff/edit" component={StaffEdit} />
-//           <Route exact path="/staff" component={Staff} />
           <Route exact path="/customer/:restaurantName/:tableID">
             <CustomerHome
               updateApp={updateApp}

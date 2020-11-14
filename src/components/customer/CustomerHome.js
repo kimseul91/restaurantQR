@@ -4,11 +4,17 @@ import "./customer.css";
 import DropdownItem from "react-bootstrap/esm/DropdownItem";
 import FastfoodIcon from "@material-ui/icons/Fastfood";
 import { useParams, Link, Redirect } from "react-router-dom";
-function Home(props) {
+function CustomerHome(props) {
   // props.name == the restaurant name
   // const [name, setName] = useState(null);
   // language array that stores all the languages that we support translation for
   const languauges = ["English", "Spanish", "French"];
+
+  const languageDictionary = {
+    English: "en",
+    Spanish: "es",
+    French: "fr",
+  };
 
   const [redirectLocation, setRedirect] = useState(null);
 
@@ -27,7 +33,11 @@ function Home(props) {
   const handleClick = (language) => {
     // Route to menu page with given langauge
     props.updateLanguage(language);
-    setRedirect(<Redirect to="/customer/menu" />);
+    setRedirect(
+      <Redirect
+        to={`/customer/${restaurantName}/${tableID}/menu?lang=${languageDictionary[language]}`}
+      />
+    );
   };
 
   // routes to the menu page after you select a language
@@ -63,6 +73,7 @@ function Home(props) {
                 <DropdownItem
                   className="languageItem"
                   href=""
+                  key={language}
                   onClick={() => {
                     handleClick(language);
                   }}
@@ -78,4 +89,4 @@ function Home(props) {
   );
 }
 
-export default Home;
+export default CustomerHome;

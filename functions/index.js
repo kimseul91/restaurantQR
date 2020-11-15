@@ -82,7 +82,22 @@ app.get("/:restaurant/menu", async (req, res) => {
 });
 
 // gets requests
-app.get("/:restaurant/liverequest", async (req, res) => {
+app.get("/:restaurant/staff/liverequest", async (req, res) => {
+  const restaurantName = req.params.restaurant;
+  
+  try {
+    const data = await firestore
+      .collection("Restaurant")
+      .doc(restaurantName)
+      .get();
+    res.send(data.data());
+  } catch (error) {
+    res.status(500).send();
+  }
+});
+
+// gets employees
+app.get("/:restaurant/staff/employees", async (req, res) => {
   const restaurantName = req.params.restaurant;
 
   try {
@@ -95,6 +110,7 @@ app.get("/:restaurant/liverequest", async (req, res) => {
     res.status(500).send();
   }
 });
+
 
 // removes request
 app.put ("/:restaurant/deleterequest/:table/", async (req, res) => {
@@ -139,7 +155,6 @@ app.put("/:restaurantName/staff/edit/table/:id/", async (req, res) => {
   const tableID = req.params.id;
   // const { restaurantName } = req.body;
   const restaurantName = req.params.restaurantName;
-  const newItem = "JOhnsons"
   const updateString = `tables.table${tableID}.paid`;
   console.log(updateString)
 
@@ -149,8 +164,31 @@ app.put("/:restaurantName/staff/edit/table/:id/", async (req, res) => {
       .collection("Restaurant")
       .doc(restaurantName)
       .update({
-        // [updateString]: false,
-        [updateString]: admin.firestore.FieldValue.arrayUnion(newItem),
+        [updateString]: false,
+        // [updateString]: admin.firestore.FieldValue.arrayUnion(newItem),
+      });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send();
+  }
+  res.status(200).send();
+});
+
+// add an employee to the restaurant
+app.put("/:restaurantName/staff/edit/addemployee", async (req, res) => {
+  const restaurantName = req.params.restaurantName;
+  const updateString = `employees`;
+  console.log(updateString)
+
+  try {
+    // adds a new request to the list
+    await firestore
+      .collection("Restaurant")
+      .doc(restaurantName)
+      .update({
+        [updateString]: req.body.employees,
+
+        // [updateString]: admin.firestore.FieldValue.arrayUnion(newItem),
       });
   } catch (error) {
     console.error(error);

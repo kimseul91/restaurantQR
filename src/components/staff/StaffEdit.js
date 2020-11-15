@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { Navbar, Button, Container, Row, Col, Table, Modal, InputGroup, FormControl } from 'react-bootstrap';
+import { Navbar, Button, Container, Row, Col, ButtonGroup, ToggleButton, Table, Modal, InputGroup, FormControl, Nav } from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import "./home.css";
 import ".././custom.css";
@@ -16,10 +16,55 @@ class StaffEdit extends React.Component {
 // function Home(props) {
     constructor(props) {
         super(props)
+        this.state={
+            value: "Tables"
+        }
     }
     
     
     render() {
+        const parentState = (e) => {
+            this.setState({ value: e });
+        };
+    
+        const getParentState = () => {
+        return this.state.value;
+        };
+    function ToggleButtonGroup() {
+            const [radioValue, setRadioValue] = useState(getParentState());
+            const radios = [
+                { name: "Tables", value: "Tables" },
+                { name: "Employees", value: "Employees" },
+                { name: "Menu", value: "Menu" } 
+            ];
+            return (
+                <div>
+                <ButtonGroup toggle>
+                    {radios.map((radio, idx) => (
+                    <ToggleButton
+                        key={idx}
+                        type="radio"
+                        variant="primary"
+                        name="radio"
+                        value={radio.value}
+                        checked={radioValue === radio.value}
+                        onChange={(e) => {
+                        setRadioValue(e.currentTarget.value);
+                        parentState(e.currentTarget.value);
+                        }}
+                    >
+                        {radio.name}
+                    </ToggleButton>
+                    ))}
+                </ButtonGroup>
+                
+                {/* <Button className="admin-setting"> Setting </Button> */}
+                </div>
+            );
+        }
+
+
+        
         return <div className="staff-home-full-container">
             <div>
 
@@ -49,8 +94,13 @@ class StaffEdit extends React.Component {
             </div>
 
             <div className="staff-container-background-color">
-
-                <Container fluid >
+                <Container fluid>
+                    <ToggleButtonGroup/>
+                </Container>
+                <Container>
+                    {this.RenderCorrectComponents()}
+                </Container>
+                {/* <Container fluid >
                     <Row className="staff-the-content-holder">
                         <Col xs={12} lg={3} className="staff-left-col">
                             <TableViews name={this.props.name}/>
@@ -66,11 +116,33 @@ class StaffEdit extends React.Component {
 
                         </Col>
                     </Row>
-                </Container>
+                </Container> */}
             </div>
 
         </div>
     }
+
+    RenderCorrectComponents = () => {
+        switch (this.state.value) {
+            case "Tables":
+                // return <RecruitersListComponent title={this.state.value} />;
+                return (<div style={{ backgroundColor: "#0DB4B9", marginTop: "1vw" }}>
+
+                    <TableViews name={this.props.name}/>
+                </div>
+                );
+            case "Employees":
+                return (
+                <Employees name={this.props.name}/>
+                );
+            case "Menu":
+                return (
+                    alert("Not yet made")
+                );
+            default:
+                return;
+            }
+        };
 
 
 }

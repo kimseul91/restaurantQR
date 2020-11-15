@@ -15,30 +15,9 @@ class Home extends React.Component {
 // function Home(props) {
     constructor(props) {
         super(props)
-        
-        this.state = {
-            time: new Date().toLocaleString(),
-        };
-
-        
-    }
-    //inspired by Kuhan on stackoverflow
-    componentDidMount() {
-        this.intervalID = setInterval(
-            () => this.tick(),
-            1000
-        );
-        // setInterval(this.renderLiveRequest, 5000)
-    }
-    componentWillUnmount() {
-        clearInterval(this.intervalID);
-    }
-    tick() {
-        this.setState({
-            time: new Date().toLocaleString()
-        });
-    }
     
+    }
+
     renderLiveRequest() {
         // console.log("liveRequest rendering")
         return <LiveRequest name={this.props.name}/>

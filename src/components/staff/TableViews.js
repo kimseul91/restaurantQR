@@ -7,14 +7,16 @@ function TableViews(props) {
     const [tables, setTables] = useState(null);
     
 
-    useEffect(async () => {
+    useEffect(() => {
         // console.log("NAME IS " + props.name)
-        const axiosCall = await axios.get(
-            `http://localhost:5001/restaurantqr-73126/us-central1/api/${props.name}/liverequest`
-        )
-        const tableLists  = axiosCall.data.tables;
-        setTables(tableLists);
-        // console.log(requestData);
+        const fetchData = async () => {
+            const axiosCall = await axios.get(
+                `http://localhost:5001/restaurantqr-73126/us-central1/api/${props.name}/liverequest`
+            )
+            const tableLists  = axiosCall.data.tables;
+            setTables(tableLists);
+        }
+        fetchData();
     }, []);
 
 
@@ -33,6 +35,10 @@ function TableViews(props) {
     );
 }
 
+
+
+
+
 function getRow (tableLists) {
     if(tableLists != null) {
         const arrTables = Object.keys(tableLists).map((key,val) => {
@@ -42,14 +48,14 @@ function getRow (tableLists) {
         return (
                 <tbody>
                     {arrTables.map((table,indx) => (
-                            <tr>
+                            <tr key={arrTables[indx][0]}>
                                 <th>{arrTables[indx][0]}</th>
                             </tr>
                     ))}
                 </tbody>
         )
     }
-    return <h2>loading...</h2>
+    return <tbody><tr><th>loading...</th></tr></tbody>
 }
 
 export default TableViews;

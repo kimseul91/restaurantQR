@@ -1,5 +1,5 @@
 import { Navbar, Button, Container, Row, Col, Table, Modal, InputGroup, FormControl } from 'react-bootstrap';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import { responsiveFontSizes } from '@material-ui/core';
 
@@ -8,10 +8,18 @@ function CreateQRCode(props) {
     const [tableNumber, setTable] = useState("");
     const [image, setImage] = useState(null);
 
-    const sendToSubmit = () => {
-        // setImage(handleSubmit(tableNumber));
+    useEffect(() => {
+
+        console.log("image rendered " + image);
+
+    }, [image]);
+
+    
+    const sendToSubmit = async () => {
+        setImage(await handleSubmit(tableNumber));
+        console.log("image");
         //add to firebase
-        addToFirebase(props.name, tableNumber);
+        // addToFirebase(props.name, tableNumber);
 
     }
     return (
@@ -28,7 +36,8 @@ function CreateQRCode(props) {
                     <Button onClick={sendToSubmit}>Generate</Button>
                 </InputGroup.Append>
             </InputGroup>
-            <img src={image}/>
+            <img id="returned-data" src={image}/>
+
 
 
         </div>
@@ -42,7 +51,7 @@ async function addToFirebase(restName, tableNumber) {
     );
 }
 
-function handleSubmit(tableNumber) {
+async function handleSubmit(tableNumber) {
     console.log("SUBMIT " + tableNumber);
     // const tableURL = `http://www.restaurantQR.com/test_restaurant_3/staff/${tableNumber}`
 
@@ -53,18 +62,19 @@ function handleSubmit(tableNumber) {
             text: `http://www.restaurantQR.com/test_restaurant_3/staff/${tableNumber}`,
             // format: 'pdf'
         },
+        responseType: "blob",
         headers: {
             'x-rapidapi-key': '0654d2cef3mshfee87c42ba18e1dp101920jsnbc82bd0af8e3',
             'x-rapidapi-host': 'qrcode3.p.rapidapi.com'
         }
     };
 
-    axios.request(options).then(function (response) {
-        console.log(response.data);
-        return response.data;
-        // this.result = response.data;
-    }).catch(function (error) {
-        console.error(error);
+    let result = await axios.request(options).then(x => {
+        console.log(x);
+        console.log(URL.createObjectURL(x.data));
+        let image = URL.createObjectURL(x.data);
+        document.getElementById("returned-data").replaceWith(<img id="returned-data" src={image}/>)
+        return image;
     });
 }
 

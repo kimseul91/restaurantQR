@@ -81,6 +81,7 @@ app.get("/:restaurant/menu", async (req, res) => {
   }
 });
 
+// gets requests
 app.get("/:restaurant/liverequest", async (req, res) => {
   const restaurantName = req.params.restaurant;
 
@@ -90,6 +91,23 @@ app.get("/:restaurant/liverequest", async (req, res) => {
       .doc(restaurantName)
       .get();
     res.send(data.data());
+  } catch (error) {
+    res.status(500).send();
+  }
+});
+
+// removes request
+app.put ("/:restaurant/deleterequest/:table/", async (req, res) => {
+  const restaurant = req.params.restaurant;
+  const table = req.params.table;
+
+  console.log(req.body.newRequest);
+  try {
+    const data = await firestore
+      .collection("Restaurant")
+      .doc(restaurant)
+      .update({tables: req.body.newRequest});
+    
   } catch (error) {
     res.status(500).send();
   }

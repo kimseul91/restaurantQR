@@ -82,9 +82,9 @@ async function handleSubmit (employees, name, e) {
     //do await call to axios 
     //create an endpoint
     employees[fName + " " + lName] = {
-        fName : fName,
-        lName : lName,
-        dOE : dOE,
+        "First Name" : fName,
+        "Last Name" : lName,
+        "Employment" : dOE,
         eid: eid
     }
 
@@ -128,13 +128,13 @@ function getRow (tableLists) {
                                 Clock In
                             </Card.Subtitle>
                             <Card.Text>
-                                {(new Date(tableLists[employee]["Clock In"]["_seconds"]*1000).toLocaleDateString("en-US").toString())}
+                                {/* {(new Date(tableLists[employee]["Clock In"]["_seconds"]*1000).toLocaleDateString("en-US").toString())} */}
                             </Card.Text>
                             <Card.Subtitle>
                                 Date of Employment
                             </Card.Subtitle>
                             <Card.Text>
-                            {(new Date(tableLists[employee]["Employment"]["_seconds"]*1000).toLocaleDateString("en-US").toString())}
+                            {/* {(new Date(tableLists[employee]["Employment"]["_seconds"]*1000).toLocaleDateString("en-US").toString())} */}
                             </Card.Text>
                         </Card.Body>
                     </Accordion.Collapse>

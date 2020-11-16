@@ -84,7 +84,7 @@ app.get("/:restaurant/menu", async (req, res) => {
 // gets requests
 app.get("/:restaurant/staff/liverequest", async (req, res) => {
   const restaurantName = req.params.restaurant;
-  
+
   try {
     const data = await firestore
       .collection("Restaurant")
@@ -113,7 +113,7 @@ app.get("/:restaurant/staff/employees", async (req, res) => {
 
 
 // removes request
-app.put ("/:restaurant/deleterequest/:table/", async (req, res) => {
+app.put("/:restaurant/deleterequest/:table/", async (req, res) => {
   const restaurant = req.params.restaurant;
   const table = req.params.table;
 
@@ -122,8 +122,24 @@ app.put ("/:restaurant/deleterequest/:table/", async (req, res) => {
     const data = await firestore
       .collection("Restaurant")
       .doc(restaurant)
-      .update({tables: req.body.newRequest});
-    
+      .update({ tables: req.body.newRequest });
+
+  } catch (error) {
+    res.status(500).send();
+  }
+});
+
+// removes table from the restaurant
+app.put("/:restaurant/deletetable/", async (req, res) => {
+  const restaurant = req.params.restaurant;
+
+  console.log(req.body.newRequest);
+  try {
+    const data = await firestore
+      .collection("Restaurant")
+      .doc(restaurant)
+      .update({ tables: req.body.tables });
+
   } catch (error) {
     res.status(500).send();
   }
@@ -165,7 +181,6 @@ app.put("/:restaurantName/staff/edit/table/:id/", async (req, res) => {
       .doc(restaurantName)
       .update({
         [updateString]: false,
-        // [updateString]: admin.firestore.FieldValue.arrayUnion(newItem),
       });
   } catch (error) {
     console.error(error);
@@ -178,7 +193,6 @@ app.put("/:restaurantName/staff/edit/table/:id/", async (req, res) => {
 app.put("/:restaurantName/staff/edit/addemployee", async (req, res) => {
   const restaurantName = req.params.restaurantName;
   const updateString = `employees`;
-  console.log(updateString)
 
   try {
     // adds a new request to the list
@@ -187,8 +201,27 @@ app.put("/:restaurantName/staff/edit/addemployee", async (req, res) => {
       .doc(restaurantName)
       .update({
         [updateString]: req.body.employees,
+      });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send();
+  }
+  res.status(200).send();
+});
 
-        // [updateString]: admin.firestore.FieldValue.arrayUnion(newItem),
+// Employee clock in/out
+app.put("/:restaurantName/staff/:clockinout/:eid", async (req, res) => {
+  const restaurantName = req.params.restaurantName;
+  const eid = req.params.employee;
+  const updateString = `employees`;
+
+  try {
+    // adds a new request to the list
+    await firestore
+      .collection("Restaurant")
+      .doc(restaurantName)
+      .update({
+        [updateString]: req.body.employees,
       });
   } catch (error) {
     console.error(error);

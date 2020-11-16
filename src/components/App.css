@@ -2,7 +2,7 @@
 .App {
   margin: 0px;
   height: 100vh !important;
-  overflow-y: hidden;
+  /* overflow-y: hidden; */
   /* background-color: #0db4b9; */
   background-color: #1d1145 !important;
   font-family: Lato, sans-serif;

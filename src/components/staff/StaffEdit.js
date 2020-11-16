@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { Navbar, Button, Container, Row, Col, ButtonGroup, ToggleButton, Table, Modal, InputGroup, FormControl, Nav } from 'react-bootstrap';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import "./home.css";
 import ".././custom.css";
 import TableViews from "./TableViews.js";
@@ -13,58 +13,58 @@ import fb from "../../Firebase";
 
 
 class StaffEdit extends React.Component {
-// function Home(props) {
+    // function Home(props) {
     constructor(props) {
         super(props)
-        this.state={
+        this.state = {
             value: "Tables"
         }
     }
-    
-    
+
+
     render() {
         const parentState = (e) => {
             this.setState({ value: e });
         };
-    
+
         const getParentState = () => {
-        return this.state.value;
+            return this.state.value;
         };
-    function ToggleButtonGroup() {
+        function ToggleButtonGroup() {
             const [radioValue, setRadioValue] = useState(getParentState());
             const radios = [
                 { name: "Tables", value: "Tables" },
                 { name: "Employees", value: "Employees" },
-                { name: "Menu", value: "Menu" } 
+                { name: "Menu", value: "Menu" }
             ];
             return (
                 <div>
                     <ButtonGroup toggle>
                         {radios.map((radio, idx) => (
-                        <ToggleButton
-                            key={idx}
-                            type="radio"
-                            variant="primary"
-                            name="radio"
-                            value={radio.value}
-                            checked={radioValue === radio.value}
-                            onChange={(e) => {
-                            setRadioValue(e.currentTarget.value);
-                            parentState(e.currentTarget.value);
-                            }}
-                        >
-                            {radio.name}
-                        </ToggleButton>
+                            <ToggleButton
+                                key={idx}
+                                type="radio"
+                                variant="primary"
+                                name="radio"
+                                value={radio.value}
+                                checked={radioValue === radio.value}
+                                onChange={(e) => {
+                                    setRadioValue(e.currentTarget.value);
+                                    parentState(e.currentTarget.value);
+                                }}
+                            >
+                                {radio.name}
+                            </ToggleButton>
                         ))}
                     </ButtonGroup>
-                
-                {/* <Button className="admin-setting"> Setting </Button> */}
+
+                    {/* <Button className="admin-setting"> Setting </Button> */}
                 </div>
             );
         }
 
 
-        
+
         return <div className="staff-home-full-container">
             <div>
 
@@ -77,18 +77,18 @@ class StaffEdit extends React.Component {
                         className="d-inline-block align-top"
                         alt="React BootStrap logo"
                     />{" "} */}
-                    {this.props.name} Edit mode
+                        {this.props.name} Edit mode
                 </Navbar.Brand>
                     <Container>
                         <Navbar.Collapse className="justify-content-center">
                             <Navbar.Text>
                                 <ClockView />
-                        </Navbar.Text>
+                            </Navbar.Text>
                         </Navbar.Collapse>
                     </Container>
-                    <Link onClick={getMenuItems}>
+                    {/* <Link onClick={getMenuItems}>
                         <Button> Get Data</Button>
-                    </Link>
+                    </Link> */}
                     <Link to="/staff">
                         <Button> Main Screen</Button>
                     </Link>
@@ -98,7 +98,7 @@ class StaffEdit extends React.Component {
 
             <div className="staff-container-background-color">
                 <Container fluid>
-                    <ToggleButtonGroup/>
+                    <ToggleButtonGroup />
                 </Container>
                 <Container>
                     {this.RenderCorrectComponents()}
@@ -131,12 +131,12 @@ class StaffEdit extends React.Component {
                 // return <RecruitersListComponent title={this.state.value} />;
                 return (<div style={{ backgroundColor: "#0DB4B9", marginTop: "1vw" }}>
 
-                    <TableViews name={this.props.name}/>
+                    <TableViews name={this.props.name} />
                 </div>
                 );
             case "Employees":
                 return (
-                <Employees name={this.props.name}/>
+                    <Employees name={this.props.name} />
                 );
             case "Menu":
                 return (
@@ -144,8 +144,8 @@ class StaffEdit extends React.Component {
                 );
             default:
                 return;
-            }
-        };
+        }
+    };
 
 
 }
@@ -6248,7 +6248,7 @@ async function getMenuItems() {
     }
     ];
     */
-    
+
     // let menuItems = [];
 
     // data.map(result => {
@@ -6297,12 +6297,12 @@ async function getMenuItems() {
     //     console.log(result.result.data);
     // })
 
-    let page = [1,2,3,4,5,6,7,8,9,10,11,12,13];
+    let page = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
     // let page = [1];
 
     const yuo = async (pg) => {
         const data = await axios.get(`https://us-restaurant-menus.p.rapidapi.com/restaurant/441663/menuitems?page=${pg}`, {
-            params: {}, 
+            params: {},
             headers: {
                 "x-rapidapi-host": "us-restaurant-menus.p.rapidapi.com",
                 "x-rapidapi-key": "0654d2cef3mshfee87c42ba18e1dp101920jsnbc82bd0af8e3"
@@ -6340,7 +6340,7 @@ async function getMenuItems() {
     //             "description": item.description,
     //         });
     // })
-    
+
 
     //** WE AGREED ON THE MENU TO BE MAP (OBJECT) */
     let subsectionsInMenuObject = {};
@@ -6351,11 +6351,11 @@ async function getMenuItems() {
     console.log(subsectionsInMenuObject);
 
     menuItems.map(item => {
-        subsectionsInMenuObject[`${item.subsection}`][`${item.name}`] = 
-            {
-                "description": item.description,
-                "price" : Math.random()*5,
-            };
+        subsectionsInMenuObject[`${item.subsection}`][`${item.name}`] =
+        {
+            "description": item.description,
+            "price": Math.random() * 5,
+        };
     })
     // subsectionsInMenu.map(sub => console.log(sub));
     console.log(subsectionsInMenuObject)

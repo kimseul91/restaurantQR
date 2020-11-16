@@ -2,6 +2,7 @@ import app from "firebase/app";
 import config from "./config.json";
 import "firebase/firestore";
 import "firebase/auth";
+import "firebase/storage";
 
 // Used to access firebase functions
 class Firebase {
@@ -9,6 +10,7 @@ class Firebase {
     app.initializeApp(config);
     this.db = app.firestore();
     this.auth = app.auth();
+    this.storage = app.storage();
   }
 
   async getData() {

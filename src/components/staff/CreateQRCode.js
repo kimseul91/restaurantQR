@@ -1,7 +1,8 @@
 import { Navbar, Button, Container, Row, Col, Table, Modal, InputGroup, FormControl } from 'react-bootstrap';
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { responsiveFontSizes } from '@material-ui/core';
+import Firebase from "../../Firebase"
 
 let result = null;
 function CreateQRCode(props) {
@@ -12,7 +13,7 @@ function CreateQRCode(props) {
         console.log("image rendered " + image);
     }, [image]);
 
-    
+
     const sendToSubmit = async () => {
         handleSubmit(tableNumber);
         console.log("image");
@@ -26,7 +27,7 @@ function CreateQRCode(props) {
             `http://localhost:5001/restaurantqr-73126/us-central1/api/${restName}/staff/edit/table/${tableNumber}/`
         );
     }
-    
+
     async function handleSubmit(tableNumber) {
         console.log("SUBMIT " + tableNumber);
         let options = {
@@ -47,7 +48,26 @@ function CreateQRCode(props) {
             // console.log(URL.createObjectURL(x.data));
             let testimage = URL.createObjectURL(x.data);
             setImage(testimage);
-        });
+            const uploadFile = Firebase.storage
+                .ref(`restaurants/test_restaurant_3/${tableNumber}`)
+                .put(x.data);
+
+            uploadFile.on("state_changed", (snapshot) => { }, (error) => {
+                console.log(error);
+                alert("");
+                return;
+            }, () => {
+                Firebase.storage.ref("restaurants/test_restaurant_3")
+                    .child(`${tableNumber}`).getDownloadURL()
+                    .then((url) => {
+                        Firebase.db.collection("Restaurant")
+                            .doc("test_restaurant_3").update({
+                                [`tables.table${tableNumber}.qrcode`]: url,
+                            });
+                    });
+            });
+        }
+        );
     }
     return (
         <div>
@@ -55,16 +75,16 @@ function CreateQRCode(props) {
             <Col xs={12} lg={9} className="staff-right-col">
                 <InputGroup className="mb-3">
                     <FormControl
-                    placeholder="Table Number"
-                    aria-label="Table Number"
-                    aria-describedby="basic-addon2"
-                    onChange={(e) => setTable(e.currentTarget.value)}
+                        placeholder="Table Number"
+                        aria-label="Table Number"
+                        aria-describedby="basic-addon2"
+                        onChange={(e) => setTable(e.currentTarget.value)}
                     />
                     <InputGroup.Append>
                         <Button onClick={sendToSubmit}>Generate</Button>
                     </InputGroup.Append>
                 </InputGroup>
-                <img id="returned-data" src={image}/>
+                <img id="returned-data" src={image} />
             </Col>
         </div>
     );

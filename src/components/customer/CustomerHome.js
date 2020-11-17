@@ -4,11 +4,17 @@ import "./customer.css";
 import DropdownItem from "react-bootstrap/esm/DropdownItem";
 import FastfoodIcon from "@material-ui/icons/Fastfood";
 import { useParams, Link, Redirect } from "react-router-dom";
-function Home(props) {
+function CustomerHome(props) {
   // props.name == the restaurant name
   // const [name, setName] = useState(null);
   // language array that stores all the languages that we support translation for
   const languauges = ["English", "Spanish", "French"];
+
+  const languageDictionary = {
+    English: "en",
+    Spanish: "es",
+    French: "fr",
+  };
 
   const [redirectLocation, setRedirect] = useState(null);
 
@@ -27,7 +33,11 @@ function Home(props) {
   const handleClick = (language) => {
     // Route to menu page with given langauge
     props.updateLanguage(language);
-    setRedirect(<Redirect to="/customer/menu" />);
+    setRedirect(
+      <Redirect
+        to={`/customer/${restaurantName}/${tableID}/menu?lang=${languageDictionary[language]}`}
+      />
+    );
   };
 
   // routes to the menu page after you select a language
@@ -39,36 +49,39 @@ function Home(props) {
 
   return (
     <div className="Home">
-      <div className="headerDiv">
-        <span id="qrTitle">restaurantQR</span>
-      </div>
-      <div className="headerDiv">
-        <span id="restaurantName">{restaurantName}</span>
+      <div className="headerDiv wide">
+        <span id="restaurantName">{`Welcome to ${restaurantName}`}</span>
       </div>
       <Container className="flex-box">
         <div id="homeImgDiv">
           <FastfoodIcon className="homeIcon" />
+          <div className="headerDiv">
+            <span id="qrTitle">restaurantQR</span>
+          </div>
         </div>
         <div id="languageDropdownDiv">
           <DropdownButton
             className="languageButton"
             title="Select language"
-            variant="primary"
+            // variant="primary"
             size="lg"
           >
-            {languauges.map((language) => (
-              // Add onClick function to route you to the menu
-              // with the language you clicked on enabled
-              <DropdownItem
-                className="languageItem"
-                href=""
-                onClick={() => {
-                  handleClick(language);
-                }}
-              >
-                {language}
-              </DropdownItem>
-            ))}
+            <div className="dropdownItemDiv">
+              {languauges.map((language) => (
+                // Add onClick function to route you to the menu
+                // with the language you clicked on enabled
+                <DropdownItem
+                  className="languageItem"
+                  href=""
+                  key={language}
+                  onClick={() => {
+                    handleClick(language);
+                  }}
+                >
+                  {language}
+                </DropdownItem>
+              ))}
+            </div>
           </DropdownButton>
         </div>
       </Container>
@@ -76,4 +89,4 @@ function Home(props) {
   );
 }
 
-export default Home;
+export default CustomerHome;

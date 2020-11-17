@@ -19,10 +19,11 @@ function MenuHeaderAndBox(props) {
           {props.sectionName}
         </Accordion.Toggle>
         <Accordion.Collapse eventKey={props.accID}>
-          <Card.Body>
+          <Card.Body className="yooooo">
             <div id="menuCardsDiv">
               {items.map((item) => (
                 <div
+                  key={item}
                   className="itemCard"
                   onClick={() => props.getMenuItem(item)}
                 >

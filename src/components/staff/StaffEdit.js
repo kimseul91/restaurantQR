@@ -1,111 +1,80 @@
-import React, {useState} from 'react';
-import { Navbar, Button, Container, Row, Col, Table, Modal, InputGroup, FormControl } from 'react-bootstrap';
-import {Link} from 'react-router-dom';
+import React, { useState } from "react";
+import {
+  Navbar,
+  Button,
+  Container,
+  Row,
+  Col,
+  Table,
+  Modal,
+  InputGroup,
+  FormControl,
+} from "react-bootstrap";
+import { Link } from "react-router-dom";
 import "./home.css";
 import ".././custom.css";
-import LiveRequest from "./LiveRequest.js";
+import TableViews from "./TableViews.js";
 import CreateQRCode from "./CreateQRCode.js";
+import ClockView from "./ClockView.js";
+import Employees from "./employees.js";
 // import CreateQRContainer from "./CreateQRContainer.js";
 // import axios from "axios";
 import fb from "../../Firebase";
 
-
 class StaffEdit extends React.Component {
-// function Home(props) {
-    constructor() {
-        super()
-        
-        this.state = {
-            time: new Date().toLocaleString(),
-        };
-        this.intervalID = null
+  // function Home(props) {
+  constructor(props) {
+    super(props);
+  }
 
-        
-    }
-    //inspired by Kuhan on stackoverflow
-    componentDidMount() {
-        this.intervalID = setInterval(
-            () => this.tick(),
-            1000
-        );
-        // setInterval(this.renderLiveRequest, 5000)
-    }
-    componentWillUnmount() {
-        clearInterval(this.intervalID);
-    }
-    tick() {
-        this.setState({
-            time: new Date().toLocaleString()
-        });
-    }
-    
-    render() {
-        return <div className="staff-home-full-container">
-            <div>
-
-                <Navbar variant="dark-blue-color" className="staff-navbar">
-                    <Navbar.Brand>
-                        {/* <img 
+  render() {
+    return (
+      <div className="staff-home-full-container">
+        <div>
+          <Navbar variant="dark-blue-color" className="staff-navbar">
+            <Navbar.Brand>
+              {/* <img 
                         src=""
                         width="30"
                         height="30"
                         className="d-inline-block align-top"
                         alt="React BootStrap logo"
                     />{" "} */}
-                    restaurant_name Edit mode
-                </Navbar.Brand>
-                    <Container>
-                        <Navbar.Collapse className="justify-content-center">
-                            <Navbar.Text>
-                                {this.state.time}
-                        </Navbar.Text>
-                        </Navbar.Collapse>
-                    </Container>
-                    <Link to="/staff">
-                        <Button> Main Screen</Button>
-                    </Link>
-                </Navbar>
-
-            </div>
-
-            <div className="staff-container-background-color">
-
-                <Container fluid >
-                    <Row className="staff-the-content-holder">
-                        <Col xs={12} lg={3} className="staff-left-col">
-                            {/* <div style={{ backgroundColor: "black" }}> Some content here</div> */}
-                            <div className="staff-table-bg-color">
-
-                                <Table striped >
-                                    <thead>
-                                        <tr className="staff-content-center">
-                                            <th className="staff-table-th" >Tables</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td> Table 1</td>
-                                        </tr>
-                                    </tbody>
-                                </Table>
-                            </div>
-                        </Col>
-                        <Col xs={12} lg={9} className="staff-right-col">
-                            <div style={{ backgroundColor: "#0DB4B9", marginTop: "1vw" }}> 
-                                {/* {this.renderLiveRequest()} */}
-                                {/* <LiveRequest/> */}
-                                <CreateQRCode />
-                            </div>
-
-                        </Col>
-                    </Row>
-                </Container>
-            </div>
-
+              {this.props.name} Edit mode
+            </Navbar.Brand>
+            <Container>
+              <Navbar.Collapse className="justify-content-center">
+                <Navbar.Text>
+                  <ClockView />
+                </Navbar.Text>
+              </Navbar.Collapse>
+            </Container>
+            <Link to="/staff">
+              <Button> Main Screen</Button>
+            </Link>
+          </Navbar>
         </div>
-    }
 
-
+        <div className="staff-container-background-color">
+          <Container fluid>
+            <Row className="staff-the-content-holder">
+              <Col xs={12} lg={3} className="staff-left-col">
+                <TableViews name={this.props.name} />
+              </Col>
+              <Col xs={12} lg={9} className="staff-right-col">
+                <div style={{ backgroundColor: "#0DB4B9", marginTop: "1vw" }}>
+                  <CreateQRCode name={this.props.name} />
+                </div>
+                <div style={{ backgroundColor: "#0DB4B9", marginTop: "1vw" }}>
+                  <Employees name={this.props.name} />
+                </div>
+              </Col>
+            </Row>
+          </Container>
+        </div>
+      </div>
+    );
+  }
 }
 
 /*

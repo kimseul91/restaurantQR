@@ -13,6 +13,7 @@ const cors = require("cors");
 const fetch = require("node-fetch");
 const axios = require("axios");
 const bodyParser = require("body-parser");
+const session = require("express-session");
 /* Manually create this file, using json data downloaded at 
 firebase console-> project settings-> service accounts-> generate private key.*/
 const adminConfig = require("./adminConfig.json");
@@ -27,6 +28,17 @@ const auth = admin.auth;
 
 app.use(cors({ origin: true }));
 app.use(bodyParser.json());
+app.use(
+  session({
+    name: "menuSessionCookie",
+    secret: "qr code secret",
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      maxAge: 7.2 * 10 ** 6,
+    },
+  })
+);
 
 app.get("/", (req, res) => {
   res.send("Yoooooo what up customers!");
@@ -67,16 +79,41 @@ app.put("/:restaurantName/customer/table/:id/order", async (req, res) => {
   res.status(200).send();
 });
 
-app.get("/:restaurant/menu", async (req, res) => {
+app.get("/:restaurant/menu/:tableID", async (req, res) => {
   const restaurantName = req.params.restaurant;
+  console.log(req.session);
   // console.log(req.params);
+  if (!req.session.previousMenu) {
+    req.session.previousMenu = {
+      restaurant: restaurantName,
+      table: req.params.tableID,
+    };
+  }
+
+  console.log(req.session.previousMenu);
+
   try {
+    if (!restaurantName) {
+      throw undefined;
+    }
     const data = await firestore
       .collection("Restaurant")
       .doc(restaurantName)
       .get();
     res.send(data.data());
   } catch (error) {
+    if (req.session.previousMenu) {
+      const data = await firestore
+        .collection("Restaurant")
+        .doc(req.session.previousMenu.restaurant)
+        .get();
+      res.send([
+        data.data(),
+        req.session.previousMenu.restaurant,
+        req.session.previousMenu.tableID,
+      ]);
+    }
+
     res.status(500).send();
   }
 });
@@ -113,6 +150,84 @@ app.post("/restaurant/createAccount", async (req, res) => {
   await firestore.collection("Restaurant").doc(name).set(databaseEntry);
 
   res.status(201).send();
+});
+
+app.post("/addEmployee", async (req, res) => {
+  // no emmployee name was given
+  if (!req.body || !req.body.name) {
+    res.status(400).send();
+    return;
+  }
+  const { name, restaurantName, currentUser } = req.body;
+
+  if (currentUser)
+    try {
+      await firestore
+        .collection("Restaurant")
+        .doc(restaurantName)
+        .update({
+          employees: admin.firestore.FieldValue.arrayUnion(name),
+        });
+      res.status(201).send();
+    } catch (error) {
+      res.status(400).send();
+    }
+});
+
+// reset a table from a restaurant
+app.put("/reset/:tableID", async (req, res) => {
+  // have to be signed in to complete this action
+  const { currentUser, restaurantName } = req.body;
+  const tableID = req.params.tableID;
+
+  // user is not signed in
+  if (!currentUser.uid) {
+    res.status(401).send("Unauthorized");
+    return;
+  }
+
+  // (await firestore.collection("Restaurant").where('uid', "==", currentUser.uid).get()).map(query => {
+  //   const bro = query.docs[0];
+  //   await bro.update({[`tables.table${tableID}.requests`]: []})
+  // })
+
+  // resets the requests back to the start
+  try {
+    await firestore
+      .collection("Restaurant")
+      .doc(restaurantName)
+      .update({
+        [`tables.table${tableID}.requests`]: [],
+      });
+    res.status(200).send();
+  } catch (error) {
+    res.status(500).send(`Unable to reset the table ${tableID}`);
+  }
+});
+
+// add a table to the restaurant
+app.put("/:restaurantName/staff/edit/table/:id/", async (req, res) => {
+  const tableID = req.params.id;
+  // const { restaurantName } = req.body;
+  const restaurantName = req.params.restaurantName;
+  const newItem = "JOhnsons";
+  const updateString = `tables.table${tableID}.paid`;
+  console.log(updateString);
+
+  try {
+    // adds a new request to the list
+    await firestore
+      .collection("Restaurant")
+      .doc(restaurantName)
+      .update({
+        // [updateString]: false,
+        [updateString]: admin.firestore.FieldValue.arrayUnion(newItem),
+      });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send();
+  }
+  res.status(200).send();
 });
 
 app.post("/translate", async (req, res) => {

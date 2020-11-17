@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./customer.css";
+import { debounce } from "@material-ui/core";
 function AutoComplete(props) {
   // keeps the state for the user input
   const [currentSearch, setSearch] = useState("");
@@ -11,19 +12,14 @@ function AutoComplete(props) {
 
   // array of menu item names that you can search
   const fullMenu = props.onlyMenuItems;
-  //   console.log(fullMenu);
-  // let hide = false;
 
-  const handleSearchChange = (event) => {
-    setSearch(event.target.value);
-    handleSearch(event.target.value, false);
-    // hide = false;
-  };
+  const handleSearchChange = debounce((text) => {
+    setSearch(text);
+    handleSearch(text, false);
+  }, 250);
 
   // updates the menu according to your search
   const handleSearch = (text, hideVar) => {
-    // console.log(text);
-    // hide = hideVar;
     setSearch(text);
     document.getElementById("inputBoxId").value = text;
     setHide(hideVar);
@@ -32,9 +28,6 @@ function AutoComplete(props) {
 
   // updates the autocomplete list
   useEffect(() => {
-    // console.log(currentSearch);
-
-    // console.log(currentSearch.length);
     if (currentSearch.length === 0) {
       //   console.log("yoooo");
       setList([]);
@@ -67,7 +60,7 @@ function AutoComplete(props) {
         type="text"
         className="inputBox"
         id="inputBoxId"
-        onChange={(event) => handleSearchChange(event)}
+        onChange={(e) => handleSearchChange(e.target.value)}
         placeholder="Search for an item..."
       ></input>
       {!hide && (

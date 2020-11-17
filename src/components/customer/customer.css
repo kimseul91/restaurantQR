@@ -6,6 +6,16 @@
   /* justify-content: space-evenly; */
   height: 100vh;
   width: auto;
+  color: white;
+}
+
+#homeImgDiv {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 15vh;
+  margin-top: 10vh;
+  color: #e76d89;
 }
 
 /* 
@@ -18,7 +28,8 @@ Modern Pink Backpack: #e76d89
 */
 
 .menuItemWrapperCard .card-header {
-  background-color: #e76d89 !important;
+  background-color: #0db4b9 !important;
+  /* background-color: #e76d89 !important; */
   color: white !important;
 }
 
@@ -28,16 +39,33 @@ Modern Pink Backpack: #e76d89
 
 .flex-box {
   display: flex;
-  justify-content: center;
+  /* justify-content: center; */
   flex-direction: column;
   align-items: center;
-  justify-content: space-around;
+  /* justify-content: space-around;  */
   height: 100%;
   width: auto;
 }
+#languageDropdownDiv {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
 
 .languageItem {
-  width: 300px;
+  width: 180px !important;
+  justify-content: center;
+}
+/* 
+.dropdownItemDiv {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+} */
+.languageButton > button {
+  background-color: #0db4b9 !important;
+  color: white;
+  border: none;
 }
 
 .languageButton:focus {
@@ -60,16 +88,19 @@ Modern Pink Backpack: #e76d89
 }
 
 #qrTitle {
-  font-size: 20px;
+  font-size: 25px;
 }
 
 #restaurantName {
-  font-family: Arial, Helvetica, sans-serif;
-  line-height: 30px;
-  font-size: 25px;
+  /* line-height: 30px;
+  font-size: 25px; */
   /* color: #1d1145; */
   /* color: #0db4b9; */
   color: white;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  line-height: 25px;
+  font-size: 22px;
 }
 
 .homeIcon {
@@ -84,8 +115,6 @@ Modern Pink Backpack: #e76d89
   margin-top: 5%;
   height: 70vh;
   justify-content: start !important;
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
 }
 #menuCardsDiv::-webkit-scrollbar {
   display: none;
@@ -145,11 +174,13 @@ Modern Pink Backpack: #e76d89
 }
 
 .menuAccordion {
-  max-height: calc(100vh - 2rem);
+  max-height: calc(100vh - 230px);
+  /* padding-bottom: 400px; */
+  /* height: 70vh; */
   overflow-y: scroll !important;
   padding-bottom: 5vh;
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+  /* -ms-overflow-style: none; 
+  scrollbar-width: none;  */
 }
 
 .menuAccordion::-webkit-scrollbar {
@@ -173,4 +204,51 @@ Modern Pink Backpack: #e76d89
 
 .inputBox {
   width: 100%;
+  border-radius: 12px;
+  border: none;
+  line-height: 30px;
+  padding-left: 10px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+.inputBox:focus {
+  outline: none !important;
+}
+
+.wide {
+  width: 100vw;
+  background-color: #0db4b9;
+}
+
+.searchTerms:hover {
+  cursor: pointer;
+}
+
+.outerFullMenuDiv {
+  height: 100vh;
+  width: 100vw;
+  overflow-y: scroll;
+}
+
+#spinner {
+  font-size: 60px;
+  height: 150px;
+  width: 150px;
+  color: white;
+}
+
+#spinnerDiv {
+  margin-top: 20vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+#spinnerText {
+  color: white;
+  line-height: 25px;
+  font-size: 22px;
+  margin-top: 20px;
 }

@@ -37,7 +37,7 @@ function MenuItem(props) {
         <p className="itemDescription">{props.item[1].description}</p>
         {props.item[1].price && (
           <span className="itemDescription" id="itemPrice">
-            Price: ${props.item[1].price}
+            Price: ${props.item[1].price.toFixed(2)}
           </span>
         )}
       </div>

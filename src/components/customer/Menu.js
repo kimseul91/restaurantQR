@@ -70,22 +70,139 @@ function Menu(props) {
       }
       // use currentLanguage to reference the translated language
 
-      console.log(menuData);
+      // console.log(menuData);
 
       if (currentLanguage && currentLanguage !== "en") {
         // need to translate
       }
 
-      // const translatedMenu = await axios.post(
-      //   "http://localhost:5001/restaurantqr-73126/us-central1/api/translate",
-      //   {
-      //     menu: menuData,
-      //   }
+      // const translate = async (text) => {
+      //   const withoutAnd = text.replace("&", "and");
+      //   const withoutDash = withoutAnd.replace("-", " ");
+      //   // console.log(text, withoutAnd, withoutDash);
+      //   const newUrl =
+      //     "https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=ko&dt=t&q=" +
+      //     encodeURI(withoutDash);
+
+      //   const translationResponse = (
+      //     await axios.get(newUrl, {
+      //       headers: {
+      //         "Referrer-Policy": "no-referrer",
+      //         "Access-Control-Allow-Origin": "*",
+      //       },
+      //     })
+      //   ).data[0][0][0];
+      //   // console.log(translationResponse);
+
+      //   // const translationResponse = JSON.stringify(
+      //   //   (await fetch(newUrl, { mode: "no-cors" })).data[0][0][0]
+      //   // );
+      //   return translationResponse;
+      // };
+
+      // const parseMenu = async (currentSection, currentObjList) => {
+      //   // console.log(currentSection, currentObjList);
+      //   // const sectionName = Object.keys(req.body.menu)[0];
+      //   const sectionName = currentSection;
+      //   // console.log(Object.entries(currentObjList));
+      //   console.log(sectionName);
+      //   console.log(await translate(sectionName));
+      //   // const translatedSectionName = JSON.parse(await translate(sectionName));
+      //   const translatedSectionName = await translate(sectionName);
+
+      //   const returnMenu = {};
+      //   returnMenu[translatedSectionName] = {};
+
+      //   console.log(Object.entries(currentObjList));
+
+      //   const items = await Promise.all(
+      //     Object.entries(currentObjList).map(async (item) => {
+      //       console.log("i am here");
+      //       console.log(currentObjList);
+      //       console.log(item);
+
+      //       if (!item || !item[0] || !item[1]) {
+      //         console.log(item);
+      //         return null;
+      //       }
+
+      //       const newMenuItem = {};
+
+      //       // const newName = JSON.parse(await translate(item[0]));
+      //       const newName = await translate(item[0]);
+
+      //       // console.log(newName);
+      //       const newDescription = await translate(item[1].description);
+
+      //       // const newDescription = JSON.parse(
+      //       //   await translate(item[1].description)
+      //       // );
+      //       // console.log(newDescription);
+      //       newMenuItem[newName] = {};
+
+      //       newMenuItem[newName]["description"] = newDescription;
+      //       // prevents service items from having an undefined price
+      //       if (item[1].price) {
+      //         newMenuItem[newName]["price"] = item[1].price;
+      //       }
+      //       // console.log(newMenuItem);
+      //       return newMenuItem;
+      //     })
+      //   );
+
+      //   items.forEach((menuItem) => {
+      //     Object.entries(menuItem).forEach((eachItem) => {
+      //       returnMenu[translatedSectionName][eachItem[0]] = eachItem[1];
+      //     });
+      //   });
+      //   return returnMenu;
+      // };
+
+      // console.log("yooooooooooooooooo");
+
+      // const entireMenu = await Promise.all(
+      //   Object.entries(menuData).map(async (item) => {
+      //     // console.log(item);
+      //     // const bro = ;
+      //     // console.log(bro);
+      //     const bro = await parseMenu(item[0], item[1]);
+      //     console.log(bro);
+      //     return bro;
+      //   })
       // );
-      // console.log(translatedMenu);
+
+      // console.log(entireMenu);
+
+      const translatedMenu = await axios.post(
+        "http://localhost:5001/restaurantqr-73126/us-central1/api/translate/menu",
+        {
+          menu: menuData,
+        }
+      );
+      console.log(translatedMenu.data);
+
+      // console.log(Object.entries(menuData));
+
+      // const newValues = await Promise.all(
+      //   Object.entries(menuData).map(async (sectionObj) => {
+      //     const translatedSection = await axios
+      //       .post(
+      //         "http://localhost:5001/restaurantqr-73126/us-central1/api/translate/menu",
+      //         {
+      //           menu: { [sectionObj[0]]: sectionObj[1] },
+      //         }
+      //       )
+      //       .catch((err) => console.log(err));
+      //     return translatedSection;
+      //   })
+      // );
+      // console.log(newValues);
+      console.log(translatedMenu.data);
 
       setTimeout(() => {
-        setMenu(menuData);
+        setMenu(translatedMenu.data);
+        // setMenu(menuData);
+
         setOriginalMenu(menuData);
         // console.log(menuData);
         // console.log(Object.entries(menuData));

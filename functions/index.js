@@ -79,18 +79,18 @@ app.put("/:restaurantName/customer/table/:id/order", async (req, res) => {
   res.status(200).send();
 });
 
-app.get("/:restaurant/menu/:tableID", async (req, res) => {
+app.get("/:restaurant/menu", async (req, res) => {
   const restaurantName = req.params.restaurant;
-  console.log(req.session);
+  // console.log(req.session);
   // console.log(req.params);
-  if (!req.session.previousMenu) {
-    req.session.previousMenu = {
-      restaurant: restaurantName,
-      table: req.params.tableID,
-    };
-  }
+  // if (!req.session.previousMenu) {
+  //   req.session.previousMenu = {
+  //     restaurant: restaurantName,
+  //     table: req.params.tableID,
+  //   };
+  // }
 
-  console.log(req.session.previousMenu);
+  // console.log(req.session.previousMenu);
 
   try {
     if (!restaurantName) {
@@ -102,17 +102,17 @@ app.get("/:restaurant/menu/:tableID", async (req, res) => {
       .get();
     res.send(data.data());
   } catch (error) {
-    if (req.session.previousMenu) {
-      const data = await firestore
-        .collection("Restaurant")
-        .doc(req.session.previousMenu.restaurant)
-        .get();
-      res.send([
-        data.data(),
-        req.session.previousMenu.restaurant,
-        req.session.previousMenu.tableID,
-      ]);
-    }
+    // if (req.session.previousMenu) {
+    //   const data = await firestore
+    //     .collection("Restaurant")
+    //     .doc(req.session.previousMenu.restaurant)
+    //     .get();
+    //   res.send([
+    //     data.data(),
+    //     req.session.previousMenu.restaurant,
+    //     req.session.previousMenu.tableID,
+    //   ]);
+    // }
 
     res.status(500).send();
   }
@@ -230,51 +230,214 @@ app.put("/:restaurantName/staff/edit/table/:id/", async (req, res) => {
   res.status(200).send();
 });
 
-app.post("/translate", async (req, res) => {
+app.post("/translate/menu", async (req, res) => {
   // Inspirtation from Amit Agarwal on https://www.labnol.org/code/19909-google-translate-api
 
-  console.log(req.body);
+  // hash menu in cache
+
+  if (!req.body || !req.body.menu) {
+    res.status(404).send();
+    return;
+  }
+
+  // console.log(req.body);
   const menu = req.body.menu;
 
-  // send a request with ff
-  Object.entries(menu).forEach((item) => {
-    // item[0]
-    // item[1]
+  // console.log(Object.entries(menu));
+
+  const entireMenu = await Promise.all(
+    Object.entries(menu).map(async (item) => {
+      const bro = await parseMenu(item[0], item[1]).catch((err) =>
+        console.log(err)
+      );
+      // console.log(bro);
+      return bro;
+    })
+  );
+
+  const newMenu = {};
+  // entireMenu.forEach((eachMenuSection) => {
+  //   newMenu[eachMenuSection];
+  // });
+
+  entireMenu.forEach((eachMenuSectionObj) => {
+    const name = Object.keys(eachMenuSectionObj)[0];
+    const values = Object.values(eachMenuSectionObj)[0];
+
+    newMenu[name] = values;
+
+    // console.log(name, values);
+    // console.log("yooooo");
+    // console.log(name);
+    // console.log("hi");
+    // console.log(values);
   });
 
-  const translatedMenu = {};
-  // translate header
+  // console.log(entireMenu);
 
-  // translate item name
-  // translate description
+  firestore
+    .collection("Restaurant")
+    .doc("test_restaurant_3")
+    .update({
+      [`translations.es.menu`]: newMenu,
+    });
 
-  const bro = [translate(text[0]), translate(text[1])];
-  // console.log(req.body.menu);
-  // // google's translation api
-  // const newUrl =
-  //   "https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=es&dt=t&q=" +
-  //   encodeURI(req.body.text);
+  res.send(newMenu);
+});
+
+app.post("/translate/item", (req, res) => {
+  res.send();
+});
+
+const parseMenu = async (currentSection, currentObjList) => {
+  // const sectionName = Object.keys(req.body.menu)[0];
+  const sectionName = currentSection;
+  // console.log(Object.entries(currentObjList));
+
+  // const translatedSectionName = JSON.parse(await translate(sectionName));
+
+  const translatedSectionName = await translate(sectionName);
+
+  const returnMenu = {};
+  returnMenu[translatedSectionName] = {};
+
+  const items = await Promise.all(
+    Object.entries(currentObjList).map(async (item) => {
+      const newMenuItem = {};
+
+      // const newName = JSON.parse(await translate(item[0]));
+      // const newName = await translate(item[0]);
+
+      // trying to reduce requests by half through appending strings
+      // const newName = await translate(item[0]);
+
+      const withoutAnd = item[1].description.replace(/\&/g, "and");
+      const withoutDash = withoutAnd.replace(/\-/g, " ");
+      const replacingPeriods = withoutDash.replace(/\./g, ":");
+
+      const stringToSend = `${item[0]}. ${replacingPeriods}`;
+      // const stringToSend = `${item[0]}. ${item[1].description}`;
+
+      // console.log(stringToSend);
+
+      // const combinedResult = await translate(stringToSend);
+      let [newName, newDescription] = await translateWithDescription(
+        stringToSend
+      );
+
+      // console.log(newName, newDescription);
+
+      if (newName) {
+        newName = newName.replace(".", "");
+        newName = newName.trim();
+      }
+      if (newDescription) {
+        newDescription = newDescription.replace(/\:/g, ".");
+      }
+
+      // console.log(newName, newDescription);
+
+      // const splitResults = combinedResult.split(". ", 1);
+
+      // const [newName, newDescription] = splitResults;
+
+      // console.log(splitResults);
+
+      // const newDescription = await translate(item[1].description);
+
+      // console.log(newName);
+      // const newDescription = JSON.parse(await translate(item[1].description));
+      // const newDescription = await translate(item[1].description);
+
+      // console.log(newDescription);
+      newMenuItem[newName] = {};
+
+      newMenuItem[newName]["description"] = newDescription;
+      // prevents service items from having an undefined price
+      if (item[1].price) {
+        newMenuItem[newName]["price"] = item[1].price;
+      }
+      // console.log(newMenuItem);
+      return newMenuItem;
+    })
+  );
+
+  items.forEach((menuItem) => {
+    Object.entries(menuItem).forEach((eachItem) => {
+      returnMenu[translatedSectionName][eachItem[0]] = eachItem[1];
+    });
+  });
+  return returnMenu;
+};
+
+const translate = async (text) => {
+  const withoutAnd = text.replace("&", "and");
+  const withoutDash = withoutAnd.replace("-", " ");
+
+  const newUrl =
+    "https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=es&dt=t&q=" +
+    encodeURI(withoutDash);
+
+  const preText = await axios.get(newUrl);
+
+  const textData = preText ? preText.data : null;
+
+  const finalData = textData ? textData[0][0][0] : null;
+
+  if (!finalData) {
+    return text;
+  }
+
+  // if (!finalData) {
+  //   // res.send();
+  //   return;
+  // }
 
   // const translationResponse = JSON.stringify(
   //   (await axios.get(newUrl)).data[0][0][0]
   // );
 
-  // console.log(translationResponse);
+  // const translationResponse = JSON.stringify(
+  //   (await axios.get(newUrl)).data[0][0][0]
+  // );
+  return finalData;
+};
 
-  const finalArr = Promise.all(bro);
+const translateWithDescription = async (text) => {
+  // const withoutAnd = text.replace("&", "and");
+  // const withoutDash = withoutAnd.replace("-", " ");
+  // const replacingPeriods = withoutDash.replace(".", ":");
 
-  res.send(translationResponse);
-});
-
-const translate = async (text) => {
   const newUrl =
     "https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=es&dt=t&q=" +
     encodeURI(text);
 
-  const translationResponse = JSON.stringify(
-    (await axios.get(newUrl)).data[0][0][0]
-  );
-  return translationResponse;
+  const preText = await axios.get(newUrl);
+
+  // console.log(preText.data);
+
+  const textData = preText ? preText.data : null;
+
+  const finalName = textData ? textData[0][0][0] : null;
+  const finalData = textData ? textData[0][1][0] : null;
+
+  if (!finalName) {
+    return [text, null];
+  }
+
+  // if (!finalData) {
+  //   // res.send();
+  //   return;
+  // }
+
+  // const translationResponse = JSON.stringify(
+  //   (await axios.get(newUrl)).data[0][0][0]
+  // );
+
+  // const translationResponse = JSON.stringify(
+  //   (await axios.get(newUrl)).data[0][0][0]
+  // );
+  return [finalName, finalData];
 };
 
 exports.api = functions.https.onRequest(app);

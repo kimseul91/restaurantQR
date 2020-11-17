@@ -16,13 +16,18 @@ function MenuItem(props) {
   };
 
   const orderItem = async (itemName) => {
+    const translatedItemName = await axios.post(
+      "http://localhost:5001/restaurantqr-73126/us-central1/api/translate/item",
+      { item: itemName }
+    ).data;
+
     // send api request to axios to add item to order
     await axios.put(
       //      `https://restaurantqr-73126.cloudfunctions.net/us-central1/api/${props.name}/menu`
       //      `http://localhost:5001/restaurantqr-73126/us-central1/api/${props.name}/customer/table/${props.tableID}/order`,
       `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/${props.name}/customer/table/${props.tableID}/order`,
       {
-        request: itemName,
+        request: translatedItemName,
       }
     );
   };

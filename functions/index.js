@@ -96,7 +96,7 @@ app.get("/:restaurant/staff/liverequest", async (req, res) => {
   }
 });
 
-// gets employees
+// get employees
 app.get("/:restaurant/staff/employees", async (req, res) => {
   const restaurantName = req.params.restaurant;
 
@@ -127,6 +127,43 @@ app.put("/:restaurant/deleterequest/:table/", async (req, res) => {
   } catch (error) {
     res.status(500).send();
   }
+  res.status(200).send();
+});
+
+// removes employee
+app.put("/:restaurant/staff/remove/:eid", async (req, res) => {
+  const eid = req.params.eid;
+
+  console.log(eid);
+  // console.log(req.body.employees);
+  let employees = (req.body.employees);
+  let newEmployees = (req.body.employees);
+  let name = "";
+  console.log(newEmployees)
+  Object.keys(employees).map(employee => {
+    console.log(employee);
+    if (employees[employee].eid == eid) { delete newEmployees[(employee)] };
+  })
+  console.log(newEmployees);
+
+  try {
+    const data = await firestore
+      .collection("Restaurant")
+      .doc(req.params.restaurant)
+      .update({ employees: newEmployees });
+  } catch (error) {
+    res.status(500).send();
+  }
+  res.status(200).send();
+  // try {
+  //   const data = await firestore
+  //     .collection("Restaurant")
+  //     .doc(req.body.restaurant)
+  //     .update({ tables: req.body.newRequest });
+
+  // } catch (error) {
+  //   res.status(500).send();
+  // }
 });
 
 // removes table from the restaurant
@@ -143,6 +180,7 @@ app.put("/:restaurant/deletetable/", async (req, res) => {
   } catch (error) {
     res.status(500).send();
   }
+  res.status(200).send();
 });
 
 // adds restaurant info to firestore db

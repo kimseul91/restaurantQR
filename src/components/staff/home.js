@@ -1,26 +1,27 @@
-import React, {useState} from 'react';
-import { Navbar, Button, Container, Row, Col, Table, Modal, InputGroup, FormControl } from 'react-bootstrap';
-import {Link} from 'react-router-dom';
+import React, { useState } from 'react';
 import "./home.css";
 import ".././custom.css";
+import { Navbar, Button, Container, Row, Col, Table, Modal, InputGroup, FormControl } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import LiveRequest from "./LiveRequest.js";
 import ClockView from "./ClockView.js";
 import CreateQRCode from "./CreateQRCode.js";
+import EmployeeLists from "./EmployeeLists.js"
 // import CreateQRContainer from "./CreateQRContainer.js";
 // import axios from "axios";
 import fb from "../../Firebase";
 
 
 class Home extends React.Component {
-// function Home(props) {
+    // function Home(props) {
     constructor(props) {
         super(props)
-    
+
     }
 
     renderLiveRequest() {
         // console.log("liveRequest rendering")
-        return <LiveRequest name={this.props.name}/>
+        return <LiveRequest name={this.props.name} />
     }
     render() {
         return <div className="staff-home-full-container">
@@ -35,13 +36,13 @@ class Home extends React.Component {
                         className="d-inline-block align-top"
                         alt="React BootStrap logo"
                     />{" "} */}
-                    {this.props.name}
-                </Navbar.Brand>
+                        {this.props.name}
+                    </Navbar.Brand>
                     <Container>
                         <Navbar.Collapse className="justify-content-center">
                             <Navbar.Text>
                                 <ClockView />
-                        </Navbar.Text>
+                            </Navbar.Text>
                         </Navbar.Collapse>
                     </Container>
                     {/* <Button onClick={getMenuItems}> Json stuff</Button> */}
@@ -49,7 +50,6 @@ class Home extends React.Component {
                     <Link to="/staff/edit">
                         <Button> Edit</Button>
                     </Link>
-                    <Button> Clock In </Button>
                 </Navbar>
 
             </div>
@@ -63,7 +63,8 @@ class Home extends React.Component {
                             <div className="staff-table-bg-color">
 
                                 <Table striped >
-                                    <thead>
+                                    <EmployeeLists name={this.props.name} from={"staffhome"} />
+                                    {/* <thead>
                                         <tr className="staff-content-center">
                                             <th className="staff-table-th" >Employees</th>
                                         </tr>
@@ -72,14 +73,14 @@ class Home extends React.Component {
                                         <tr>
                                             <td>John Doe</td>
                                         </tr>
-                                    </tbody>
+                                    </tbody> */}
                                 </Table>
                             </div>
                         </Col>
                         <Col xs={12} lg={9} className="staff-right-col">
-                            <div style={{ backgroundColor: "#0DB4B9", marginTop: "1vw" }}> 
+                            <div style={{ backgroundColor: "#0DB4B9", marginTop: "1vw" }}>
                                 {/* {this.renderLiveRequest()} */}
-                                <LiveRequest name={this.props.name}/>
+                                <LiveRequest name={this.props.name} />
                                 {/* <CreateQRCode /> */}
                             </div>
 

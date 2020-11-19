@@ -38,3 +38,14 @@
     border-top: 0px !important;
     border-bottom: 0px !important;
 }
+
+.accordion-card {
+    color: black !important;
+    padding: 20px !important;
+}
+Accordion {
+    color: black !important;
+}
+Accordion.Collapse {
+    color: black !important;
+}

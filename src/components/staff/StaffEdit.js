@@ -103,23 +103,6 @@ class StaffEdit extends React.Component {
                 <Container>
                     {this.RenderCorrectComponents()}
                 </Container>
-                {/* <Container fluid >
-                    <Row className="staff-the-content-holder">
-                        <Col xs={12} lg={3} className="staff-left-col">
-                            <TableViews name={this.props.name}/>
-                            
-                        </Col>
-                        <Col xs={12} lg={9} className="staff-right-col">
-                            <div style={{ backgroundColor: "#0DB4B9", marginTop: "1vw" }}> 
-                                <CreateQRCode name={this.props.name}/>
-                            </div>
-                            <div style={{ backgroundColor: "#0DB4B9", marginTop: "1vw" }}> 
-                                <Employees name={this.props.name}/>
-                            </div>
-
-                        </Col>
-                    </Row>
-                </Container> */}
             </div>
 
         </div>

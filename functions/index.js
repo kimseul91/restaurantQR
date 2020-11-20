@@ -440,62 +440,175 @@ const translateWithDescription = async (text) => {
   return [finalName, finalData];
 };
 
+const translateCombined = async (text) => {
+  // need ogMenu to get original price info
+  const newUrl =
+    "https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=ko&dt=t&q=" +
+    encodeURI(text);
+
+  const preText = await axios.get(newUrl);
+
+  // number of items determines how I should parse the answers
+
+  const resultsArr = [];
+  let newSection = "";
+
+  if (preText.data) {
+    // console.log(preText.data[0]);
+
+    // console.log(preText.data[0].length);
+    let i = 0;
+    // for (let i = 0; i < preText.data[0][0].length; i++) {
+    while (i < preText.data[0].length) {
+      // console.log(i);
+      if (i === 0) {
+        // newSection = preText.data[0][0][0].split("~")[0].trim();
+        newSection = preText.data[0][0][0].replace(".", "").trim();
+        i++;
+        continue;
+      }
+      const currentItem = preText.data[0][i][0];
+
+      const split = currentItem.split("~");
+
+      const name = split[0].trim();
+
+      let item = split[1];
+
+      if (item == null) console.log(currentItem);
+      // console.log(name, item);
+
+      if (
+        i + 1 < preText.data[0].length &&
+        !preText.data[0][i + 1][0].includes("~")
+      ) {
+        item += preText.data[0][i + 1][0];
+        i += 2;
+      } else {
+        i++;
+      }
+
+      // removes splitting period
+      item = item.replace(/\./g, "");
+      // adds the sentence separators back
+      item = item.replace(/\:/g, ".");
+      item = item.trim();
+
+      resultsArr.push([name, item != "***" ? item : ""]);
+    }
+  }
+
+  return [newSection, resultsArr];
+};
+
+const parseMenuV2 = async (sectionName, menuSection) => {
+  const preStringArray = Object.entries(menuSection).map((item) => {
+    // item[0] name of item
+    // item[1].description the description
+
+    const preName = item[0].replace(/\-/g, " ");
+    const noSlash = preName.replace(/\//g, " ");
+    const noDashName = noSlash.replace(/\&/g, "and");
+
+    if (!item[1].description || item[1].description == "") {
+      return `${noDashName} ~ ***`;
+    }
+    const withoutAnd = item[1].description.replace(/\&/g, "and");
+    const withoutDash = withoutAnd.replace(/\-/g, " ");
+    const replacingPeriods = withoutDash.replace(/\./g, ":");
+
+    const newText = `${noDashName} ~ ${replacingPeriods}`;
+    // console.log(newText);
+    return newText;
+  });
+
+  // const lengthForParsing = preStringArray.length;
+
+  const hugeText = preStringArray.join(". ");
+  // console.log(lengthForParsing);
+
+  let filteredSectionName = sectionName;
+  filteredSectionName = filteredSectionName.replace(/\-/g, " ");
+  filteredSectionName = filteredSectionName.replace(/\&/g, "and");
+  filteredSectionName = filteredSectionName.replace(/\//g, " ");
+
+  // const translatedSectionName = await translate(sectionName);
+
+  const [translatedSectionName, allTextArrays] = await translateCombined(
+    `${filteredSectionName} . ` + hugeText
+  );
+  // console.log(allTextArrays);
+
+  const objToSend = {};
+
+  objToSend[translatedSectionName] = {};
+
+  allTextArrays.forEach((eachTuple) => {
+    // console.log(eachTuple);
+    objToSend[translatedSectionName][eachTuple[0]] = {};
+    objToSend[translatedSectionName][eachTuple[0]].description = eachTuple[1];
+    objToSend[translatedSectionName][eachTuple[0]].price = Math.random() * 15;
+  });
+
+  // console.log(objToSend);
+
+  return objToSend;
+};
+
+app.post("/bro", async (req, res) => {
+  const menu = req.body.menu;
+
+  const language = req.body.language;
+
+  try {
+    const currentMenuOptions = await firestore
+      .collection("Restaurant")
+      .doc("test_restaurant_3")
+      .get();
+    try {
+      if (currentMenuOptions.data()["translations"][language]) {
+        const translations = currentMenuOptions.data()["translations"][
+          language
+        ];
+        if (translations) {
+          res.send(translations.menu);
+          return;
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  } catch (error) {
+    res.status(404).send();
+  }
+
+  const entireMenu = await Promise.all(
+    Object.entries(menu).map(async (item) => {
+      const bro = await parseMenuV2(item[0], item[1]).catch((err) =>
+        console.log(err)
+      );
+      // console.log(bro);
+      return bro;
+    })
+  );
+
+  const newMenu = {};
+
+  entireMenu.forEach((eachMenuSectionObj) => {
+    console.log(eachMenuSectionObj);
+    const name = Object.keys(eachMenuSectionObj)[0];
+    const values = Object.values(eachMenuSectionObj)[0];
+    newMenu[name] = values;
+  });
+
+  firestore
+    .collection("Restaurant")
+    .doc("test_restaurant_3")
+    .update({
+      [`translations.ko.menu`]: newMenu,
+    });
+
+  res.send(newMenu);
+});
+
 exports.api = functions.https.onRequest(app);
-
-// app.get("/", (req, res) => {
-//   res.send("Yoooooo what up customers!");
-// });
-
-// // updates a tables request list
-// app.put("/table/:id/order", async (req, res) => {
-//   const tableID = req.params.id;
-//   const { restaurantName } = req.body;
-//   const newItem = req.body.request;
-//   const updateString = `table${tableID}.requests`;
-
-//   try {
-//     // adds a new request to the list
-//     await firestore
-//       .collection("Restaurant")
-//       .doc(restaurantName)
-//       .update({
-//         [updateString]: firebase.firestore.FieldValue.arrayUnion(newItem),
-//       });
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).send();
-//   }
-//   res.status(200).send();
-// });
-
-// // add all customer endpoints above this comment :)
-// exports.customer = functions.https.onRequest(app);
-
-// // Add all of the staff endpoints below this comment :)
-// app.get("/", (req, res) => {
-//   res.send("Yoooooo what up staff!");
-// });
-
-// exports.staff = functions.https.onRequest(app);
-
-// // All multipurpose endpoints are below this comment :)
-
-// app.get("/", (req, res) => {
-//   res.send("Yoooooo what up multipurpose");
-// });
-
-// app.get("/:restaurant/menu", async (req, res) => {
-//   const restaurantName = req.params.restaurant;
-//   console.log(req.params);
-//   try {
-//     const data = await firestore
-//       .collection("Restaurant")
-//       .doc(restaurantName)
-//       .get();
-//     res.send(data.data());
-//   } catch (error) {
-//     res.status(500).send();
-//   }
-// });
-
-// exports.general = functions.https.onRequest(app);

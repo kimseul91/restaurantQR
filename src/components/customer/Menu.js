@@ -40,7 +40,8 @@ function Menu(props) {
         // `http://localhost:5001/restaurantqr-73126/us-central1/api/${
         //   name ? name : "null"
         // }/menu/${id ? id : "null"}`
-        `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/${restaurantName}/menu`
+        // `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/${restaurantName}/menu`
+        `http://localhost:5001/restaurantqr-73126/us-central1/api/${restaurantName}/menu`
       );
 
       const menuData = menuRequest.data.menu;
@@ -174,9 +175,10 @@ function Menu(props) {
       // console.log(entireMenu);
 
       const translatedMenu = await axios.post(
-        "http://localhost:5001/restaurantqr-73126/us-central1/api/translate/menu",
+        "http://localhost:5001/restaurantqr-73126/us-central1/api/bro",
         {
           menu: menuData,
+          language: currentLanguage,
         }
       );
       console.log(translatedMenu.data);

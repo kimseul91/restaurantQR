@@ -285,16 +285,15 @@ app.post("/translate/menu", async (req, res) => {
   res.send(newMenu);
 });
 
-app.post("/translate/item", (req, res) => {
-
+app.post("/translate/item", async (req, res) => {
   // translates an item back to english for the restaurant
 
-  if (!req.body || !req.body.item || !req.body.language){
+  if (!req.body || !req.body.item || !req.body.language) {
     res.status(400).send();
     return;
   }
 
-  const {item, language} = req.body;
+  const { item, language } = req.body;
 
   const withoutAnd = item.replace("&", "and");
   const withoutDash = withoutAnd.replace("-", " ");
@@ -583,7 +582,7 @@ const parseMenuV2 = async (sectionName, menuSection, language) => {
   return objToSend;
 };
 
-app.post("/bro", async (req, res) => {
+app.post("/translate/fullMenu", async (req, res) => {
   if (!req.body || !req.body.menu || !req.body.language) {
     res.send(400);
     return;
@@ -617,11 +616,13 @@ app.post("/bro", async (req, res) => {
 
   const entireMenu = await Promise.all(
     Object.entries(menu).map(async (item) => {
-      const bro = await parseMenuV2(item[0], item[1], language).catch((err) =>
-        console.log(err)
-      );
+      const menuComponent = await parseMenuV2(
+        item[0],
+        item[1],
+        language
+      ).catch((err) => console.log(err));
       // console.log(bro);
-      return bro;
+      return menuComponent;
     })
   );
 

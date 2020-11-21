@@ -55,7 +55,9 @@ function CustomerHome(props) {
   return (
     <div className="Home">
       <div className="headerDiv wide">
-        <span id="restaurantName">{`Welcome to ${restaurantName}`}</span>
+        <span id="restaurantName">{`Welcome to ${decodeURI(
+          restaurantName
+        )}`}</span>
       </div>
       <Container className="flex-box">
         <div id="homeImgDiv">

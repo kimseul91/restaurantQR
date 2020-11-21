@@ -78,7 +78,7 @@ function Menu(props) {
       if (currentLanguage && currentLanguage !== "en") {
         // need to translate
         translatedMenu = await axios.post(
-          "http://localhost:5001/restaurantqr-73126/us-central1/api/bro",
+          "http://localhost:5001/restaurantqr-73126/us-central1/api/translate/fullMenu",
           {
             menu: menuData,
             language: currentLanguage,
@@ -98,7 +98,9 @@ function Menu(props) {
 
         const tempArr = [];
         // adds all of the menu items to the search term list
-        Object.values(menuData).forEach((eachList) => {
+        Object.values(
+          currentLanguage == "en" ? menuData : translatedMenu.data
+        ).forEach((eachList) => {
           // console.log(eachList);
           Object.keys(eachList).forEach((eachItem) => {
             tempArr.push(eachItem);

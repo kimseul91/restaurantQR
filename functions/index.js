@@ -117,9 +117,150 @@ app.get("/:restaurant/menu", async (req, res) => {
     res.status(500).send();
   }
 });
+app.post("/restaurant/getName", async (req, res) => {
+  if (!req.body || !req.body.user) {
+    res.status(400).send();
+    return;
+  }
 
-// gets requests
+  const uid = req.body.user.uid;
+
+  try {
+    const accountPreData = await firestore
+      .collection("Restaurant")
+      .where("uid", "==", uid)
+      .get();
+    const accountData = accountPreData.docs[0].data();
+    res.send(accountData);
+  } catch (error) {
+    res.status(404).send();
+    return;
+  }
+});
+
+app.post("/restaurant/addNew/section", async (req, res) => {
+  const currentInfo = (
+    await axios.post(
+      "http://localhost:5001/restaurantqr-73126/us-central1/api/restaurant/getName",
+      {
+        user: req.body.user,
+      }
+    )
+  ).data;
+
+  const name = currentInfo.name;
+  if (name == null) {
+    res.status(400).send();
+    return;
+  }
+
+  try {
+    await firestore
+      .collection("Restaurant")
+      .doc(name)
+      .update({
+        [`menu.${req.body.sectionName}`]: {},
+      });
+    res.status(200).send();
+  } catch (error) {
+    res.status(400).send();
+  }
+});
+
+app.post("/restaurant/addNew/item", async (req, res) => {
+  const currentInfo = (
+    await axios.post(
+      "http://localhost:5001/restaurantqr-73126/us-central1/api/restaurant/getName",
+      {
+        user: req.body.user,
+      }
+    )
+  ).data;
+
+  const name = currentInfo.name;
+
+  if (name == null) {
+    res.status(400).send();
+    return;
+  }
+
+  try {
+    await firestore
+      .collection("Restaurant")
+      .doc(name)
+      .update({
+        [`menu.${req.body.sectionName}.${req.body.itemName}`]: {
+          description: req.body.description,
+          price: req.body.price,
+        },
+      });
+    res.status(200).send();
+  } catch (error) {
+    res.status(400).send();
+  }
+});
+
+app.post("/restaurant/delete/section", async (req, res) => {
+  const currentInfo = (
+    await axios.post(
+      "http://localhost:5001/restaurantqr-73126/us-central1/api/restaurant/getName",
+      {
+        user: req.body.user,
+      }
+    )
+  ).data;
+
+  const name = currentInfo.name;
+
+  if (name == null) {
+    res.status(400).send();
+    return;
+  }
+
+  try {
+    await firestore
+      .collection("Restaurant")
+      .doc(name)
+      .update({
+        [`menu.${req.body.sectionName}`]: admin.firestore.FieldValue.delete(),
+      });
+    res.status(200).send();
+  } catch (error) {
+    res.status(400).send();
+  }
+});
+
+app.post("/restaurant/delete/item", async (req, res) => {
+  console.log("yooooooooooo");
+  const currentInfo = (
+    await axios.post(
+      "http://localhost:5001/restaurantqr-73126/us-central1/api/restaurant/getName",
+      {
+        user: req.body.user,
+      }
+    )
+  ).data;
+
+  const name = currentInfo.name;
+
+  console.log(name);
+  console.log(req.body);
+
+  try {
+    await firestore
+      .collection("Restaurant")
+      .doc(name)
+      .update({
+        [`menu.${req.body.sectionName}.${req.body.itemName}`]: admin.firestore.FieldValue.delete(),
+      });
+    res.status(200).send();
+  } catch (error) {
+    res.status(400).send();
+  }
+});
+
 app.get("/:restaurant/staff/liverequest", async (req, res) => {
+
   const restaurantName = req.params.restaurant;
 
   try {
@@ -554,43 +695,6 @@ const translate = async (text) => {
   //   (await axios.get(newUrl)).data[0][0][0]
   // );
   return finalData;
-};
-
-const translateWithDescription = async (text, language) => {
-  // const withoutAnd = text.replace("&", "and");
-  // const withoutDash = withoutAnd.replace("-", " ");
-  // const replacingPeriods = withoutDash.replace(".", ":");
-
-  const newUrl =
-    `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=${language}&dt=t&q=` +
-    encodeURI(text);
-
-  const preText = await axios.get(newUrl);
-
-  // console.log(preText.data);
-
-  const textData = preText ? preText.data : null;
-
-  const finalName = textData ? textData[0][0][0] : null;
-  const finalData = textData ? textData[0][1][0] : null;
-
-  if (!finalName) {
-    return [text, null];
-  }
-
-  // if (!finalData) {
-  //   // res.send();
-  //   return;
-  // }
-
-  // const translationResponse = JSON.stringify(
-  //   (await axios.get(newUrl)).data[0][0][0]
-  // );
-
-  // const translationResponse = JSON.stringify(
-  //   (await axios.get(newUrl)).data[0][0][0]
-  // );
-  return [finalName, finalData];
 };
 
 const translateCombined = async (text, language) => {

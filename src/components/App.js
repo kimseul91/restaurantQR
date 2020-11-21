@@ -7,6 +7,7 @@ import Menu from "./customer/Menu.js";
 import StaffEdit from "./staff/StaffEdit.js";
 import Login from "./staff/Authentication/Login";
 import SignUp from "./staff/Authentication/SignUp";
+import EditMenu from "./staff/EditMenu";
 
 import "./App.css";
 
@@ -46,19 +47,24 @@ function App(props) {
           <Route exact path="/signup">
             <SignUp />
           </Route>
+          <Route exact path="/staff/edit" component={StaffEdit} />
+          <Route
+            exact
+            path="/staff"
+            render={(...props) => <Staff {...props} />}
+          />
+          <Route
+            exact
+            path="/staff/edit/menu"
+            render={(...props) => <EditMenu {...props} />}
+          />
+          </Route>
           <Route exact path="/customer/:restaurantName/:tableID">
             <CustomerHome
               updateApp={updateApp}
               updateLanguage={updateLanguage}
               match={props.match}
             />
-          </Route>
-          <Route exact path="/staff/edit">
-            <StaffEdit name={"test_restaurant_3"} />
-          </Route>
-          <Route exact path="/staff">
-            <Staff name={"test_restaurant_3"} />
-          </Route>
           </Route>
           <Route
             exact
@@ -73,9 +79,6 @@ function App(props) {
               />
             )}
           ></Route>
-          {/* <Route exact path="/customer/:restaurantName/:tableID/menu">
-            <Menu name={name} tableID={tableID} language={language} />
-          </Route> */}
         </Switch>
       </Router>
     </div>

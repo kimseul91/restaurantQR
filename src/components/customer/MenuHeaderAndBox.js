@@ -23,6 +23,7 @@ function MenuHeaderAndBox(props) {
             <div id="menuCardsDiv">
               {items.map((item) => (
                 <div
+                  key={item}
                   className="itemCard"
                   onClick={() => props.getMenuItem(item)}
                 >

@@ -20,10 +20,6 @@ function AutoComplete(props) {
 
   // updates the menu according to your search
   const handleSearch = (text, hideVar) => {
-    // console.log(text);
-    // hide = hideVar;
-    // console.log(text);
-    console.log("yooooooooooooo");
     setSearch(text);
     document.getElementById("inputBoxId").value = text;
     setHide(hideVar);

@@ -1,10 +1,11 @@
 .staff-home-full-container{
-    height: 100vh;
-    overflow-y: hidden;
+    height: 92vh;
+    /* overflow-y: auto !important; */
 }
 
 .staff-nav-bar {
-    background-color: #221B45 !important;
+    /* background-color: #221B45 !important; */
+    height: 10vh !important;
 }
 
 .staff-the-content-holder {
@@ -20,32 +21,28 @@
 }
 
 .staff-container-background-color {
-    background-color: #E8E8E8;
-    height: 100vh;
+    /* background-color: #E8E8E8; */
+    background: rgb(232,232,232);
+    background: linear-gradient(0deg, rgba(232,232,232,1) 0%, rgba(117,71,159,1) 100%);
+    
+    height: 100%;
 }
 
 .staff-table-bg-color {
     margin-top:1vw;
-    background-color: #0DB4B9;
+    width: 100%;
+    /* background-color: #0DB4B9; */
+    background: rgb(12,160,164);
+    background: linear-gradient(280deg, rgba(12,160,164,.5) 17%, rgba(78,71,159,.5) 95%);
+    /* background: radial-gradient() */
 }
 
 .staff-content-center {
     display: flex;
     justify-content: center;
-  }
+}
 
 .staff-table-th {
     border-top: 0px !important;
     border-bottom: 0px !important;
-}
-
-.accordion-card {
-    color: black !important;
-    padding: 20px !important;
-}
-Accordion {
-    color: black !important;
-}
-Accordion.Collapse {
-    color: black !important;
 }

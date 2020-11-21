@@ -70,22 +70,20 @@ function CreateQRCode(props) {
         );
     }
     return (
-        <div>
-            <h3>Create Table</h3>
-            <Col xs={12} lg={9} className="staff-right-col">
-                <InputGroup className="mb-3">
-                    <FormControl
-                        placeholder="Table Number"
-                        aria-label="Table Number"
-                        aria-describedby="basic-addon2"
-                        onChange={(e) => setTable(e.currentTarget.value)}
-                    />
-                    <InputGroup.Append>
-                        <Button onClick={sendToSubmit}>Generate</Button>
-                    </InputGroup.Append>
-                </InputGroup>
-                <img id="returned-data" src={image} />
-            </Col>
+        <div className="create-table">
+            <h2>Create Table</h2>
+            <InputGroup size="lg">
+                <FormControl
+                    placeholder="Table Number"
+                    aria-label="Table Number"
+                    aria-describedby="basic-addon2"
+                    onChange={(e) => setTable(e.currentTarget.value)}
+                />
+                <InputGroup.Append>
+                    <Button onClick={sendToSubmit}>Generate</Button>
+                </InputGroup.Append>
+            </InputGroup>
+            <img id="returned-data" src={image} />
         </div>
     );
 }

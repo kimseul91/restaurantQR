@@ -65,18 +65,12 @@ function Employees(props) {
             return (
                 Object.keys(tableLists).map((employee, indx) => {
                     return (
-                        <Card key={employee + indx} class="accordion-card">
-                            <Accordion.Toggle as={Button} eventKey={employee}>
+                        <Card key={employee + indx} className="accordion-card">
+                            <Accordion.Toggle as={Button} eventKey={employee} className="accordion-collapse">
                                 {employee}
                             </Accordion.Toggle>
-                            <Accordion.Collapse eventKey={employee}>
+                            <Accordion.Collapse eventKey={employee} >
                                 <Card.Body>
-                                    <Card.Subtitle>
-                                        Employee ID
-                                </Card.Subtitle>
-                                    <Card.Text>
-                                        {tableLists[employee].eid}
-                                    </Card.Text>
                                     <Card.Subtitle>
                                         Clock In
                                 </Card.Subtitle>
@@ -85,7 +79,7 @@ function Employees(props) {
                                             (tableLists[employee]["Clock In"]) ?
                                                 <span>
                                                     {(new Date(tableLists[employee]["Clock In"] * 1000).toLocaleDateString("en-US").toString())}
-                                                    <br />
+                                                    {"  @  "}
                                                     {(new Date(tableLists[employee]["Clock In"] * 1000).toLocaleTimeString("en-US").toString())}
                                                     <br />
                                                     <Button eid={tableLists[employee].eid} onClick={handleClockOut}> Clock Out</Button>
@@ -117,13 +111,9 @@ function Employees(props) {
     }
     return (
         <div className="staff-table-bg-color">
-            <Accordion defaultActiveKey="0">
-                <Col xs={12} lg={9} className="staff-right-col">
-                    <h3>
-                        Employees
-                    </h3>
-                    {populateEmployees(employees)}
-                </Col>
+            <Accordion defaultActiveKey="0" className="accordion">
+                <h2 className="h2-padding center">Employees</h2>
+                {populateEmployees(employees)}
             </Accordion>
         </div>
     );

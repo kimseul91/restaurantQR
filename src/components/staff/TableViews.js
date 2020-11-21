@@ -1,4 +1,4 @@
-import { Table, Col, Card, Accordion, Button } from 'react-bootstrap';
+import { Media, Card, Accordion, Button } from 'react-bootstrap';
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import CreateQRCode from "./CreateQRCode.js";
@@ -23,25 +23,30 @@ function TableViews(props) {
 
 
 
-    const getRow = () => {
+    const populateTables = () => {
         if (tables != null) {
             const arrTables = Object.keys(tables).map((key, val) => {
                 return [key, tables[key].requests]
-            })
-            // console.log(tables);
+            }).sort();
+
             return (
                 arrTables.map((table, indx) => (
                     <Card key={table[0]}>
-                        <Accordion.Toggle as={Button} eventKey={table}>
+                        <Accordion.Toggle as={Button} eventKey={table} >
                             {arrTables[indx][0]}
                         </Accordion.Toggle>
                         <Accordion.Collapse eventKey={table}>
                             <Card.Body>
-                                QR Code
-                                {/* {console.log(arrTables[indx])} */}
-                                <img src={tables[table[0]].qrcode} width="300px" />
-                                <Button table={table[0]} onClick={deleteTable}>Delete</Button>
-                                <Button table={table[0]} onClick={printImg}>Print This Page</Button>
+                                <Media>
+                                    <Media.Body className="media-body">
+                                        <img src={tables[table[0]].qrcode} width={128} height={128}
+                                            className="mr-3" />
+                                        <h5>QR Code for {arrTables[indx][0]}</h5>
+                                        <br />
+                                        <Button table={table[0]} onClick={printImg}>Print this code</Button>
+                                        <Button table={table[0]} onClick={deleteTable}>Delete</Button>
+                                    </Media.Body>
+                                </Media>
                             </Card.Body>
                         </Accordion.Collapse>
                     </Card>
@@ -83,12 +88,10 @@ function TableViews(props) {
         <div className="staff-table-bg-color">
             <CreateQRCode name={props.name} />
             <Accordion defaultActiveKey="0">
-                <Col xs={12} lg={9} className="staff-right-col">
-                    <h1>
-                        Tables
-                    </h1>
-                    {getRow()}
-                </Col>
+                <h2>
+                    Tables
+                    </h2>
+                {populateTables()}
             </Accordion>
         </div>
     );

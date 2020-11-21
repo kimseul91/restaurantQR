@@ -53,10 +53,10 @@ function App() {
           </Route>
           <Route exact path="/staff/edit">
             <StaffEdit name={"test_restaurant_3"} />
-          </Route> 
+          </Route>
           <Route exact path="/staff">
             <Staff name={"test_restaurant_3"} />
-          </Route> 
+          </Route>
           <Route exact path="/customer/menu">
             {tableID !== "" && (
               <Menu name={name} tableID={tableID} language={language} />

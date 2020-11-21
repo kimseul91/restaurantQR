@@ -60,11 +60,11 @@ function Employees(props) {
 
         return (
             <Card key="add-new-employee">
-                <Accordion.Toggle as={Button} eventKey={"add-new-employee"}>
+                <Accordion.Toggle as={Button} eventKey={"add-new-employee"} className="center">
                     New Employee
                 </Accordion.Toggle>
-                <Accordion.Collapse eventKey={"add-new-employee"}>
-                    <Card.Body>
+                <Accordion.Collapse eventKey={"add-new-employee"} >
+                    <Card.Body >
                         <Form.Row>
                             <Col>
                                 <Form.Control id="firstName" placeholder="First name" />
@@ -142,7 +142,7 @@ function Employees(props) {
         setCounter(counter + 1);
 
     }
-    const getRow = (tableLists) => {
+    const populateEmployeesList = (tableLists) => {
         if (tableLists != null) {
             const arrTables = Object.keys(tableLists).map((key, val) => {
                 return [key, tableLists[key]]
@@ -151,11 +151,11 @@ function Employees(props) {
                 Object.keys(tableLists).map((employee, indx) => {
                     return (
                         <Card key={employee + indx}>
-                            <Accordion.Toggle as={Button} eventKey={employee}>
+                            <Accordion.Toggle as={Button} eventKey={employee} className="center">
                                 {employee}
                             </Accordion.Toggle>
                             <Accordion.Collapse eventKey={employee}>
-                                <Card.Body>
+                                <Card.Body className="media-body">
                                     <Card.Subtitle>
                                         Employee ID
                                 </Card.Subtitle>
@@ -198,13 +198,11 @@ function Employees(props) {
     return (
         <div className="staff-table-bg-color">
             <Accordion defaultActiveKey="0">
-                <Col xs={12} lg={9} className="staff-right-col">
-                    <h1>
-                        Employees
-                    </h1>
-                    {newEmployee(employees, props.name)}
-                    {getRow(employees)}
-                </Col>
+                <h2 className="h2-padding">
+                    Employees
+                    </h2>
+                {newEmployee(employees, props.name)}
+                {populateEmployeesList(employees)}
             </Accordion>
         </div>
     );

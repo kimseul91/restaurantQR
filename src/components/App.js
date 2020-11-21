@@ -58,7 +58,6 @@ function App(props) {
             path="/staff/edit/menu"
             render={(...props) => <EditMenu {...props} />}
           />
-          </Route>
           <Route exact path="/customer/:restaurantName/:tableID">
             <CustomerHome
               updateApp={updateApp}

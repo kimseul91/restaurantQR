@@ -1,135 +1,132 @@
-
-import React, { useState } from 'react';
-import { Navbar, Button, Container, Row, Col, ButtonGroup, ToggleButton } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import React, { useState } from "react";
+import {
+  Navbar,
+  Button,
+  Container,
+  Row,
+  Col,
+  ButtonGroup,
+  ToggleButton,
+} from "react-bootstrap";
+import { Link } from "react-router-dom";
 import "./home.css";
 import ".././custom.css";
 import TableViews from "./TableViews.js";
-import ClockView from "./ClockView.js"
-import Employees from "./Employees.js"
+import ClockView from "./ClockView.js";
+import Employees from "./employees.js";
 import fb from "../../Firebase";
 
-
 class StaffEdit extends React.Component {
-    // function Home(props) {
-    constructor(props) {
-        super(props)
-        this.state = {
-            value: "Tables"
-        }
+  // function Home(props) {
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: "Tables",
+    };
+  }
+
+  render() {
+    const parentState = (e) => {
+      this.setState({ value: e });
+    };
+
+    const getParentState = () => {
+      return this.state.value;
+    };
+    function ToggleButtonGroup() {
+      const [radioValue, setRadioValue] = useState(getParentState());
+      const radios = [
+        { name: "Tables", value: "Tables" },
+        { name: "Employees", value: "Employees" },
+        { name: "Menu", value: "Menu" },
+      ];
+      return (
+        <div className="center">
+          <ButtonGroup toggle className="buttongroup">
+            {radios.map((radio, idx) => (
+              <ToggleButton
+                className="togglebutton center"
+                key={idx}
+                type="radio"
+                variant="primary"
+                name="radio"
+                value={radio.value}
+                checked={radioValue === radio.value}
+                onChange={(e) => {
+                  setRadioValue(e.currentTarget.value);
+                  parentState(e.currentTarget.value);
+                }}
+              >
+                {radio.name}
+              </ToggleButton>
+            ))}
+          </ButtonGroup>
+
+          {/* <Button className="admin-setting"> Setting </Button> */}
+        </div>
+      );
     }
 
-
-    render() {
-        const parentState = (e) => {
-            this.setState({ value: e });
-        };
-
-        const getParentState = () => {
-            return this.state.value;
-        };
-        function ToggleButtonGroup() {
-            const [radioValue, setRadioValue] = useState(getParentState());
-            const radios = [
-                { name: "Tables", value: "Tables" },
-                { name: "Employees", value: "Employees" },
-                { name: "Menu", value: "Menu" }
-            ];
-            return (
-                <div className="center">
-                    <ButtonGroup toggle className="buttongroup">
-                        {radios.map((radio, idx) => (
-                            <ToggleButton
-                                className="togglebutton center"
-                                key={idx}
-                                type="radio"
-                                variant="primary"
-                                name="radio"
-                                value={radio.value}
-                                checked={radioValue === radio.value}
-                                onChange={(e) => {
-                                    setRadioValue(e.currentTarget.value);
-                                    parentState(e.currentTarget.value);
-                                }}
-                            >
-                                {radio.name}
-                            </ToggleButton>
-                        ))}
-                    </ButtonGroup>
-
-                    {/* <Button className="admin-setting"> Setting </Button> */}
-                </div>
-            );
-        }
-
-
-
-        return <div className="staff-home-full-container">
-            <div>
-
-                <Navbar variant="dark-blue-color" className="staff-navbar">
-                    <Navbar.Brand>
-                        Edit mode <br />
-                        {this.props.name}
-                    </Navbar.Brand>
-                    <Container>
-                        <Navbar.Collapse className="justify-content-md-center">
-                            <Navbar.Text>
-                                <ClockView />
-                            </Navbar.Text>
-                        </Navbar.Collapse>
-                    </Container>
-                    {/* <Link onClick={getMenuItems}>
+    return (
+      <div className="staff-home-full-container">
+        <div>
+          <Navbar variant="dark-blue-color" className="staff-navbar">
+            <Navbar.Brand>
+              Edit mode <br />
+              {this.props.name}
+            </Navbar.Brand>
+            <Container>
+              <Navbar.Collapse className="justify-content-md-center">
+                <Navbar.Text>
+                  <ClockView />
+                </Navbar.Text>
+              </Navbar.Collapse>
+            </Container>
+            {/* <Link onClick={getMenuItems}>
                         <Button> Get Data</Button>
                     </Link> */}
-                    <Link to="/staff">
-                        <Button> Main Screen</Button>
-                    </Link>
-                </Navbar>
-
-            </div>
-
-            <div className="staff-container-background-color">
-                <Container fluid>
-                    <div className="btn-grp">
-                        <ToggleButtonGroup />
-                    </div>
-                </Container>
-                <Container fluid>
-
-                    <Row className="justify-content-lg-center">
-                        <Col xs={12} lg={9} className="center various-render">
-                            {this.RenderCorrectComponents()}
-                        </Col>
-                    </Row>
-                </Container>
-            </div>
-
+            <Link to="/staff">
+              <Button> Main Screen</Button>
+            </Link>
+          </Navbar>
         </div>
+
+        <div className="staff-container-background-color">
+          <Container fluid>
+            <div className="btn-grp">
+              <ToggleButtonGroup />
+            </div>
+          </Container>
+          <Container fluid>
+            <Row className="justify-content-lg-center">
+              <Col xs={12} lg={9} className="center various-render">
+                {this.RenderCorrectComponents()}
+              </Col>
+            </Row>
+          </Container>
+        </div>
+      </div>
+    );
+  }
+
+  RenderCorrectComponents = () => {
+    switch (this.state.value) {
+      case "Tables":
+        // return <RecruitersListComponent title={this.state.value} />;
+        return (
+          // <div style={{ backgroundColor: "#0DB4B9", marginTop: "1vw" }}>
+
+          <TableViews name={this.props.name} />
+          // </div>
+        );
+      case "Employees":
+        return <Employees name={this.props.name} />;
+      case "Menu":
+        return alert("Not yet made");
+      default:
+        return;
     }
-
-    RenderCorrectComponents = () => {
-        switch (this.state.value) {
-            case "Tables":
-                // return <RecruitersListComponent title={this.state.value} />;
-                return (
-                    // <div style={{ backgroundColor: "#0DB4B9", marginTop: "1vw" }}>
-
-                    <TableViews name={this.props.name} />
-                    // </div>
-                );
-            case "Employees":
-                return (
-                    <Employees name={this.props.name} />
-                );
-            case "Menu":
-                return (
-                    alert("Not yet made")
-                );
-            default:
-                return;
-        }
-    };
+  };
 }
 
 /*

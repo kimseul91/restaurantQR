@@ -117,7 +117,6 @@ app.get("/:restaurant/menu", async (req, res) => {
     res.status(500).send();
   }
 });
-
 app.post("/restaurant/getName", async (req, res) => {
   if (!req.body || !req.body.user) {
     res.status(400).send();
@@ -260,7 +259,8 @@ app.post("/restaurant/delete/item", async (req, res) => {
   }
 });
 
-app.get("/:restaurant/liverequest", async (req, res) => {
+app.get("/:restaurant/staff/liverequest", async (req, res) => {
+
   const restaurantName = req.params.restaurant;
 
   try {
@@ -272,6 +272,93 @@ app.get("/:restaurant/liverequest", async (req, res) => {
   } catch (error) {
     res.status(500).send();
   }
+});
+
+// get employees
+app.get("/:restaurant/staff/employees", async (req, res) => {
+  const restaurantName = req.params.restaurant;
+
+  try {
+    const data = await firestore
+      .collection("Restaurant")
+      .doc(restaurantName)
+      .get();
+    res.send(data.data());
+  } catch (error) {
+    res.status(500).send();
+  }
+});
+
+
+// removes request
+app.put("/:restaurant/deleterequest/:table/", async (req, res) => {
+  const restaurant = req.params.restaurant;
+  const table = req.params.table;
+
+  console.log(req.body.newRequest);
+  try {
+    const data = await firestore
+      .collection("Restaurant")
+      .doc(restaurant)
+      .update({ tables: req.body.newRequest });
+
+  } catch (error) {
+    res.status(500).send();
+  }
+  res.status(200).send();
+});
+
+// removes employee
+app.put("/:restaurant/staff/remove/:eid", async (req, res) => {
+  const eid = req.params.eid;
+
+  console.log(eid);
+  // console.log(req.body.employees);
+  let employees = (req.body.employees);
+  let newEmployees = (req.body.employees);
+  let name = "";
+  console.log(newEmployees)
+  Object.keys(employees).map(employee => {
+    console.log(employee);
+    if (employees[employee].eid == eid) { delete newEmployees[(employee)] };
+  })
+  console.log(newEmployees);
+
+  try {
+    const data = await firestore
+      .collection("Restaurant")
+      .doc(req.params.restaurant)
+      .update({ employees: newEmployees });
+  } catch (error) {
+    res.status(500).send();
+  }
+  res.status(200).send();
+  // try {
+  //   const data = await firestore
+  //     .collection("Restaurant")
+  //     .doc(req.body.restaurant)
+  //     .update({ tables: req.body.newRequest });
+
+  // } catch (error) {
+  //   res.status(500).send();
+  // }
+});
+
+// removes table from the restaurant
+app.put("/:restaurant/deletetable/", async (req, res) => {
+  const restaurant = req.params.restaurant;
+
+  console.log(req.body.newRequest);
+  try {
+    const data = await firestore
+      .collection("Restaurant")
+      .doc(restaurant)
+      .update({ tables: req.body.tables });
+
+  } catch (error) {
+    res.status(500).send();
+  }
+  res.status(200).send();
 });
 
 // adds restaurant info to firestore db
@@ -352,7 +439,6 @@ app.put("/:restaurantName/staff/edit/table/:id/", async (req, res) => {
   const tableID = req.params.id;
   // const { restaurantName } = req.body;
   const restaurantName = req.params.restaurantName;
-  const newItem = "JOhnsons";
   const updateString = `tables.table${tableID}.paid`;
   console.log(updateString);
 
@@ -362,8 +448,48 @@ app.put("/:restaurantName/staff/edit/table/:id/", async (req, res) => {
       .collection("Restaurant")
       .doc(restaurantName)
       .update({
-        // [updateString]: false,
-        [updateString]: admin.firestore.FieldValue.arrayUnion(newItem),
+        [updateString]: false,
+      });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send();
+  }
+  res.status(200).send();
+});
+
+// add an employee to the restaurant
+app.put("/:restaurantName/staff/edit/addemployee", async (req, res) => {
+  const restaurantName = req.params.restaurantName;
+  const updateString = `employees`;
+
+  try {
+    // adds a new request to the list
+    await firestore
+      .collection("Restaurant")
+      .doc(restaurantName)
+      .update({
+        [updateString]: req.body.employees,
+      });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send();
+  }
+  res.status(200).send();
+});
+
+// Employee clock in/out
+app.put("/:restaurantName/staff/:clockinout/:eid", async (req, res) => {
+  const restaurantName = req.params.restaurantName;
+  const eid = req.params.employee;
+  const updateString = `employees`;
+
+  try {
+    // adds a new request to the list
+    await firestore
+      .collection("Restaurant")
+      .doc(restaurantName)
+      .update({
+        [updateString]: req.body.employees,
       });
   } catch (error) {
     console.error(error);

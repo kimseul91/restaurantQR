@@ -58,18 +58,13 @@ function App(props) {
             path="/staff/edit/menu"
             render={(...props) => <EditMenu {...props} />}
           />
+          </Route>
           <Route exact path="/customer/:restaurantName/:tableID">
             <CustomerHome
               updateApp={updateApp}
               updateLanguage={updateLanguage}
               match={props.match}
             />
-          </Route>
-          <Route exact path="/staff/edit">
-            <StaffEdit name={"test_restaurant_3"} />
-          </Route>
-          <Route exact path="/staff">
-            <Staff name={"test_restaurant_3"} />
           </Route>
           <Route
             exact

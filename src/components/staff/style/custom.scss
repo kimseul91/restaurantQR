@@ -1,0 +1,100 @@
+
+
+$theme-colors: (
+    "primary": #63bed4,
+    "danger": rgb(235, 124, 142)
+);
+
+@import "../../../../node_modules/bootstrap/scss/bootstrap/";
+
+.App-clock {
+    font-size: 50px,
+}
+
+.accordion {
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-bottom: 5%;
+}
+
+.accordion-collapse {
+    width: 100%
+}
+
+.accordion-card {
+    width: auto;
+    margin: 2%;
+    // border: 0px;
+    padding: 0%;
+    border-color: #0DB4B9;
+}
+
+Table, th, td{
+    width: auto;
+    padding: 5%;
+    border: 2px solid  #63bed4;;
+
+}
+
+th, td {
+    color: white;
+    font-size: large;
+}
+.center {
+    text-align: center;
+    color: white;
+    font-size: large;
+}
+.btn {
+    color: white;
+}
+.btn:hover {
+    text-align: center;
+    color: rgb(38, 38, 160);
+    font-size: large;
+}
+
+.liverequest-table {
+    padding: 2%;
+}
+
+.buttongroup {
+    // margin-top: 3vh;
+    width: 100vw * 0.65;
+    height: 6vh;
+    min-height: 40px;
+
+}
+
+.btn-grp {
+    padding: 10px;
+}
+
+.togglebutton {
+    font-size: 100%;
+    text-align: center;
+}
+
+button {
+    font-size: 100% !important;
+    // font-weight: bold !important;
+}
+
+.create-table {
+    padding-top: 2%;
+    padding-left: 5%;
+    padding-right: 5%;
+
+}
+
+.h2-padding{
+    padding-top: 2%
+}
+
+.media-body {
+    color:black;
+}
+
+.h6 {
+    font-size: 1.6rem !important;;
+}

@@ -9,8 +9,16 @@ function LiveRequest(props) {
   console.log(props.name);
 
   useEffect(async () => {
+    const currentInfo = (
+      await axios.post(
+        "http://localhost:5001/restaurantqr-73126/us-central1/api/restaurant/getName",
+        {
+          user: fb.auth.currentUser,
+        }
+      )
+    ).data;
     const liveRequest = await axios.get(
-      "https://us-central1-restaurantqr-73126.cloudfunctions.net/api/test_restaurant_3/liverequest"
+      `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/${currentInfo.name}/liverequest`
       // http://localhost:5001/restaurantqr-73126/us-central1/api/
     );
     const requestData = liveRequest.data.tables;

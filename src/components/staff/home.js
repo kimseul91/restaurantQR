@@ -76,7 +76,7 @@ class Home extends React.Component {
                         className="d-inline-block align-top"
                         alt="React BootStrap logo"
                     />{" "} */}
-              {this.props.name}
+              {this.state.name}
             </Navbar.Brand>
             <Container>
               <Navbar.Collapse className="justify-content-center">

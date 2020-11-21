@@ -10,14 +10,14 @@ function EditMenuButtons(props) {
           variant="primary"
           onClick={() => props.addNewSection()}
         >
-          Add A New Menu Section
+          Add A Menu Section
         </Button>
         <Button
           className="editMenuBtns"
           variant="primary"
           onClick={() => props.addNewItem()}
         >
-          Add A New Menu Item
+          Add A Menu Item
         </Button>
       </div>
       <div className="btnRow">

@@ -22,6 +22,11 @@
   height: 40px;
 }
 
+.editCards {
+  height: auto !important;
+  margin: 0 !important;
+}
+
 #editMenuButtonDiv {
   display: flex;
   width: 40vw;
@@ -31,6 +36,48 @@
   justify-content: flex-start;
   align-items: center;
   position: sticky;
+}
+
+#editTextBoxDiv {
+  display: flex;
+  width: 40vw;
+  align-items: center;
+  flex-direction: column;
+}
+
+#inputRowForEdits {
+  display: flex;
+  width: 34vw;
+  height: auto;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.editText {
+  margin: 10px;
+  border-radius: 12px;
+  border: none;
+  line-height: 30px;
+  padding-left: 10px;
+}
+
+.textareaEdit {
+  margin: 10px;
+  border-radius: 12px;
+  border: none;
+  line-height: 30px;
+  padding-left: 10px;
+  width: calc(34vw - 20px);
+  height: auto;
+}
+.textareaEdit:focus {
+  outline: none !important;
+}
+
+.editText:focus {
+  outline: none !important;
 }
 
 .editMenuBtns {
@@ -49,7 +96,6 @@
   align-items: center;
 }
 
-
-.editInput{
+.editInput {
   background-color: white;
 }

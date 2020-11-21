@@ -37,7 +37,7 @@ function EditMenuHeaderAndBox(props) {
         </Accordion.Toggle>
         <Accordion.Collapse eventKey={props.accID}>
           <Card.Body className="yooooo">
-            <div id="menuCardsDiv">
+            <div id="menuCardsDiv editCards">
               {items.map((item) => (
                 <div key={item} className="itemCard">
                   <span className="itemText">{`${item[0]}`}</span>

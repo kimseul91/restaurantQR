@@ -286,7 +286,34 @@ app.post("/translate/menu", async (req, res) => {
 });
 
 app.post("/translate/item", (req, res) => {
-  res.send();
+
+  // translates an item back to english for the restaurant
+
+  if (!req.body || !req.body.item || !req.body.language){
+    res.status(400).send();
+    return;
+  }
+
+  const {item, language} = req.body;
+
+  const withoutAnd = item.replace("&", "and");
+  const withoutDash = withoutAnd.replace("-", " ");
+
+  const newUrl =
+    `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${language}&tl=en&dt=t&q=` +
+    encodeURI(withoutDash);
+
+  const preText = await axios.get(newUrl);
+
+  const textData = preText ? preText.data : null;
+
+  const finalData = textData ? textData[0][0][0] : null;
+
+  if (!finalData) {
+    res.send(item);
+    return;
+  }
+  res.send(finalData);
 });
 
 const parseMenu = async (currentSection, currentObjList) => {
@@ -403,13 +430,13 @@ const translate = async (text) => {
   return finalData;
 };
 
-const translateWithDescription = async (text) => {
+const translateWithDescription = async (text, language) => {
   // const withoutAnd = text.replace("&", "and");
   // const withoutDash = withoutAnd.replace("-", " ");
   // const replacingPeriods = withoutDash.replace(".", ":");
 
   const newUrl =
-    "https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=es&dt=t&q=" +
+    `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=${language}&dt=t&q=` +
     encodeURI(text);
 
   const preText = await axios.get(newUrl);
@@ -440,10 +467,10 @@ const translateWithDescription = async (text) => {
   return [finalName, finalData];
 };
 
-const translateCombined = async (text) => {
+const translateCombined = async (text, language) => {
   // need ogMenu to get original price info
   const newUrl =
-    "https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=ko&dt=t&q=" +
+    `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=${language}&dt=t&q=` +
     encodeURI(text);
 
   const preText = await axios.get(newUrl);
@@ -501,7 +528,7 @@ const translateCombined = async (text) => {
   return [newSection, resultsArr];
 };
 
-const parseMenuV2 = async (sectionName, menuSection) => {
+const parseMenuV2 = async (sectionName, menuSection, language) => {
   const preStringArray = Object.entries(menuSection).map((item) => {
     // item[0] name of item
     // item[1].description the description
@@ -535,7 +562,8 @@ const parseMenuV2 = async (sectionName, menuSection) => {
   // const translatedSectionName = await translate(sectionName);
 
   const [translatedSectionName, allTextArrays] = await translateCombined(
-    `${filteredSectionName} . ` + hugeText
+    `${filteredSectionName} . ` + hugeText,
+    language
   );
   // console.log(allTextArrays);
 
@@ -556,14 +584,19 @@ const parseMenuV2 = async (sectionName, menuSection) => {
 };
 
 app.post("/bro", async (req, res) => {
-  const menu = req.body.menu;
+  if (!req.body || !req.body.menu || !req.body.language) {
+    res.send(400);
+    return;
+  }
 
+  const menu = req.body.menu;
   const language = req.body.language;
+  const name = req.body.name;
 
   try {
     const currentMenuOptions = await firestore
       .collection("Restaurant")
-      .doc("test_restaurant_3")
+      .doc(name)
       .get();
     try {
       if (currentMenuOptions.data()["translations"][language]) {
@@ -584,7 +617,7 @@ app.post("/bro", async (req, res) => {
 
   const entireMenu = await Promise.all(
     Object.entries(menu).map(async (item) => {
-      const bro = await parseMenuV2(item[0], item[1]).catch((err) =>
+      const bro = await parseMenuV2(item[0], item[1], language).catch((err) =>
         console.log(err)
       );
       // console.log(bro);
@@ -603,9 +636,9 @@ app.post("/bro", async (req, res) => {
 
   firestore
     .collection("Restaurant")
-    .doc("test_restaurant_3")
+    .doc(name)
     .update({
-      [`translations.ko.menu`]: newMenu,
+      [`translations.${language}.menu`]: newMenu,
     });
 
   res.send(newMenu);

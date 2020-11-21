@@ -1,0 +1,42 @@
+.centerMenuDiv {
+  width: 40vw;
+  /* margin-top: 40px; */
+  margin-bottom: 5vh;
+}
+
+#outerCenter {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+#spacer {
+  width: 100vw;
+  height: 40px;
+}
+
+#editMenuButtonDiv {
+  display: flex;
+  width: 40vw;
+  /* max-height: 40vw; */
+  flex-direction: column;
+  /* flex-wrap: wrap; */
+  justify-content: flex-start;
+  align-items: center;
+  position: sticky;
+}
+
+.editMenuBtns {
+  width: 15vw;
+  margin: 10px;
+  max-height: 40px !important;
+}
+
+.btnRow {
+  display: flex;
+  width: 34vw;
+  height: auto;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}

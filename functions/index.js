@@ -118,6 +118,27 @@ app.get("/:restaurant/menu", async (req, res) => {
   }
 });
 
+app.post("/restaurant/getName", async (req, res) => {
+  if (!req.body || !req.body.user) {
+    res.status(400).send();
+    return;
+  }
+
+  const uid = req.body.user.uid;
+
+  try {
+    const accountPreData = await firestore
+      .collection("Restaurant")
+      .where("uid", "==", uid)
+      .get();
+    const accountData = accountPreData.docs[0].data();
+    res.send(accountData);
+  } catch (error) {
+    res.status(404).send();
+    return;
+  }
+});
+
 app.get("/:restaurant/liverequest", async (req, res) => {
   const restaurantName = req.params.restaurant;
 
@@ -427,43 +448,6 @@ const translate = async (text) => {
   //   (await axios.get(newUrl)).data[0][0][0]
   // );
   return finalData;
-};
-
-const translateWithDescription = async (text, language) => {
-  // const withoutAnd = text.replace("&", "and");
-  // const withoutDash = withoutAnd.replace("-", " ");
-  // const replacingPeriods = withoutDash.replace(".", ":");
-
-  const newUrl =
-    `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=${language}&dt=t&q=` +
-    encodeURI(text);
-
-  const preText = await axios.get(newUrl);
-
-  // console.log(preText.data);
-
-  const textData = preText ? preText.data : null;
-
-  const finalName = textData ? textData[0][0][0] : null;
-  const finalData = textData ? textData[0][1][0] : null;
-
-  if (!finalName) {
-    return [text, null];
-  }
-
-  // if (!finalData) {
-  //   // res.send();
-  //   return;
-  // }
-
-  // const translationResponse = JSON.stringify(
-  //   (await axios.get(newUrl)).data[0][0][0]
-  // );
-
-  // const translationResponse = JSON.stringify(
-  //   (await axios.get(newUrl)).data[0][0][0]
-  // );
-  return [finalName, finalData];
 };
 
 const translateCombined = async (text, language) => {

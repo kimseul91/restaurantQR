@@ -39,17 +39,12 @@ function Menu(props) {
 
     (async function () {
       const menuRequest = await axios.get(
-        // `http://localhost:5001/restaurantqr-73126/us-central1/api/${
-        //   name ? name : "null"
-        // }/menu/${id ? id : "null"}`
-        // `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/${restaurantName}/menu`
-        `http://localhost:5001/restaurantqr-73126/us-central1/api/${decodeURI(
+        `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/${decodeURI(
           restaurantName
         )}/menu`
       );
 
       const menuData = menuRequest.data.menu;
-      // const translatedMenu = menuData.
       menuData["Service Items"] = {
         Napkins: { description: "Your sever will bring you more napkins" },
         "Refill Drinks": {

@@ -6,13 +6,12 @@ import axios from "axios";
 
 function LiveRequest(props) {
   const [liveRequests, setRequest] = useState(null);
-
+  console.log(props.name);
 
   useEffect(async () => {
     const liveRequest = await axios.get(
       "https://us-central1-restaurantqr-73126.cloudfunctions.net/api/test_restaurant_3/liverequest"
       // http://localhost:5001/restaurantqr-73126/us-central1/api/
-
     );
     const requestData = liveRequest.data.tables;
     setRequest(requestData);
@@ -33,10 +32,13 @@ function getRow(tableRequests) {
   if (tableRequests != null) {
     const arrTables = Object.keys(tableRequests).map((key, val) => {
       // console.log(`key: ${key} | val: ${tableRequests[key].requests}`);
-      return [key, tableRequests[key].requests];
+      return [
+        key,
+        tableRequests[key].requests ? tableRequests[key].requests : [],
+      ];
     });
     // console.log("array");
-    // console.log(arrTables);
+    console.log(arrTables);
     return (
       <div>
         <Table striped>

@@ -22,7 +22,10 @@ function LoginBox(props) {
 
     // redirect to staff if successful login
     if (success) {
-      setRedirect(<Redirect to="/staff" />);
+      setRedirect(
+        // inspiration from https://stackoverflow.com/questions/52064303/reactjs-pass-props-with-redirect-component
+        <Redirect to={{ pathname: "/staff", state: { name: "yo" } }} />
+      );
     }
   };
   return (

@@ -4,6 +4,14 @@
   margin-bottom: 5vh;
 }
 
+.editMenuDiv {
+  height: 100%;
+  width: 100%;
+  padding-right: 17px;
+  box-sizing: content-box;
+  overflow-y: scroll;
+}
+
 #outerCenter {
   display: flex;
   justify-content: space-evenly;
@@ -39,4 +47,9 @@
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+}
+
+
+.editInput{
+  background-color: white;
 }

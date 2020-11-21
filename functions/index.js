@@ -139,6 +139,127 @@ app.post("/restaurant/getName", async (req, res) => {
   }
 });
 
+app.post("/restaurant/addNew/section", async (req, res) => {
+  const currentInfo = (
+    await axios.post(
+      "http://localhost:5001/restaurantqr-73126/us-central1/api/restaurant/getName",
+      {
+        user: req.body.user,
+      }
+    )
+  ).data;
+
+  const name = currentInfo.name;
+  if (name == null) {
+    res.status(400).send();
+    return;
+  }
+
+  try {
+    await firestore
+      .collection("Restaurant")
+      .doc(name)
+      .update({
+        [`menu.${req.body.sectionName}`]: {},
+      });
+    res.status(200).send();
+  } catch (error) {
+    res.status(400).send();
+  }
+});
+
+app.post("/restaurant/addNew/item", async (req, res) => {
+  const currentInfo = (
+    await axios.post(
+      "http://localhost:5001/restaurantqr-73126/us-central1/api/restaurant/getName",
+      {
+        user: req.body.user,
+      }
+    )
+  ).data;
+
+  const name = currentInfo.name;
+
+  if (name == null) {
+    res.status(400).send();
+    return;
+  }
+
+  try {
+    await firestore
+      .collection("Restaurant")
+      .doc(name)
+      .update({
+        [`menu.${req.body.sectionName}.${req.body.itemName}`]: {
+          description: req.body.description,
+          price: req.body.price,
+        },
+      });
+    res.status(200).send();
+  } catch (error) {
+    res.status(400).send();
+  }
+});
+
+app.post("/restaurant/delete/section", async (req, res) => {
+  const currentInfo = (
+    await axios.post(
+      "http://localhost:5001/restaurantqr-73126/us-central1/api/restaurant/getName",
+      {
+        user: req.body.user,
+      }
+    )
+  ).data;
+
+  const name = currentInfo.name;
+
+  if (name == null) {
+    res.status(400).send();
+    return;
+  }
+
+  try {
+    await firestore
+      .collection("Restaurant")
+      .doc(name)
+      .update({
+        [`menu.${req.body.sectionName}`]: admin.firestore.FieldValue.delete(),
+      });
+    res.status(200).send();
+  } catch (error) {
+    res.status(400).send();
+  }
+});
+
+app.post("/restaurant/delete/item", async (req, res) => {
+  console.log("yooooooooooo");
+  const currentInfo = (
+    await axios.post(
+      "http://localhost:5001/restaurantqr-73126/us-central1/api/restaurant/getName",
+      {
+        user: req.body.user,
+      }
+    )
+  ).data;
+
+  const name = currentInfo.name;
+
+  console.log(name);
+  console.log(req.body);
+
+  try {
+    await firestore
+      .collection("Restaurant")
+      .doc(name)
+      .update({
+        [`menu.${req.body.sectionName}.${req.body.itemName}`]: admin.firestore.FieldValue.delete(),
+      });
+    res.status(200).send();
+  } catch (error) {
+    res.status(400).send();
+  }
+});
+
 app.get("/:restaurant/liverequest", async (req, res) => {
   const restaurantName = req.params.restaurant;
 

@@ -6,6 +6,29 @@ function EditMenuHeaderAndBox(props) {
   // props.sectionName == the name of a menu section
   // props.items == the menu items for that section
   const items = Object.entries(props.items);
+
+  // inspiration from https://stackoverflow.com/questions/679915/how-do-i-test-for-an-empty-javascript-object
+  if (
+    items.length === 0 &&
+    props.items.constructor === Object &&
+    props.items != null
+  ) {
+    return (
+      <Card className="menuItemWrapperCard">
+        <Accordion.Toggle as={Card.Header} eventKey={props.accID}>
+          {props.sectionName}
+        </Accordion.Toggle>
+        <Accordion.Collapse eventKey={props.accID}>
+          <Card.Body className="yooooo">
+            <div className="itemCard">
+              <span className="itemText">{`Add a menu item to this section`}</span>
+            </div>
+          </Card.Body>
+        </Accordion.Collapse>
+      </Card>
+    );
+  }
+
   return (
     items.length !== 0 && (
       <Card className="menuItemWrapperCard">

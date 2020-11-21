@@ -3,17 +3,17 @@
   height: 100vh !important;
   /* overflow-y: hidden; */
 
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
   /* background-color: #0db4b9; */
   background-color: #1d1145 !important;
   font-family: Lato, sans-serif;
-  overflow-x: hidden;
+  overflow: hidden;
 }
-
+/* 
 body::-webkit-scrollbar {
   width: 1em;
   display: none;
-}
+} */
 
 .navbar-color-1 {
   background-color: #221b45;

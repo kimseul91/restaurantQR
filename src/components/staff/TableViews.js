@@ -10,7 +10,6 @@ function TableViews(props) {
     const [counter, setCounter] = useState(0);
 
     useEffect(() => {
-        // console.log("NAME IS " + props.name)
         const fetchData = async () => {
             const axiosCall = await axios.get(
                 `http://localhost:5001/restaurantqr-73126/us-central1/api/${props.name}/staff/liverequest`
@@ -19,7 +18,7 @@ function TableViews(props) {
             setTables(tableLists);
         }
         fetchData();
-    }, [counter]);
+    }, [props, counter]);
 
 
 
@@ -40,7 +39,7 @@ function TableViews(props) {
                                 <Media>
                                     <Media.Body className="media-body">
                                         <img src={tables[table[0]].qrcode} width={128} height={128}
-                                            className="mr-3" />
+                                            className="mr-3" alt="qrCode" />
                                         <h5>QR Code for {arrTables[indx][0]}</h5>
                                         <br />
                                         <Button table={table[0]} onClick={printImg}>Print this code</Button>
@@ -57,10 +56,8 @@ function TableViews(props) {
     }
 
     const deleteTable = async (event) => {
-        console.log(event.target.getAttribute("table"));
         delete tables[(event.target.getAttribute("table"))];
         const tableNumber = event.target.getAttribute("table").replace(/table/g, '');
-        console.log(tableNumber);
         const objToSend = {
             tables: tables
         };

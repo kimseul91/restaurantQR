@@ -1,15 +1,11 @@
 import React, { useState } from 'react';
-import { Navbar, Button, Container, Row, Col, ButtonGroup, ToggleButton, Table, Modal, InputGroup, FormControl, Nav } from 'react-bootstrap';
+import { Navbar, Button, Container, Row, Col, ButtonGroup, ToggleButton } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import "./home.css";
 import ".././custom.css";
 import TableViews from "./TableViews.js";
-import CreateQRCode from "./CreateQRCode.js";
 import ClockView from "./ClockView.js"
 import Employees from "./Employees.js"
-// import CreateQRContainer from "./CreateQRContainer.js";
-import axios from "axios";
-import fb from "../../Firebase";
 
 
 class StaffEdit extends React.Component {

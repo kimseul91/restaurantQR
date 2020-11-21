@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 // import "./home.css";
 // import ".././custom.css";
 import "./style/custom.css"
-import { Navbar, Button, Container, Row, Col, Table } from 'react-bootstrap';
+import { Navbar, Button, Container, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import LiveRequest from "./LiveRequest.js";
 import ClockView from "./ClockView.js";
@@ -14,7 +14,6 @@ class Home extends React.Component {
         super(props)
     }
     renderLiveRequest() {
-        // console.log("liveRequest rendering")
         return <LiveRequest name={this.props.name} />
     }
     render() {
@@ -52,11 +51,8 @@ class Home extends React.Component {
                     </Row>
                 </Container>
             </div>
-
         </div>
     }
-
-
 }
 
 export default Home;

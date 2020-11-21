@@ -7,22 +7,34 @@ import axios from "axios";
 function MenuItem(props) {
   // props.item == the menu item obj to be displayed
 
-  // items will look like this
-  const testItem = {
-    name: "Tacos",
-    price: "9.99",
-    description:
-      "A traditional topping of roma tomatoes, fresh basil and extra-virgin olive oil. Served with toasted ciabatta bread.",
-  };
-
   const orderItem = async (itemName) => {
+    // doesnt need a translation
+    if (props.language == "en") {
+      await axios.put(
+        //      `https://restaurantqr-73126.cloudfunctions.net/us-central1/api/${props.name}/menu`
+        //      `http://localhost:5001/restaurantqr-73126/us-central1/api/${props.name}/customer/table/${props.tableID}/order`,
+        `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/${props.name}/customer/table/${props.tableID}/order`,
+        {
+          request: translatedItemName,
+        }
+      );
+      return;
+    }
+
+    const translatedItemName = (
+      await axios.post(
+        "http://localhost:5001/restaurantqr-73126/us-central1/api/translate/item",
+        { item: itemName, language: props.language }
+      )
+    ).data;
+
     // send api request to axios to add item to order
     await axios.put(
       //      `https://restaurantqr-73126.cloudfunctions.net/us-central1/api/${props.name}/menu`
       //      `http://localhost:5001/restaurantqr-73126/us-central1/api/${props.name}/customer/table/${props.tableID}/order`,
       `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/${props.name}/customer/table/${props.tableID}/order`,
       {
-        request: itemName,
+        request: translatedItemName,
       }
     );
   };
@@ -37,7 +49,7 @@ function MenuItem(props) {
         <p className="itemDescription">{props.item[1].description}</p>
         {props.item[1].price && (
           <span className="itemDescription" id="itemPrice">
-            Price: ${props.item[1].price}
+            Price: ${props.item[1].price.toFixed(2)}
           </span>
         )}
       </div>

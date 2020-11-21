@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Navbar, Button, Container, Row, Col, ButtonGroup, ToggleButton } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
@@ -6,6 +7,7 @@ import ".././custom.css";
 import TableViews from "./TableViews.js";
 import ClockView from "./ClockView.js"
 import Employees from "./Employees.js"
+import fb from "../../Firebase";
 
 
 class StaffEdit extends React.Component {
@@ -128,8 +130,6 @@ class StaffEdit extends React.Component {
                 return;
         }
     };
-
-
 }
 
 /*

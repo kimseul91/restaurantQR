@@ -23,19 +23,19 @@ function MenuDiv(props) {
               );
             })
         ) : (
-          <Card className="menuItemWrapperCard">
-            <Accordion.Toggle as={Card.Header}>
-              {
-                "To get started, add a menu section using the buttons on the left"
-              }
-            </Accordion.Toggle>
-            <Accordion.Collapse eventKey={1}>
-              <Card.Body className="yooooo">
-                <div id="menuCardsDiv"></div>
-              </Card.Body>
-            </Accordion.Collapse>
-          </Card>
-        )}
+            <Card className="menuItemWrapperCard">
+              <Accordion.Toggle as={Card.Header}>
+                {
+                  "To get started, add a menu section using the buttons on the left"
+                }
+              </Accordion.Toggle>
+              <Accordion.Collapse eventKey={1}>
+                <Card.Body className="yooooo">
+                  <div id="menuCardsDiv"></div>
+                </Card.Body>
+              </Accordion.Collapse>
+            </Card>
+          )}
       </Accordion>
     </div>
   );

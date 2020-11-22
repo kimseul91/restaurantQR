@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Staff from "./staff/home.js";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import "bootstrap/dist/css/bootstrap.min.css";
+// import "bootstrap/dist/css/bootstrap.min.css";
 import CustomerHome from "./customer/CustomerHome.js";
 import Menu from "./customer/Menu.js";
 import StaffEdit from "./staff/StaffEdit.js";

@@ -71,7 +71,7 @@ function TableViews(props) {
     };
     setCounter(counter + 1);
     const del = await axios.put(
-      `http://localhost:5001/restaurantqr-73126/us-central1/api/${props.name}/deletetable`,
+      `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/${props.name}/deletetable`,
       objToSend
     );
     const uploadFile = Firebase.storage.ref(
@@ -96,7 +96,7 @@ function TableViews(props) {
   return (
     <div className="staff-table-bg-color">
       <CreateQRCode name={props.name} />
-      <Accordion defaultActiveKey="0">
+      <Accordion className="tables-accordion" defaultActiveKey="0">
         <h2>Tables</h2>
         {populateTables()}
       </Accordion>

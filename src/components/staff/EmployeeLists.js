@@ -124,7 +124,7 @@ function Employees(props) {
   };
   return (
     <div className="staff-table-bg-color">
-      <Accordion defaultActiveKey="0" className="accordion">
+      <Accordion defaultActiveKey="0" className="accordion tables-accordion">
         <h2 className="h2-padding center">Employees</h2>
         {populateEmployees(employees)}
       </Accordion>

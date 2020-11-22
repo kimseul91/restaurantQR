@@ -28,13 +28,25 @@ Modern Pink Backpack: #e76d89
 */
 
 .menuItemWrapperCard .card-header {
-  background-color: #0db4b9 !important;
-  /* background-color: #e76d89 !important; */
+  /* background-color: #0db4b9 !important; */
+  background-color: #63bed4 !important;
   color: white !important;
+  font-weight: 600;
+}
+
+.menuItemWrapperCard {
+  background-color: transparent !important;
 }
 
 .menuItemWrapperCard .card-body {
-  background-color: #1d1145 !important;
+  /* background-color: #1d1145 !important; */
+  background: rgb(12, 160, 164);
+  background: linear-gradient(
+    0deg,
+    rgba(12, 160, 164, 0.5) 17%,
+    rgba(78, 71, 159, 1) 95%
+  );
+  padding: 0.5rem;
 }
 
 .flex-box {
@@ -63,7 +75,7 @@ Modern Pink Backpack: #e76d89
   flex-direction: column;
 } */
 .languageButton > button {
-  background-color: #0db4b9 !important;
+  /* background-color: #0db4b9 !important;  */
   color: white;
   border: none;
 }
@@ -144,11 +156,11 @@ Modern Pink Backpack: #e76d89
 .itemCard {
   text-align: center;
   /* height: 75px; */
-  border: 1px solid #1d1145;
+  border: 1px solid #8dcada;
   border-radius: 12px;
-  margin: 1rem;
+  margin: 0.5rem;
   /* background-color: #1d1145; */
-  background-color: #0db4b9;
+  background-color: #63bed4;
   padding: 0.5rem;
   color: #1d1145;
 }
@@ -189,8 +201,8 @@ Modern Pink Backpack: #e76d89
 
 .smallDescriptionText {
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 17px;
-  line-height: 25px;
+  font-size: 14px;
+  line-height: 20px;
   text-align: center;
 }
 
@@ -218,7 +230,13 @@ Modern Pink Backpack: #e76d89
 
 .wide {
   width: 100vw;
-  background-color: #0db4b9;
+  /* background-color: #0db4b9; */
+  background: rgb(57, 47, 106);
+  background: linear-gradient(
+    90deg,
+    rgba(57, 47, 106, 1) 41%,
+    rgba(0, 0, 0, 1) 100%
+  );
 }
 
 .searchTerms:hover {

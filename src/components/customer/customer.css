@@ -39,14 +39,14 @@ Modern Pink Backpack: #e76d89
 }
 
 .menuItemWrapperCard .card-body {
-  /* background-color: #1d1145 !important; */
-/*   background: linear-gradient(
+  background: rgb(12, 160, 164);
+  background: linear-gradient(
     0deg,
-    rgba(34, 193, 195, 1) 0%,
-    rgba(253, 187, 45, 1) 100%
-  ); */
+    rgba(12, 160, 164, 0.5) 17%,
+    rgba(78, 71, 159, 1) 95%
+  );
 }
-.menuItemWrapperCard {
+/* .menuItemWrapperCard {
   background: rgb(12, 160, 164);
   background: linear-gradient(
     0deg,
@@ -54,6 +54,11 @@ Modern Pink Backpack: #e76d89
     rgba(78, 71, 159, 1) 95%
   );
   padding: 0.5rem;
+} */
+.food {
+  height: auto;
+  width: 100vw;
+  padding: 2rem;
 }
 
 .flex-box {

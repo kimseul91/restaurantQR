@@ -28,6 +28,7 @@ function CreateQRCode(props) {
 
   async function handleSubmit(tableNumber) {
     // console.log("SUBMIT " + tableNumber);
+    console.log(key);
     let options = {
       method: "GET",
       url: "https://rapidapi.p.rapidapi.com/generateQR",
@@ -37,7 +38,7 @@ function CreateQRCode(props) {
       },
       responseType: "blob",
       headers: {
-        "x-rapidapi-key": key,
+        "x-rapidapi-key": key.key,
         "x-rapidapi-host": "qrcode3.p.rapidapi.com",
       },
     };
@@ -56,18 +57,20 @@ function CreateQRCode(props) {
           return;
         },
         () => {
-          Firebase.storage
-            .ref(`restaurants/${props.name}`)
-            .child(`${tableNumber}`)
-            .getDownloadURL()
-            .then((url) => {
-              Firebase.db
-                .collection("Restaurant")
-                .doc(`${props.name}`)
-                .update({
-                  [`tables.table${tableNumber}.qrcode`]: url,
-                });
-            });
+          (async () =>
+            await Firebase.storage
+              .ref(`restaurants/${props.name}`)
+              .child(`${tableNumber}`)
+              .getDownloadURL()
+              .then((url) => {
+                Firebase.db
+                  .collection("Restaurant")
+                  .doc(`${props.name}`)
+                  .update({
+                    [`tables.table${tableNumber}.qrcode`]: url,
+                  });
+                props.update();
+              }))();
         }
       );
     });

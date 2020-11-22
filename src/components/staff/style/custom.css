@@ -11352,4 +11352,12 @@ button {
   overflow-y: scroll;
   max-height: 60vh;
 }
+
+#returned-data{
+  height: 25%;
+  width: 25%;
+  max-width: 30%;
+  max-height: 30%;
+
+}
 /*# sourceMappingURL=custom.css.map */

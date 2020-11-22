@@ -71,6 +71,10 @@ function MenuItem(props) {
         <span className="itemDescription itemHeaderName" id="itemName">
           {props.item[0]}
         </span>
+        <img
+          src="https://thestayathomechef.com/wp-content/uploads/2017/08/Most-Amazing-Lasagna-2-e1574792735811.jpg"
+          className="food"
+        />
         <p className="itemDescription">{props.item[1].description}</p>
         {props.item[1].price && (
           <span className="itemDescription" id="itemPrice">

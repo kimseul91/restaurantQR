@@ -54,7 +54,7 @@ function LiveRequest(props) {
     };
     await axios.put(
       // `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/${name}/deleterequest/${table}`,
-      `http://localhost:5001/restaurantqr-73126/us-central1/api/${name}/deleterequest/${table}`,
+      `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/${name}/deleterequest/${table}`,
       objectsToAxios
     );
   };

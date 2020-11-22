@@ -62,6 +62,7 @@ app.put("/:restaurantName/customer/table/:id/order", async (req, res) => {
   // const { restaurantName } = req.body;
   const restaurantName = req.params.restaurantName;
   const newItem = req.body.request;
+  const time = req.body.time;
   const updateString = `tables.table${tableID}.requests`;
 
   try {
@@ -70,7 +71,10 @@ app.put("/:restaurantName/customer/table/:id/order", async (req, res) => {
       .collection("Restaurant")
       .doc(restaurantName)
       .update({
-        [updateString]: admin.firestore.FieldValue.arrayUnion(newItem),
+        [updateString]: admin.firestore.FieldValue.arrayUnion({
+          item: newItem,
+          time: time,
+        }),
       });
   } catch (error) {
     console.error(error);
@@ -94,7 +98,7 @@ app.get("/:restaurant/menu", async (req, res) => {
 
   try {
     if (!restaurantName) {
-      throw undefined;
+      throw new Error();
     }
     const data = await firestore
       .collection("Restaurant")
@@ -149,7 +153,7 @@ app.post("/restaurant/addNew/section", async (req, res) => {
   ).data;
 
   const name = currentInfo.name;
-  if (name == null) {
+  if (!name) {
     res.status(400).send();
     return;
   }
@@ -179,7 +183,7 @@ app.post("/restaurant/addNew/item", async (req, res) => {
 
   const name = currentInfo.name;
 
-  if (name == null) {
+  if (!name) {
     res.status(400).send();
     return;
   }
@@ -212,7 +216,7 @@ app.post("/restaurant/delete/section", async (req, res) => {
 
   const name = currentInfo.name;
 
-  if (name == null) {
+  if (!name) {
     res.status(400).send();
     return;
   }
@@ -260,7 +264,6 @@ app.post("/restaurant/delete/item", async (req, res) => {
 });
 
 app.get("/:restaurant/staff/liverequest", async (req, res) => {
-
   const restaurantName = req.params.restaurant;
 
   try {
@@ -289,7 +292,6 @@ app.get("/:restaurant/staff/employees", async (req, res) => {
   }
 });
 
-
 // removes request
 app.put("/:restaurant/deleterequest/:table/", async (req, res) => {
   const restaurant = req.params.restaurant;
@@ -301,7 +303,6 @@ app.put("/:restaurant/deleterequest/:table/", async (req, res) => {
       .collection("Restaurant")
       .doc(restaurant)
       .update({ tables: req.body.newRequest });
-
   } catch (error) {
     res.status(500).send();
   }
@@ -314,14 +315,17 @@ app.put("/:restaurant/staff/remove/:eid", async (req, res) => {
 
   console.log(eid);
   // console.log(req.body.employees);
-  let employees = (req.body.employees);
-  let newEmployees = (req.body.employees);
+  let employees = req.body.employees;
+  let newEmployees = req.body.employees;
   let name = "";
-  console.log(newEmployees)
-  Object.keys(employees).map(employee => {
+  console.log(newEmployees);
+  Object.keys(employees).map((employee) => {
     console.log(employee);
-    if (employees[employee].eid == eid) { delete newEmployees[(employee)] };
-  })
+    if (employees[employee].eid === eid) {
+      delete newEmployees[employee];
+    }
+    return;
+  });
   console.log(newEmployees);
 
   try {
@@ -354,7 +358,6 @@ app.put("/:restaurant/deletetable/", async (req, res) => {
       .collection("Restaurant")
       .doc(restaurant)
       .update({ tables: req.body.tables });
-
   } catch (error) {
     res.status(500).send();
   }
@@ -572,6 +575,8 @@ app.post("/translate/item", async (req, res) => {
 
   const preText = await axios.get(newUrl);
 
+  console.log(preText);
+
   const textData = preText ? preText.data : null;
 
   const finalData = textData ? textData[0][0][0] : null;
@@ -605,8 +610,8 @@ const parseMenu = async (currentSection, currentObjList) => {
       // trying to reduce requests by half through appending strings
       // const newName = await translate(item[0]);
 
-      const withoutAnd = item[1].description.replace(/\&/g, "and");
-      const withoutDash = withoutAnd.replace(/\-/g, " ");
+      const withoutAnd = item[1].description.replace(/&/g, "and");
+      const withoutDash = withoutAnd.replace(/-/g, " ");
       const replacingPeriods = withoutDash.replace(/\./g, ":");
 
       const stringToSend = `${item[0]}. ${replacingPeriods}`;
@@ -626,7 +631,7 @@ const parseMenu = async (currentSection, currentObjList) => {
         newName = newName.trim();
       }
       if (newDescription) {
-        newDescription = newDescription.replace(/\:/g, ".");
+        newDescription = newDescription.replace(/:/g, ".");
       }
 
       // console.log(newName, newDescription);
@@ -732,7 +737,7 @@ const translateCombined = async (text, language) => {
 
       let item = split[1];
 
-      if (item == null) console.log(currentItem);
+      // if (item == null) console.log(currentItem);
       // console.log(name, item);
 
       if (
@@ -748,10 +753,10 @@ const translateCombined = async (text, language) => {
       // removes splitting period
       item = item.replace(/\./g, "");
       // adds the sentence separators back
-      item = item.replace(/\:/g, ".");
+      item = item.replace(/:/g, ".");
       item = item.trim();
 
-      resultsArr.push([name, item != "***" ? item : ""]);
+      resultsArr.push([name, item !== "***" ? item : ""]);
     }
   }
 
@@ -763,15 +768,15 @@ const parseMenuV2 = async (sectionName, menuSection, language) => {
     // item[0] name of item
     // item[1].description the description
 
-    const preName = item[0].replace(/\-/g, " ");
+    const preName = item[0].replace(/-/g, " ");
     const noSlash = preName.replace(/\//g, " ");
-    const noDashName = noSlash.replace(/\&/g, "and");
+    const noDashName = noSlash.replace(/&/g, "and");
 
-    if (!item[1].description || item[1].description == "") {
+    if (!item[1].description || item[1].description === "") {
       return `${noDashName} ~ ***`;
     }
-    const withoutAnd = item[1].description.replace(/\&/g, "and");
-    const withoutDash = withoutAnd.replace(/\-/g, " ");
+    const withoutAnd = item[1].description.replace(/&/g, "and");
+    const withoutDash = withoutAnd.replace(/-/g, " ");
     const replacingPeriods = withoutDash.replace(/\./g, ":");
 
     const newText = `${noDashName} ~ ${replacingPeriods}`;
@@ -785,8 +790,8 @@ const parseMenuV2 = async (sectionName, menuSection, language) => {
   // console.log(lengthForParsing);
 
   let filteredSectionName = sectionName;
-  filteredSectionName = filteredSectionName.replace(/\-/g, " ");
-  filteredSectionName = filteredSectionName.replace(/\&/g, "and");
+  filteredSectionName = filteredSectionName.replace(/-/g, " ");
+  filteredSectionName = filteredSectionName.replace(/&/g, "and");
   filteredSectionName = filteredSectionName.replace(/\//g, " ");
 
   // const translatedSectionName = await translate(sectionName);

@@ -36,6 +36,9 @@ Modern Pink Backpack: #e76d89
 .menuItemWrapperCard .card-body {
   background-color: #1d1145 !important;
 }
+.menuItemWrapperCard {
+  background-color: transparent !important;
+}
 
 .flex-box {
   display: flex;
@@ -120,11 +123,19 @@ Modern Pink Backpack: #e76d89
   display: none;
 }
 
+#menuSingleItemDiv {
+  overflow-y: scroll;
+  color: white;
+  /* margin-top: 5%; */
+  height: 60vh;
+  justify-content: start !important;
+}
+
 .itemDescription {
   width: 100vw;
-  margin: 2rem;
+  margin: 1rem;
   padding: 1rem;
-  margin-bottom: 30%;
+  /* margin-bottom: 30%; */
 }
 
 #itemPrice,

@@ -8,10 +8,11 @@ function LiveRequest(props) {
 
   useEffect(() => {
     if (props.name) {
+      console.log(props.name);
       const interval = setInterval(() => {
         const fetchData = async () => {
           const liveRequest = await axios.get(
-            `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/${props.name}/liverequest`
+            `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/${props.name}/staff/liverequest`
             // http://localhost:5001/restaurantqr-73126/us-central1/api/
           );
           const requestData = liveRequest.data.tables;
@@ -26,7 +27,7 @@ function LiveRequest(props) {
     if (props.name) {
       const fetchData = async () => {
         const liveRequest = await axios.get(
-          `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/${props.name}/liverequest`
+          `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/${props.name}/staff/liverequest`
           // http://localhost:5001/restaurantqr-73126/us-central1/api/
         );
         const requestData = liveRequest.data.tables;
@@ -63,9 +64,15 @@ function LiveRequest(props) {
       removeData(tableRequests, event);
     };
     if (tableRequests != null) {
-      const arrTables = Object.keys(tableRequests).map((key, val) => {
-        return [key, tableRequests[key].requests];
+      let arrTables = [];
+      Object.keys(tableRequests).map((key, indx) => {
+        if (tableRequests[key].requests && tableRequests[key].requests.length > 0) {
+          tableRequests[key].requests.map(item => {
+            return arrTables.push([item["time"], { "item": item["item"], "table": key }])
+          })
+        }
       });
+      arrTables.sort((a, b) => b - a);
       return (
         <Table striped>
           <thead>
@@ -76,25 +83,20 @@ function LiveRequest(props) {
             </tr>
           </thead>
           <tbody>
-            {arrTables.map((table, indx) =>
-              arrTables[indx][1] ? (
-                arrTables[indx][1].map((item) => (
-                  <tr
-                    id="request-row"
-                    name={name}
-                    table={arrTables[indx][0]}
-                    item={item}
-                    key={arrTables[indx][0] + item}
-                    onClick={doneWithTask}
-                  >
-                    <td>{arrTables[indx][0]}</td>
-                    <td>{item}</td>
-                    <td>12:00pm</td>
-                  </tr>
-                ))
-              ) : (
-                <></>
-              )
+            {arrTables.map((item, indx) => {
+              return <tr
+                id="request-row"
+                name={name}
+                table={item[1].table}
+                item={item}
+                key={item[1].table + item[1].item + item[0]}
+                onClick={doneWithTask}
+              >
+                <td>{item[1].table}</td>
+                <td>{item[1].item}</td>
+                <td>{new Date(arrTables[indx][0] * 1000).toLocaleTimeString("en-US").toString()}</td>
+              </tr>
+            }
             )}
           </tbody>
         </Table>

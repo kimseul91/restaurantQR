@@ -1,5 +1,8 @@
 .navbar-dark-blue-color {
-    background-color: #221B45;
+    /* background-color: #221B45;
+     */
+    background: rgb(57,47,106);
+    background: linear-gradient(90deg, rgba(57,47,106,1) 41%, rgba(0,0,0,1) 100%);
     color: white;
   }
 

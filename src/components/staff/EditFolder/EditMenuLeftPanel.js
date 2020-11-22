@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import Header from "../customer/Header";
+import Header from "../../customer/Header";
 import MenuDiv from "./MenuDiv";
 import EditMenuButtons from "./EditMenuButtons";
 import axios from "axios";
-import Firebase from "../../Firebase";
+import Firebase from "../../../Firebase";
 
 import "./EditMenu.css";
 import EditText from "./EditText";

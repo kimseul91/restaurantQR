@@ -24,7 +24,7 @@ function LoginBox(props) {
     if (success) {
       setRedirect(
         // inspiration from https://stackoverflow.com/questions/52064303/reactjs-pass-props-with-redirect-component
-        <Redirect to={{ pathname: "/staff", state: { name: "yo" } }} />
+        <Redirect to="staff" />
       );
     }
   };

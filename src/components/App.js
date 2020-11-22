@@ -7,7 +7,7 @@ import Menu from "./customer/Menu.js";
 import StaffEdit from "./staff/StaffEdit.js";
 import Login from "./staff/Authentication/Login";
 import SignUp from "./staff/Authentication/SignUp";
-import EditMenu from "./staff/EditMenu";
+import EditMenu from "./staff/EditFolder/EditMenu";
 
 import "./App.css";
 
@@ -53,11 +53,11 @@ function App(props) {
             path="/staff"
             render={(...props) => <Staff {...props} />}
           />
-          <Route
+          {/* <Route
             exact
             path="/staff/edit/menu"
             render={(...props) => <EditMenu {...props} />}
-          />
+          /> */}
           <Route exact path="/customer/:restaurantName/:tableID">
             <CustomerHome
               updateApp={updateApp}

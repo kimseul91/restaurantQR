@@ -1,5 +1,5 @@
 import React from "react";
-import "../customer/customer.css";
+import "../../customer/customer.css";
 import { Button } from "react-bootstrap";
 function EditMenuButtons(props) {
   return (

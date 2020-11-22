@@ -1,5 +1,5 @@
 import React from "react";
-import "../customer/customer.css";
+import "../../customer/customer.css";
 import Accordion from "react-bootstrap/Accordion";
 import Card from "react-bootstrap/Card";
 function EditMenuHeaderAndBox(props) {

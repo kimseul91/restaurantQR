@@ -14,7 +14,9 @@ import ".././custom.css";
 import TableViews from "./TableViews.js";
 import ClockView from "./ClockView.js";
 import Employees from "./employees.js";
-import fb from "../../Firebase";
+import Firebase from "../../Firebase";
+import axios from "axios";
+import EditMenu from "./EditFolder/EditMenu";
 
 class StaffEdit extends React.Component {
   // function Home(props) {
@@ -22,7 +24,19 @@ class StaffEdit extends React.Component {
     super(props);
     this.state = {
       value: "Tables",
+      name: null,
     };
+  }
+  async componentDidMount() {
+    const currentInfo = (
+      await axios.post(
+        "http://localhost:5001/restaurantqr-73126/us-central1/api/restaurant/getName",
+        {
+          user: Firebase.auth.currentUser,
+        }
+      )
+    ).data;
+    this.setState({ name: currentInfo.name });
   }
 
   render() {
@@ -73,7 +87,7 @@ class StaffEdit extends React.Component {
           <Navbar variant="dark-blue-color" className="staff-navbar">
             <Navbar.Brand>
               Edit mode <br />
-              {this.props.name}
+              {this.state.name}
             </Navbar.Brand>
             <Container>
               <Navbar.Collapse className="justify-content-md-center">
@@ -116,13 +130,13 @@ class StaffEdit extends React.Component {
         return (
           // <div style={{ backgroundColor: "#0DB4B9", marginTop: "1vw" }}>
 
-          <TableViews name={this.props.name} />
+          <TableViews name={this.state.name} />
           // </div>
         );
       case "Employees":
-        return <Employees name={this.props.name} />;
+        return <Employees name={this.state.name} />;
       case "Menu":
-        return alert("Not yet made");
+        return <EditMenu />;
       default:
         return;
     }

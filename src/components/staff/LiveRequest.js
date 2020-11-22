@@ -66,15 +66,21 @@ function LiveRequest(props) {
     if (tableRequests != null) {
       let arrTables = [];
       Object.keys(tableRequests).map((key, indx) => {
-        if (tableRequests[key].requests && tableRequests[key].requests.length > 0) {
-          tableRequests[key].requests.map(item => {
-            return arrTables.push([item["time"], { "item": item["item"], "table": key }])
-          })
+        if (
+          tableRequests[key].requests &&
+          tableRequests[key].requests.length > 0
+        ) {
+          tableRequests[key].requests.map((item) => {
+            return arrTables.push([
+              item["time"],
+              { item: item["item"], table: key },
+            ]);
+          });
         }
       });
       arrTables.sort((a, b) => b - a);
       return (
-        <Table striped>
+        <Table striped className="tables-accordion">
           <thead>
             <tr className="center">
               <th>Table</th>
@@ -84,20 +90,25 @@ function LiveRequest(props) {
           </thead>
           <tbody>
             {arrTables.map((item, indx) => {
-              return <tr
-                id="request-row"
-                name={name}
-                table={item[1].table}
-                item={item}
-                key={item[1].table + item[1].item + item[0]}
-                onClick={doneWithTask}
-              >
-                <td>{item[1].table}</td>
-                <td>{item[1].item}</td>
-                <td>{new Date(arrTables[indx][0] * 1000).toLocaleTimeString("en-US").toString()}</td>
-              </tr>
-            }
-            )}
+              return (
+                <tr
+                  id="request-row"
+                  name={name}
+                  table={item[1].table}
+                  item={item}
+                  key={item[1].table + item[1].item + item[0]}
+                  onClick={doneWithTask}
+                >
+                  <td>{item[1].table}</td>
+                  <td>{item[1].item}</td>
+                  <td>
+                    {new Date(arrTables[indx][0] * 1000)
+                      .toLocaleTimeString("en-US")
+                      .toString()}
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </Table>
       );

@@ -11360,4 +11360,7 @@ button {
   max-height: 30%;
 
 }
+.staff-container-scroll {
+  overflow-y: auto;
+}
 /*# sourceMappingURL=custom.css.map */

@@ -92,7 +92,7 @@ function TableViews(props) {
 
     uploadFile
       .delete()
-      .then(function () {})
+      .then(function () { })
       .catch((err) => console.log(err));
   };
 
@@ -108,7 +108,7 @@ function TableViews(props) {
   return (
     <div className="staff-table-bg-color">
       <CreateQRCode name={props.name} update={update} />
-      <Accordion className="tables-accordion" defaultActiveKey="0">
+      <Accordion className="tables-accordionx" defaultActiveKey="0">
         <h2>Tables</h2>
         {/* {populateTables()} */}
         {populateTablesVariable}

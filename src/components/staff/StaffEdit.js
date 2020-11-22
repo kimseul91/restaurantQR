@@ -105,7 +105,7 @@ class StaffEdit extends React.Component {
           </Navbar>
         </div>
 
-        <div className="staff-container-background-color">
+        <div className="staff-container-background-color staff-container-scroll">
           <Container fluid>
             <div className="btn-grp">
               <ToggleButtonGroup />

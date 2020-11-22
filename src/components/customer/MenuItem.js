@@ -22,7 +22,6 @@ function MenuItem(props) {
   const orderItem = async (itemName) => {
     // handleClick();
     // props.handleOrderSuccess();
-    console.log(props.language);
 
     // doesnt need a translation
     if (props.language !== "en") {
@@ -33,8 +32,6 @@ function MenuItem(props) {
         )
       ).data;
 
-      console.log(translatedItemName);
-      console.log(Date.now());
       // send api request to axios to add item to order
       await axios.put(
         //      `https://restaurantqr-73126.cloudfunctions.net/us-central1/api/${props.name}/menu`

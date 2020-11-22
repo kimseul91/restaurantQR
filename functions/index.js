@@ -145,7 +145,7 @@ app.post("/restaurant/getName", async (req, res) => {
 app.post("/restaurant/addNew/section", async (req, res) => {
   const currentInfo = (
     await axios.post(
-      "http://localhost:5001/restaurantqr-73126/us-central1/api/restaurant/getName",
+      "https://us-central1-restaurantqr-73126.cloudfunctions.net/api/restaurant/getName",
       {
         user: req.body.user,
       }
@@ -174,7 +174,7 @@ app.post("/restaurant/addNew/section", async (req, res) => {
 app.post("/restaurant/addNew/item", async (req, res) => {
   const currentInfo = (
     await axios.post(
-      "http://localhost:5001/restaurantqr-73126/us-central1/api/restaurant/getName",
+      "https://us-central1-restaurantqr-73126.cloudfunctions.net/api/restaurant/getName",
       {
         user: req.body.user,
       }
@@ -207,7 +207,7 @@ app.post("/restaurant/addNew/item", async (req, res) => {
 app.post("/restaurant/delete/section", async (req, res) => {
   const currentInfo = (
     await axios.post(
-      "http://localhost:5001/restaurantqr-73126/us-central1/api/restaurant/getName",
+      "https://us-central1-restaurantqr-73126.cloudfunctions.net/api/restaurant/getName",
       {
         user: req.body.user,
       }
@@ -235,10 +235,9 @@ app.post("/restaurant/delete/section", async (req, res) => {
 });
 
 app.post("/restaurant/delete/item", async (req, res) => {
-  console.log("yooooooooooo");
   const currentInfo = (
     await axios.post(
-      "http://localhost:5001/restaurantqr-73126/us-central1/api/restaurant/getName",
+      "https://us-central1-restaurantqr-73126.cloudfunctions.net/api/restaurant/getName",
       {
         user: req.body.user,
       }
@@ -246,9 +245,6 @@ app.post("/restaurant/delete/item", async (req, res) => {
   ).data;
 
   const name = currentInfo.name;
-
-  console.log(name);
-  console.log(req.body);
 
   try {
     await firestore
@@ -810,7 +806,9 @@ const parseMenuV2 = async (sectionName, menuSection, language) => {
     // console.log(eachTuple);
     objToSend[translatedSectionName][eachTuple[0]] = {};
     objToSend[translatedSectionName][eachTuple[0]].description = eachTuple[1];
-    objToSend[translatedSectionName][eachTuple[0]].price = Math.random() * 15;
+    if (sectionName !== "Service Items") {
+      objToSend[translatedSectionName][eachTuple[0]].price = Math.random() * 15;
+    }
   });
 
   // console.log(objToSend);

@@ -8,13 +8,18 @@ function CustomerHome(props) {
   // props.name == the restaurant name
   // const [name, setName] = useState(null);
   // language array that stores all the languages that we support translation for
-  const languauges = ["English", "Spanish", "French"];
 
   const languageDictionary = {
     English: "en",
     Spanish: "es",
     French: "fr",
+    Korean: "ko",
+    Portuguese: "pt",
+    German: "de",
+    Chinese: "zh",
   };
+
+  const languauges = Object.keys(languageDictionary);
 
   const [redirectLocation, setRedirect] = useState(null);
 
@@ -50,7 +55,9 @@ function CustomerHome(props) {
   return (
     <div className="Home">
       <div className="headerDiv wide">
-        <span id="restaurantName">{`Welcome to ${restaurantName}`}</span>
+        <span id="restaurantName">{`Welcome to ${decodeURI(
+          restaurantName
+        )}`}</span>
       </div>
       <Container className="flex-box">
         <div id="homeImgDiv">

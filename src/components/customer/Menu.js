@@ -32,19 +32,19 @@ function Menu(props) {
 
   // console.log(props.location.search);
 
+  let currentLanguage;
+
   useEffect(() => {
     // used for animation purposes
 
     (async function () {
       const menuRequest = await axios.get(
-        // `http://localhost:5001/restaurantqr-73126/us-central1/api/${
-        //   name ? name : "null"
-        // }/menu/${id ? id : "null"}`
-        `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/${restaurantName}/menu`
+        `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/${decodeURI(
+          restaurantName
+        )}/menu`
       );
 
       const menuData = menuRequest.data.menu;
-      // const translatedMenu = menuData.
       menuData["Service Items"] = {
         Napkins: { description: "Your sever will bring you more napkins" },
         "Refill Drinks": {
@@ -56,43 +56,46 @@ function Menu(props) {
         Check: { description: "Your sever will bring you the check" },
       };
 
-      let currentLanguage;
       // gets the language code from the url
       // inspiration from https://medium.com/better-programming/using-url-parameters-and-query-strings-with-react-router-fffdcea7a8e9
       if (props.location && props.location.search) {
         const queryString = new URLSearchParams(props.location.search);
-        currentLanguage = queryString.get("lang");
-        console.log(currentLanguage);
-
-        if (currentLanguage) {
-          // setMenulanguage(currentLanguage);
+        if (!queryString.get("lang")) {
+          currentLanguage = "en";
+        } else {
+          currentLanguage = queryString.get("lang");
         }
       }
       // use currentLanguage to reference the translated language
 
-      console.log(menuData);
+      let translatedMenu = menuData;
 
       if (currentLanguage && currentLanguage !== "en") {
         // need to translate
+        translatedMenu = await axios.post(
+          "http://localhost:5001/restaurantqr-73126/us-central1/api/translate/fullMenu",
+          {
+            menu: menuData,
+            language: currentLanguage,
+            name: decodeURI(restaurantName),
+          }
+        );
+        console.log(translatedMenu.data);
       }
 
-      // const translatedMenu = await axios.post(
-      //   "http://localhost:5001/restaurantqr-73126/us-central1/api/translate",
-      //   {
-      //     menu: menuData,
-      //   }
-      // );
-      // console.log(translatedMenu);
-
       setTimeout(() => {
-        setMenu(menuData);
-        setOriginalMenu(menuData);
+        setMenu(currentLanguage == "en" ? menuData : translatedMenu.data);
+        // setMenu(menuData);
+
+        // setOriginalMenu(menuData);
         // console.log(menuData);
         // console.log(Object.entries(menuData));
 
         const tempArr = [];
         // adds all of the menu items to the search term list
-        Object.values(menuData).forEach((eachList) => {
+        Object.values(
+          currentLanguage == "en" ? menuData : translatedMenu.data
+        ).forEach((eachList) => {
           // console.log(eachList);
           Object.keys(eachList).forEach((eachItem) => {
             tempArr.push(eachItem);
@@ -141,6 +144,7 @@ function Menu(props) {
         tableID={tableID}
         item={currentItem}
         goBackToMenu={changeToMenuView}
+        language={currentLanguage ? currentLanguage : "en"}
       />
     );
   }

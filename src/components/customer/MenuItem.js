@@ -68,7 +68,7 @@ function MenuItem(props) {
     <div className="outerDiv">
       <Header name={props.name} />
       <div id="menuSingleItemDiv" className="flex-box">
-        <span className="itemDescription" id="itemName">
+        <span className="itemDescription itemHeaderName" id="itemName">
           {props.item[0]}
         </span>
         <p className="itemDescription">{props.item[1].description}</p>

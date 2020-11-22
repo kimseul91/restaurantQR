@@ -13,6 +13,8 @@
 
 /.idea
 
+/src/components/staff/key.json
+
 # misc
 .DS_Store
 .env.local

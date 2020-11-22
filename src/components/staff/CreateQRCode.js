@@ -1,6 +1,7 @@
 import { Button, InputGroup, FormControl } from "react-bootstrap";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import key from "./key.json";
 import Firebase from "../../Firebase";
 
 function CreateQRCode(props) {
@@ -31,12 +32,12 @@ function CreateQRCode(props) {
       method: "GET",
       url: "https://rapidapi.p.rapidapi.com/generateQR",
       params: {
-        text: `http://www.restaurantQR.com/test_restaurant_3/staff/${tableNumber}`,
+        text: `https://restaurantqr-73126.web.app/customer/${props.name}/${tableNumber}`,
         // format: 'pdf'
       },
       responseType: "blob",
       headers: {
-        "x-rapidapi-key": "0654d2cef3mshfee87c42ba18e1dp101920jsnbc82bd0af8e3",
+        "x-rapidapi-key": key,
         "x-rapidapi-host": "qrcode3.p.rapidapi.com",
       },
     };
@@ -44,7 +45,7 @@ function CreateQRCode(props) {
       let testimage = URL.createObjectURL(x.data);
       setImage(testimage);
       const uploadFile = Firebase.storage
-        .ref(`restaurants/test_restaurant_3/${tableNumber}`)
+        .ref(`restaurants/${props.name}/${tableNumber}`)
         .put(x.data);
       uploadFile.on(
         "state_changed",
@@ -56,13 +57,13 @@ function CreateQRCode(props) {
         },
         () => {
           Firebase.storage
-            .ref("restaurants/test_restaurant_3")
+            .ref(`restaurants/${props.name}`)
             .child(`${tableNumber}`)
             .getDownloadURL()
             .then((url) => {
               Firebase.db
                 .collection("Restaurant")
-                .doc("test_restaurant_3")
+                .doc(`${props.name}`)
                 .update({
                   [`tables.table${tableNumber}.qrcode`]: url,
                 });

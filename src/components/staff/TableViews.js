@@ -75,7 +75,7 @@ function TableViews(props) {
       objToSend
     );
     const uploadFile = Firebase.storage.ref(
-      `restaurants/test_restaurant_3/${tableNumber}`
+      `restaurants/${props.name}/${tableNumber}`
     );
 
     uploadFile

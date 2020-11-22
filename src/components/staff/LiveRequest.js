@@ -11,7 +11,7 @@ function LiveRequest(props) {
       const interval = setInterval(() => {
         const fetchData = async () => {
           const liveRequest = await axios.get(
-            `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/${props.name}/liverequest`
+            `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/${props.name}/staff/liverequest`
             // http://localhost:5001/restaurantqr-73126/us-central1/api/
           );
           const requestData = liveRequest.data.tables;
@@ -26,7 +26,7 @@ function LiveRequest(props) {
     if (props.name) {
       const fetchData = async () => {
         const liveRequest = await axios.get(
-          `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/${props.name}/liverequest`
+          `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/${props.name}/staff/liverequest`
           // http://localhost:5001/restaurantqr-73126/us-central1/api/
         );
         const requestData = liveRequest.data.tables;

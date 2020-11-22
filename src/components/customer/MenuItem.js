@@ -36,8 +36,8 @@ function MenuItem(props) {
         // send api request to axios to add item to order
         await axios.put(
           //      `https://restaurantqr-73126.cloudfunctions.net/us-central1/api/${props.name}/menu`
-          `http://localhost:5001/restaurantqr-73126/us-central1/api/${props.name}/customer/table/${props.tableID}/order`,
-          // `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/${props.name}/customer/table/${props.tableID}/order`,
+          // `http://localhost:5001/restaurantqr-73126/us-central1/api/${props.name}/customer/table/${props.tableID}/order`,
+          `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/${props.name}/customer/table/${props.tableID}/order`,
           {
             request: translatedItemName,
             time: Date.now(),
@@ -51,6 +51,7 @@ function MenuItem(props) {
       try {
         await axios.put(
           `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/${props.name}/customer/table/${props.tableID}/order`,
+          // `http://localhost:5001/restaurantqr-73126/us-central1/api/${props.name}/customer/table/${props.tableID}/order`,
           {
             request: itemName,
             time: Date.now(),

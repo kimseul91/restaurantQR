@@ -44,6 +44,9 @@ th, td {
     text-align: center;
     color: white;
     font-size: large;
+    display: flex;
+justify-content: center;
+align-items: center;
 }
 .btn {
     color: white;
@@ -72,7 +75,10 @@ th, td {
 
 .togglebutton {
     font-size: 100%;
-    text-align: center;
+    // text-align: center;
+    display: flex;
+justify-content: center;
+align-items: center;
 }
 
 button {

@@ -9,7 +9,7 @@
   width: 100%;
   padding-right: 17px;
   box-sizing: content-box;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 #outerCenter {
@@ -56,6 +56,7 @@
 }
 
 .editText {
+  width: 15vw;
   margin: 10px;
   border-radius: 12px;
   border: none;
@@ -64,6 +65,7 @@
 }
 
 .textareaEdit {
+  width: 79% !important;
   margin: 10px;
   border-radius: 12px;
   border: none;
@@ -83,7 +85,12 @@
 .editMenuBtns {
   width: 15vw;
   margin: 10px;
+  /* margin-left: 30px; */
+  /* margin-right: 30px; */
   max-height: 40px !important;
+display: flex;
+justify-content: center;
+align-items: center;
 }
 
 .btnRow {
@@ -98,4 +105,9 @@
 
 .editInput {
   background-color: white;
+}
+
+.menuItemWrapperCard {
+  width: 91%;
+  margin: 10px;
 }

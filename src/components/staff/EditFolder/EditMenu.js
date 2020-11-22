@@ -42,8 +42,8 @@ function EditMenu() {
   }, [counter]);
   return (
     <div className="editMenuDiv">
-      <Header name={currentName} />
-      <div id="spacer"></div>
+      {/* <Header name={currentName} /> */}
+      {/* <div id="spacer"></div> */}
       <div id="outerCenter">
         <EditMenuLeftPanel update={update} />
         <MenuDiv menu={menu} />

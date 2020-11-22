@@ -9,7 +9,7 @@ function Employees(props) {
   useEffect(() => {
     const fetchData = async () => {
       const axiosCall = await axios.get(
-        `http://localhost:5001/restaurantqr-73126/us-central1/api/${props.name}/staff/employees`
+        `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/${props.name}/staff/employees`
       );
       const employeeList = axiosCall.data.employees;
       setEmployees(employeeList);
@@ -31,7 +31,7 @@ function Employees(props) {
     };
     await axios.put(
       // `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/${name}/deleterequest/${table}`,
-      `http://localhost:5001/restaurantqr-73126/us-central1/api/${props.name}/staff/out/${eid}`,
+      `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/${props.name}/staff/out/${eid}`,
       objectsToAxios
     );
     setCounter(counter + 1);
@@ -49,7 +49,7 @@ function Employees(props) {
     };
     await axios.put(
       // `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/${name}/deleterequest/${table}`,
-      `http://localhost:5001/restaurantqr-73126/us-central1/api/${props.name}/staff/in/${eid}`,
+      `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/${props.name}/staff/in/${eid}`,
       objectsToAxios
     );
     setCounter(counter + 1);

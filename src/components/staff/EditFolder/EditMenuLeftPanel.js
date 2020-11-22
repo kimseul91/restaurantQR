@@ -16,7 +16,7 @@ function EditMenuLeftPanel(props) {
 
   const addNewSection = async () => {
     await axios.post(
-      "http://localhost:5001/restaurantqr-73126/us-central1/api/restaurant/addNew/section",
+      "https://us-central1-restaurantqr-73126.cloudfunctions.net/api/restaurant/addNew/section",
       {
         user: Firebase.auth.currentUser,
         sectionName: section,
@@ -27,7 +27,7 @@ function EditMenuLeftPanel(props) {
 
   const addNewItem = async () => {
     await axios.post(
-      "http://localhost:5001/restaurantqr-73126/us-central1/api/restaurant/addNew/item",
+      "https://us-central1-restaurantqr-73126.cloudfunctions.net/api/restaurant/addNew/item",
       {
         user: Firebase.auth.currentUser,
         sectionName: section,
@@ -41,7 +41,7 @@ function EditMenuLeftPanel(props) {
 
   const deleteItem = async () => {
     await axios.post(
-      "http://localhost:5001/restaurantqr-73126/us-central1/api/restaurant/delete/item",
+      "https://us-central1-restaurantqr-73126.cloudfunctions.net/api/restaurant/delete/item",
       {
         user: Firebase.auth.currentUser,
         sectionName: section,
@@ -53,7 +53,7 @@ function EditMenuLeftPanel(props) {
 
   const deleteSection = async () => {
     await axios.post(
-      "http://localhost:5001/restaurantqr-73126/us-central1/api/restaurant/delete/section",
+      "https://us-central1-restaurantqr-73126.cloudfunctions.net/api/restaurant/delete/section",
       {
         user: Firebase.auth.currentUser,
         sectionName: section,

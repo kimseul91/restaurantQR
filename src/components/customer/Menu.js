@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./customer.css";
 import Header from "./Header.js";
 import MenuItem from "./MenuItem.js";
@@ -8,6 +8,8 @@ import Accordion from "react-bootstrap/Accordion";
 import AutoComplete from "./AutoComplete";
 import { useParams } from "react-router-dom";
 import { Spinner } from "react-bootstrap";
+import { Snackbar } from "@material-ui/core";
+import MuiAlert from "@material-ui/lab/Alert";
 
 function Menu(props) {
   // props.name == the restaurant name;
@@ -20,11 +22,8 @@ function Menu(props) {
   const [searchTerm, setSearch] = useState("");
   const [menuLanguage, setMenulanguage] = useState("en");
   const [menuSearchTerms, setMenuSearchTerms] = useState([]);
-  const languageDictionary = {
-    English: "en",
-    Spanish: "es",
-    French: "fr",
-  };
+  const [open, setOpen] = useState(false);
+  const currentLanguage = useRef("en");
 
   const { restaurantName, tableID } = useParams();
 
@@ -32,7 +31,7 @@ function Menu(props) {
 
   // console.log(props.location.search);
 
-  let currentLanguage;
+  // let currentLanguage;
 
   useEffect(() => {
     // used for animation purposes
@@ -61,40 +60,35 @@ function Menu(props) {
       if (props.location && props.location.search) {
         const queryString = new URLSearchParams(props.location.search);
         if (!queryString.get("lang")) {
-          currentLanguage = "en";
+          currentLanguage.current = "en";
         } else {
-          currentLanguage = queryString.get("lang");
+          currentLanguage.current = queryString.get("lang");
         }
       }
       // use currentLanguage to reference the translated language
 
       let translatedMenu = menuData;
 
-      if (currentLanguage && currentLanguage !== "en") {
+      if (currentLanguage.current && currentLanguage.current !== "en") {
         // need to translate
         translatedMenu = await axios.post(
-          "http://localhost:5001/restaurantqr-73126/us-central1/api/translate/fullMenu",
+          "https://us-central1-restaurantqr-73126.cloudfunctions.net/api/translate/fullMenu",
           {
             menu: menuData,
-            language: currentLanguage,
+            language: currentLanguage.current,
             name: decodeURI(restaurantName),
           }
         );
-        console.log(translatedMenu.data);
       }
 
       setTimeout(() => {
-        setMenu(currentLanguage == "en" ? menuData : translatedMenu.data);
-        // setMenu(menuData);
-
-        // setOriginalMenu(menuData);
-        // console.log(menuData);
-        // console.log(Object.entries(menuData));
-
+        setMenu(
+          currentLanguage.current === "en" ? menuData : translatedMenu.data
+        );
         const tempArr = [];
         // adds all of the menu items to the search term list
         Object.values(
-          currentLanguage == "en" ? menuData : translatedMenu.data
+          currentLanguage.current === "en" ? menuData : translatedMenu.data
         ).forEach((eachList) => {
           // console.log(eachList);
           Object.keys(eachList).forEach((eachItem) => {
@@ -102,16 +96,7 @@ function Menu(props) {
           });
         });
 
-        // const bro = await axios.post(
-        //   "http://localhost:5001/restaurantqr-73126/us-central1/api/test_restaurant_3/menu",
-        //   {
-        //     data: tempArr,
-        //   }
-        // );
-
         setMenuSearchTerms(tempArr);
-
-        // const termList = Object.values(menuData).reduce((acc, curr) => {}, []);
       }, 1200);
     })();
   }, []);
@@ -136,6 +121,19 @@ function Menu(props) {
     setSearch(text);
   };
 
+  const handleClick = () => {
+    setOpen(true);
+  };
+
+  const handleOrderSuccess = () => {
+    changeToMenuView();
+    handleClick();
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   // changes to the item view if you click on an item
   if (itemView) {
     return (
@@ -144,7 +142,8 @@ function Menu(props) {
         tableID={tableID}
         item={currentItem}
         goBackToMenu={changeToMenuView}
-        language={currentLanguage ? currentLanguage : "en"}
+        handleOrderSuccess={handleOrderSuccess}
+        language={currentLanguage.current ? currentLanguage.current : "en"}
       />
     );
   }
@@ -193,6 +192,17 @@ function Menu(props) {
           <span id="spinnerText">Loading Menu...</span>
         </div>
       )}
+      <Snackbar
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        open={open}
+        autoHideDuration={3000}
+        onClose={handleClose}
+        key={"top" + "center"}
+      >
+        <MuiAlert elevation={6} variant="filled" severity="success">
+          Your order has been placed!
+        </MuiAlert>
+      </Snackbar>
     </div>
   );
 }

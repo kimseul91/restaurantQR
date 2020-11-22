@@ -20,7 +20,7 @@ class Home extends React.Component {
   async componentDidMount() {
     const currentInfo = (
       await axios.post(
-        "http://localhost:5001/restaurantqr-73126/us-central1/api/restaurant/getName",
+        "https://us-central1-restaurantqr-73126.cloudfunctions.net/api/restaurant/getName",
         {
           user: Firebase.auth.currentUser,
         }

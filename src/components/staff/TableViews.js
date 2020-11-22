@@ -11,7 +11,7 @@ function TableViews(props) {
   useEffect(() => {
     const fetchData = async () => {
       const axiosCall = await axios.get(
-        `http://localhost:5001/restaurantqr-73126/us-central1/api/${props.name}/staff/liverequest`
+        `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/${props.name}/staff/liverequest`
       );
       const tableLists = axiosCall.data.tables;
       setTables(tableLists);
@@ -71,11 +71,11 @@ function TableViews(props) {
     };
     setCounter(counter + 1);
     const del = await axios.put(
-      `http://localhost:5001/restaurantqr-73126/us-central1/api/${props.name}/deletetable`,
+      `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/${props.name}/deletetable`,
       objToSend
     );
     const uploadFile = Firebase.storage.ref(
-      `restaurants/test_restaurant_3/${tableNumber}`
+      `restaurants/${props.name}/${tableNumber}`
     );
 
     uploadFile

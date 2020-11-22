@@ -11,7 +11,7 @@ function MenuItem(props) {
 
   const [open, setOpen] = useState(false);
 
-  const handleClick = () => {
+  const handleFail = () => {
     setOpen(true);
   };
 
@@ -25,31 +25,41 @@ function MenuItem(props) {
 
     // doesnt need a translation
     if (props.language !== "en") {
-      const translatedItemName = (
-        await axios.post(
-          "https://us-central1-restaurantqr-73126.cloudfunctions.net/api/translate/item",
-          { item: itemName, language: props.language }
-        )
-      ).data;
+      try {
+        const translatedItemName = (
+          await axios.post(
+            "https://us-central1-restaurantqr-73126.cloudfunctions.net/api/translate/item",
+            { item: itemName, language: props.language }
+          )
+        ).data;
 
-      // send api request to axios to add item to order
-      await axios.put(
-        //      `https://restaurantqr-73126.cloudfunctions.net/us-central1/api/${props.name}/menu`
-        `http://localhost:5001/restaurantqr-73126/us-central1/api/${props.name}/customer/table/${props.tableID}/order`,
-        // `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/${props.name}/customer/table/${props.tableID}/order`,
-        {
-          request: translatedItemName,
-          time: Date.now(),
-        }
-      );
+        // send api request to axios to add item to order
+        await axios.put(
+          //      `https://restaurantqr-73126.cloudfunctions.net/us-central1/api/${props.name}/menu`
+          `http://localhost:5001/restaurantqr-73126/us-central1/api/${props.name}/customer/table/${props.tableID}/order`,
+          // `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/${props.name}/customer/table/${props.tableID}/order`,
+          {
+            request: translatedItemName,
+            time: Date.now(),
+          }
+        );
+        props.handleOrderSuccess();
+      } catch (error) {
+        handleFail();
+      }
     } else {
-      await axios.put(
-        `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/${props.name}/customer/table/${props.tableID}/order`,
-        {
-          request: itemName,
-          time: Date.now(),
-        }
-      );
+      try {
+        await axios.put(
+          `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/${props.name}/customer/table/${props.tableID}/order`,
+          {
+            request: itemName,
+            time: Date.now(),
+          }
+        );
+        props.handleOrderSuccess();
+      } catch (error) {
+        handleFail();
+      }
     }
   };
 

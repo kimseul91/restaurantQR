@@ -88,7 +88,7 @@ function Menu(props) {
         const tempArr = [];
         // adds all of the menu items to the search term list
         Object.values(
-          currentLanguage == "en" ? menuData : translatedMenu.data
+          currentLanguage.current === "en" ? menuData : translatedMenu.data
         ).forEach((eachList) => {
           // console.log(eachList);
           Object.keys(eachList).forEach((eachItem) => {

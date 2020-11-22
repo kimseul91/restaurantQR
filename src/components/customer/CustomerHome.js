@@ -16,7 +16,6 @@ function CustomerHome(props) {
     Korean: "ko",
     Portuguese: "pt",
     German: "de",
-    Chinese: "zh",
   };
 
   const languauges = Object.keys(languageDictionary);

@@ -115,7 +115,7 @@ Modern Pink Backpack: #e76d89
 #menuCardsDiv {
   overflow-y: scroll;
   color: white;
-  margin-top: 5%;
+  /* margin-top: 5%; */
   height: 70vh;
   justify-content: start !important;
 }

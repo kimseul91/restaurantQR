@@ -13,7 +13,9 @@
   display: flex;
   /* border: 2px solid white; */
   border-radius: 8px;
-  background-color: #e76d89;
+  /* background-color: #e76d89; */
+  background: rgb(12,160,164);
+  background: linear-gradient(280deg, rgba(12,160,164,.5) 17%, rgba(78,71,159,.5) 95%);
 }
 
 .inputText {
@@ -45,12 +47,15 @@
 
 .loginBtn {
   margin: 5px;
-  background-color: #0db4b9;
+  background-color: #63bed4;
   border: none;
 }
 
 .loginBtn:hover {
-  background-color: #1d1145 !important;
+  /* background-color: #1d1145 !important; */
+  text-align: center;
+  color: rgb(38, 38, 160);
+  font-size: large;
 }
 
 #linkSpan {
@@ -65,7 +70,9 @@
   padding: 1.5rem;
   text-align: center;
   margin-bottom: 2pc;
-  background-color: #0db4b9;
+  /* background-color: #0db4b9; */
+  background: rgb(57,47,106);
+    background: linear-gradient(90deg, rgba(57,47,106,1) 41%, rgba(0,0,0,1) 100%);
   font-family: Lato, sans-serif;
   /* position: fixed; */
 }

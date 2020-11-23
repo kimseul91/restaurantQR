@@ -20,11 +20,9 @@ function LiveRequest(props) {
           setRequest(requestData);
         };
         fetchData();
-        console.log("HEYYYyYYYYYYYY");
       }, 20000);
       return () => clearInterval(interval);
     }
-    console.log("HELLO");
   }, [props]);
   useEffect(() => {
     if (props.name) {
@@ -37,7 +35,6 @@ function LiveRequest(props) {
         setRequest(requestData);
       };
       fetchData();
-      console.log("yoooooooooooo");
     }
   }, [props, counter]);
   const removeData = async (requests, e) => {
@@ -63,8 +60,8 @@ function LiveRequest(props) {
     };
     await axios.put(
       // `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/${name}/deleterequest/${table}`,
-      // `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/${name}/deleterequest/${table}`,
-      `http://localhost:5001/restaurantqr-73126/us-central1/api/${name}/deleterequest/${table}`,
+      `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/${name}/deleterequest/${table}`,
+      // `http://localhost:5001/restaurantqr-73126/us-central1/api/${name}/deleterequest/${table}`,
 
       objectsToAxios
     );

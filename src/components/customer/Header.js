@@ -3,7 +3,7 @@ import "./customer.css";
 import FastfoodIcon from "@material-ui/icons/Fastfood";
 function Header(props) {
   return (
-    <div className="headerDiv mainHeader wide">
+    <div className="headerDiv mainHeader wide" id="newHeader">
       <FastfoodIcon
         fontSize="large"
         style={{ marginRight: "10px", color: "white" }}

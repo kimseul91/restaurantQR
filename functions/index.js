@@ -27,18 +27,19 @@ const firestore = admin.firestore();
 const auth = admin.auth;
 
 app.use(cors({ origin: true }));
+app.options("*", cors());
 app.use(bodyParser.json());
-app.use(
-  session({
-    name: "menuSessionCookie",
-    secret: "qr code secret",
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      maxAge: 7.2 * 10 ** 6,
-    },
-  })
-);
+// app.use(
+//   session({
+//     name: "menuSessionCookie",
+//     secret: "qr code secret",
+//     resave: false,
+//     saveUninitialized: false,
+//     cookie: {
+//       maxAge: 7.2 * 10 ** 6,
+//     },
+//   })
+// );
 
 app.get("/", (req, res) => {
   res.send("Yoooooo what up customers!");
@@ -135,7 +136,7 @@ app.post("/restaurant/getName", async (req, res) => {
       .where("uid", "==", uid)
       .get();
     const accountData = accountPreData.docs[0].data();
-    res.send(accountData);
+    res.send({ name: accountData.name });
   } catch (error) {
     res.status(404).send();
     return;
@@ -143,16 +144,18 @@ app.post("/restaurant/getName", async (req, res) => {
 });
 
 app.post("/restaurant/addNew/section", async (req, res) => {
-  const currentInfo = (
-    await axios.post(
-      "https://us-central1-restaurantqr-73126.cloudfunctions.net/api/restaurant/getName",
-      {
-        user: req.body.user,
-      }
-    )
-  ).data;
+  // const currentInfo = (
+  //   await axios.post(
+  //     "https://us-central1-restaurantqr-73126.cloudfunctions.net/api/restaurant/getName",
+  //     {
+  //       user: req.body.user,
+  //     }
+  //   )
+  // ).data;
 
-  const name = currentInfo.name;
+  // const name = currentInfo.name;
+
+  const name = req.body.name;
   if (!name) {
     res.status(400).send();
     return;
@@ -172,16 +175,20 @@ app.post("/restaurant/addNew/section", async (req, res) => {
 });
 
 app.post("/restaurant/addNew/item", async (req, res) => {
-  const currentInfo = (
-    await axios.post(
-      "https://us-central1-restaurantqr-73126.cloudfunctions.net/api/restaurant/getName",
-      {
-        user: req.body.user,
-      }
-    )
-  ).data;
+  // const currentInfo = (
+  //   await axios.post(
+  //     "https://us-central1-restaurantqr-73126.cloudfunctions.net/api/restaurant/getName",
+  //     {
+  //       user: req.body.user,
+  //     }
+  //   )
+  // ).data;
 
-  const name = currentInfo.name;
+  // const name = currentInfo.name;
+
+  // console.log("hello");
+
+  const name = req.body.name;
 
   if (!name) {
     res.status(400).send();
@@ -205,16 +212,16 @@ app.post("/restaurant/addNew/item", async (req, res) => {
 });
 
 app.post("/restaurant/delete/section", async (req, res) => {
-  const currentInfo = (
-    await axios.post(
-      "https://us-central1-restaurantqr-73126.cloudfunctions.net/api/restaurant/getName",
-      {
-        user: req.body.user,
-      }
-    )
-  ).data;
+  // const currentInfo = (
+  //   await axios.post(
+  //     "https://us-central1-restaurantqr-73126.cloudfunctions.net/api/restaurant/getName",
+  //     {
+  //       user: req.body.user,
+  //     }
+  //   )
+  // ).data;
 
-  const name = currentInfo.name;
+  const name = req.body.name;
 
   if (!name) {
     res.status(400).send();
@@ -235,16 +242,17 @@ app.post("/restaurant/delete/section", async (req, res) => {
 });
 
 app.post("/restaurant/delete/item", async (req, res) => {
-  const currentInfo = (
-    await axios.post(
-      "https://us-central1-restaurantqr-73126.cloudfunctions.net/api/restaurant/getName",
-      {
-        user: req.body.user,
-      }
-    )
-  ).data;
+  // const currentInfo = (
+  //   await axios.post(
+  //     "https://us-central1-restaurantqr-73126.cloudfunctions.net/api/restaurant/getName",
+  //     {
+  //       user: req.body.user,
+  //     }
+  //   )
+  // ).data;
 
-  const name = currentInfo.name;
+  // const name = currentInfo.name;
+  const name = req.body.name;
 
   try {
     await firestore

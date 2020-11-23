@@ -15,48 +15,109 @@ function EditMenuLeftPanel(props) {
   const [description, setDescription] = useState("");
 
   const addNewSection = async () => {
+    // const currentInfo = (
+    //   await axios.post(
+    //     "https://us-central1-restaurantqr-73126.cloudfunctions.net/api/restaurant/getName",
+    //     {
+    //       user: Firebase.auth.currentUser,
+    //     }
+    //   )
+    // ).data;
+
+    const name = props.name;
+
     await axios.post(
       "https://us-central1-restaurantqr-73126.cloudfunctions.net/api/restaurant/addNew/section",
+      // "http://localhost:5001/restaurantqr-73126/us-central1/api/restaurant/addNew/section",
+
       {
         user: Firebase.auth.currentUser,
         sectionName: section,
+        name: name,
       }
     );
     props.update();
   };
 
   const addNewItem = async () => {
+    // const currentInfo = (
+    //   await axios.post(
+    //     "https://us-central1-restaurantqr-73126.cloudfunctions.net/api/restaurant/getName",
+
+    //     {
+    //       user: Firebase.auth.currentUser,
+    //     }
+    //   )
+    // ).data;
+
+    // const name = currentInfo.name;
+    const name = props.name;
+
     await axios.post(
       "https://us-central1-restaurantqr-73126.cloudfunctions.net/api/restaurant/addNew/item",
+      // "http://localhost:5001/restaurantqr-73126/us-central1/api/restaurant/addNew/item",
       {
         user: Firebase.auth.currentUser,
         sectionName: section,
         itemName: item,
         price: price,
         description: description,
+        name: name,
       }
     );
     props.update();
   };
 
   const deleteItem = async () => {
+    // const currentInfo = (
+    //   await axios.post(
+    //     "https://us-central1-restaurantqr-73126.cloudfunctions.net/api/restaurant/getName",
+    //     {
+    //       user: Firebase.auth.currentUser,
+    //     }
+    //   )
+    // ).data;
+
+    // const name = currentInfo.name;
+
+    const name = props.name;
+
     await axios.post(
       "https://us-central1-restaurantqr-73126.cloudfunctions.net/api/restaurant/delete/item",
+      // "http://localhost:5001/restaurantqr-73126/us-central1/api/restaurant/delete/item",
+
       {
         user: Firebase.auth.currentUser,
         sectionName: section,
         itemName: item,
+        name: name,
       }
     );
     props.update();
   };
 
   const deleteSection = async () => {
+    // const currentInfo = (
+    //   await axios.post(
+    //     "https://us-central1-restaurantqr-73126.cloudfunctions.net/api/restaurant/getName",
+    //     {
+    //       user: Firebase.auth.currentUser,
+    //     }
+    //   )
+    // ).data;
+
+    // const name = currentInfo.name;
+
+    const name = props.name;
+
     await axios.post(
       "https://us-central1-restaurantqr-73126.cloudfunctions.net/api/restaurant/delete/section",
+      // "http://localhost:5001/restaurantqr-73126/us-central1/api/restaurant/delete/section",
+
       {
         user: Firebase.auth.currentUser,
         sectionName: section,
+        name: name,
       }
     );
     props.update();

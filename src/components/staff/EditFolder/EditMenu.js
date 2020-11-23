@@ -9,7 +9,7 @@ import EditText from "./EditText";
 import EditMenuLeftPanel from "./EditMenuLeftPanel";
 import Firebase from "../../../Firebase";
 
-function EditMenu() {
+function EditMenu(props) {
   const [menu, setMenu] = useState(null);
   const [counter, setCounter] = useState(0);
   const [currentName, setName] = useState(null);
@@ -20,20 +20,20 @@ function EditMenu() {
 
   useEffect(() => {
     (async function () {
-      const currentInfo = (
-        await axios.post(
-          "https://us-central1-restaurantqr-73126.cloudfunctions.net/api/restaurant/getName",
-          {
-            user: Firebase.auth.currentUser,
-          }
-        )
-      ).data;
+      // const currentInfo = (
+      //   await axios.post(
+      //     "https://us-central1-restaurantqr-73126.cloudfunctions.net/api/restaurant/getName",
+      //     {
+      //       user: Firebase.auth.currentUser,
+      //     }
+      //   )
+      // ).data;
 
-      setName(currentInfo.name);
+      setName(props.name);
 
       const menuRequest = await axios.get(
         `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/${encodeURI(
-          currentInfo.name
+          props.name
         )}/menu`
       );
       const menuData = menuRequest.data.menu;
@@ -45,8 +45,8 @@ function EditMenu() {
       {/* <Header name={currentName} /> */}
       {/* <div id="spacer"></div> */}
       <div id="outerCenter">
-        <EditMenuLeftPanel update={update} />
-        <MenuDiv menu={menu} />
+        <EditMenuLeftPanel update={update} name={props.name} />
+        <MenuDiv menu={menu} name={props.name} />
       </div>
     </div>
   );

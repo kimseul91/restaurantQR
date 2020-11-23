@@ -81,18 +81,20 @@ function TableViews(props) {
     const objToSend = {
       tables: tables,
     };
-    setCounter(counter + 1);
     const del = await axios.put(
       `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/${props.name}/deletetable`,
       objToSend
     );
+
+    update();
+
     const uploadFile = Firebase.storage.ref(
       `restaurants/${props.name}/${tableNumber}`
     );
 
     uploadFile
       .delete()
-      .then(function () { })
+      .then(function () {})
       .catch((err) => console.log(err));
   };
 

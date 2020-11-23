@@ -136,7 +136,7 @@ class StaffEdit extends React.Component {
       case "Employees":
         return <Employees name={this.state.name} />;
       case "Menu":
-        return <EditMenu />;
+        return <EditMenu name={this.state.name} />;
       default:
         return;
     }

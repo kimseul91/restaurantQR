@@ -57,8 +57,8 @@ Modern Pink Backpack: #e76d89
 } */
 .food {
   height: auto;
-  width: 100vw;
-  padding: 2rem;
+  width: 60vw;
+  /* padding: 0.5rem; */
 }
 
 .flex-box {
@@ -111,6 +111,10 @@ Modern Pink Backpack: #e76d89
   text-align: center;
 }
 
+#newHeader {
+  height: 8vh !important;
+}
+
 #qrTitle {
   font-size: 25px;
 }
@@ -148,22 +152,26 @@ Modern Pink Backpack: #e76d89
 #menuSingleItemDiv {
   overflow-y: scroll;
   color: white;
-  /* margin-top: 5%; */
-  height: 60vh;
+  height: 70vh;
   justify-content: start !important;
 }
 
 .itemDescription {
   width: 100vw;
   margin: 1rem;
-  padding: 1rem;
+  padding: 0.5rem;
   /* margin-bottom: 30%; */
 }
 
-#itemPrice,
+#actualDescription,
+#itemPrice {
+  margin: 0;
+}
+
+/* #itemPrice,
 #itemName {
   margin-bottom: 5%;
-}
+} */
 
 #itemName,
 #itemPrice,
@@ -175,8 +183,8 @@ Modern Pink Backpack: #e76d89
 }
 
 .itemHeaderName {
-  font-size: 30px !important;
-  width: 70%;
+  /* font-size: 22px !important; */
+  width: 85%;
   font-weight: bold;
   /* border: 1px solid #1d1145; */
   /* background-color: #1d1145; */
@@ -217,7 +225,7 @@ Modern Pink Backpack: #e76d89
 
 .button-box {
   display: flex;
-  margin-top: 5%;
+  /* margin-top: -5%; */
   flex-direction: row;
   align-items: center;
   justify-content: space-around;

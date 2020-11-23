@@ -13,8 +13,9 @@ function EditMenuHeaderAndBox(props) {
     props.items.constructor === Object &&
     props.items != null
   ) {
+    // this is used for menu sections without any items in them
     return (
-      <Card className="menuItemWrapperCard">
+      <Card className="menuItemWrapperCard width91">
         <Accordion.Toggle as={Card.Header} eventKey={props.accID}>
           {props.sectionName}
         </Accordion.Toggle>
@@ -29,6 +30,7 @@ function EditMenuHeaderAndBox(props) {
     );
   }
 
+  // returns a header and the menu items within the header as a part of the accordion
   return (
     items.length !== 0 && (
       <Card className="menuItemWrapperCard width91">

@@ -11,18 +11,18 @@ function MenuItem(props) {
 
   const [open, setOpen] = useState(false);
 
+  // used for failing to complete an order request
   const handleFail = () => {
     setOpen(true);
   };
 
+  // closes the notification
   const handleClose = () => {
     setOpen(false);
   };
 
+  // function to order an item
   const orderItem = async (itemName) => {
-    // handleClick();
-    // props.handleOrderSuccess();
-
     // doesnt need a translation
     if (props.language !== "en") {
       try {
@@ -35,35 +35,37 @@ function MenuItem(props) {
 
         // send api request to axios to add item to order
         await axios.put(
-          //      `https://restaurantqr-73126.cloudfunctions.net/us-central1/api/${props.name}/menu`
-          // `http://localhost:5001/restaurantqr-73126/us-central1/api/${props.name}/customer/table/${props.tableID}/order`,
           `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/${props.name}/customer/table/${props.tableID}/order`,
           {
             request: translatedItemName,
             time: Math.floor(Date.now() / 1000),
           }
         );
+        // shows the success notification
         props.handleOrderSuccess();
       } catch (error) {
+        // shows the failure notification
         handleFail();
       }
     } else {
       try {
         await axios.put(
           `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/${props.name}/customer/table/${props.tableID}/order`,
-          // `http://localhost:5001/restaurantqr-73126/us-central1/api/${props.name}/customer/table/${props.tableID}/order`,
           {
             request: itemName,
             time: Math.floor(Date.now() / 1000),
           }
         );
+        // shows the success notification
         props.handleOrderSuccess();
       } catch (error) {
+        // shows the failure notification
         handleFail();
       }
     }
   };
 
+  // used to create a random distrubution of pictures to be used in the menu item
   const randomPicArray = [
     "https://thestayathomechef.com/wp-content/uploads/2017/08/Most-Amazing-Lasagna-2-e1574792735811.jpg",
     "https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F9%2F2013%2F12%2F06%2Fmolten-chocolate-cake-FT-RECIPE0220.jpg",
@@ -76,8 +78,10 @@ function MenuItem(props) {
     "https://www.qsrmagazine.com/sites/default/files/styles/story_page/public/phut_0.jpg?itok=h30EAnkk",
     "https://images.chinahighlights.com/allpicture/2019/11/a4ad4a7fe0cb401cb0be6383_894x598.jpg",
   ];
-  const randomIndex = Math.ceil(randomPicArray.length * Math.random());
+  // selects the random index for the pic array
+  const randomIndex = Math.floor(randomPicArray.length * Math.random());
 
+  // main component for a singular menu item view
   return (
     <div className="outerDiv">
       <Header name={props.name} />
@@ -85,7 +89,11 @@ function MenuItem(props) {
         <span className="itemDescription itemHeaderName" id="itemName">
           {props.item[0]}
         </span>
-        <img src={randomPicArray[randomIndex]} className="food" />
+        <img
+          src={randomPicArray[randomIndex]}
+          className="food"
+          alt="Random food"
+        />
         <p className="itemDescription" id="actualDescription">
           {props.item[1].description === "" ? null : props.item[1].description}
         </p>
@@ -118,7 +126,7 @@ function MenuItem(props) {
         open={open}
         autoHideDuration={5000}
         onClose={handleClose}
-        key={"top" + "center"}
+        key={"topcenter"}
       >
         <MuiAlert elevation={6} variant="filled" severity="error">
           Something went wrong, please try again!

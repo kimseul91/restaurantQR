@@ -1,6 +1,4 @@
-import React, { useEffect, useState } from "react";
-import Header from "../../customer/Header";
-import MenuDiv from "./MenuDiv";
+import React, { useState } from "react";
 import EditMenuButtons from "./EditMenuButtons";
 import axios from "axios";
 import Firebase from "../../../Firebase";
@@ -9,27 +7,19 @@ import "./EditMenu.css";
 import EditText from "./EditText";
 
 function EditMenuLeftPanel(props) {
+  // parent component that manages the left panel of EditMenu
+  // controls the api requests
   const [section, setSection] = useState("");
   const [item, setItem] = useState("");
   const [price, setPrice] = useState(5.99);
   const [description, setDescription] = useState("");
 
   const addNewSection = async () => {
-    // const currentInfo = (
-    //   await axios.post(
-    //     "https://us-central1-restaurantqr-73126.cloudfunctions.net/api/restaurant/getName",
-    //     {
-    //       user: Firebase.auth.currentUser,
-    //     }
-    //   )
-    // ).data;
-
+    // sends an api request to add a new section
     const name = props.name;
 
     await axios.post(
       "https://us-central1-restaurantqr-73126.cloudfunctions.net/api/restaurant/addNew/section",
-      // "http://localhost:5001/restaurantqr-73126/us-central1/api/restaurant/addNew/section",
-
       {
         user: Firebase.auth.currentUser,
         sectionName: section,
@@ -40,22 +30,11 @@ function EditMenuLeftPanel(props) {
   };
 
   const addNewItem = async () => {
-    // const currentInfo = (
-    //   await axios.post(
-    //     "https://us-central1-restaurantqr-73126.cloudfunctions.net/api/restaurant/getName",
-
-    //     {
-    //       user: Firebase.auth.currentUser,
-    //     }
-    //   )
-    // ).data;
-
-    // const name = currentInfo.name;
+    // sends an api request to add a new item or update a current item's price or description
     const name = props.name;
 
     await axios.post(
       "https://us-central1-restaurantqr-73126.cloudfunctions.net/api/restaurant/addNew/item",
-      // "http://localhost:5001/restaurantqr-73126/us-central1/api/restaurant/addNew/item",
       {
         user: Firebase.auth.currentUser,
         sectionName: section,
@@ -69,22 +48,11 @@ function EditMenuLeftPanel(props) {
   };
 
   const deleteItem = async () => {
-    // const currentInfo = (
-    //   await axios.post(
-    //     "https://us-central1-restaurantqr-73126.cloudfunctions.net/api/restaurant/getName",
-    //     {
-    //       user: Firebase.auth.currentUser,
-    //     }
-    //   )
-    // ).data;
-
-    // const name = currentInfo.name;
-
+    // sends a request to delete an item
     const name = props.name;
 
     await axios.post(
       "https://us-central1-restaurantqr-73126.cloudfunctions.net/api/restaurant/delete/item",
-      // "http://localhost:5001/restaurantqr-73126/us-central1/api/restaurant/delete/item",
 
       {
         user: Firebase.auth.currentUser,
@@ -97,22 +65,11 @@ function EditMenuLeftPanel(props) {
   };
 
   const deleteSection = async () => {
-    // const currentInfo = (
-    //   await axios.post(
-    //     "https://us-central1-restaurantqr-73126.cloudfunctions.net/api/restaurant/getName",
-    //     {
-    //       user: Firebase.auth.currentUser,
-    //     }
-    //   )
-    // ).data;
-
-    // const name = currentInfo.name;
-
+    // sends a request to delete a menu section
     const name = props.name;
 
     await axios.post(
       "https://us-central1-restaurantqr-73126.cloudfunctions.net/api/restaurant/delete/section",
-      // "http://localhost:5001/restaurantqr-73126/us-central1/api/restaurant/delete/section",
 
       {
         user: Firebase.auth.currentUser,

@@ -2,6 +2,7 @@ import React from "react";
 import "../../customer/customer.css";
 import { Button } from "react-bootstrap";
 function EditMenuButtons(props) {
+  // these buttons are used to send api requests to add/update/delete a restaurant's menu
   return (
     <div id="editMenuButtonDiv">
       <div className="btnRow">

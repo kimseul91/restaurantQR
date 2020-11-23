@@ -1,6 +1,7 @@
 import React from "react";
 
 function EditText(props) {
+  // returns a component with all the input boxes to be used for editing/updating menus
   return (
     <div id="editTextBoxDiv">
       <div id="inputRowForEdits">

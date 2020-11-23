@@ -17,7 +17,7 @@ The Customers’ view of the website will have buttons to request drinks/napkins
 	Endpoint: 
 		PUT `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/:restaurantName/customer/table/:id/order`
 
-	URL Express param wildcards:
+	URL params wildcards:
 		restaurantName: name of the restaurant from where you're ordering
 		id: table number
 
@@ -32,7 +32,7 @@ The Customers’ view of the website will have buttons to request drinks/napkins
 	Endpoint: 
 		POST `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/:restaurant/menu`
 
-	URL Express param wildcards:
+	URL params wildcards:
 		restaurant: name of the restaurant from where you're ordering
 	Response: 
 		Responds with the full document of data from a given restaurant
@@ -45,7 +45,7 @@ The Customers’ view of the website will have buttons to request drinks/napkins
 	Endpoint: 
 		POST `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/:restaurant/menu`
 
-	URL Express param wildcards:
+	URL params wildcards:
 		restaurant: name of the restaurant from where you're ordering
 
 	Response: 

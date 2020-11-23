@@ -20,7 +20,7 @@ function LiveRequest(props) {
           setRequest(requestData);
         };
         fetchData();
-      }, 20000);
+      }, 15000);
       return () => clearInterval(interval);
     }
   }, [props]);

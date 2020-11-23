@@ -29,7 +29,7 @@ The Customers’ view of the website will have buttons to request drinks/napkins
 	Purpose: 
 		Retrieves the menu for the given restaurant
 	Endpoint: 
-		POST `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/:restaurant/menu`
+		GET `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/:restaurant/menu`
 	URL params wildcards:
 		restaurant: name of the restaurant from where you're ordering
 	Response: 

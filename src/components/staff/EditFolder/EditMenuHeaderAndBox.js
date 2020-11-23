@@ -31,7 +31,7 @@ function EditMenuHeaderAndBox(props) {
 
   return (
     items.length !== 0 && (
-      <Card className="menuItemWrapperCard">
+      <Card className="menuItemWrapperCard width91">
         <Accordion.Toggle as={Card.Header} eventKey={props.accID}>
           {props.sectionName}
         </Accordion.Toggle>

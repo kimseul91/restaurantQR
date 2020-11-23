@@ -11301,6 +11301,8 @@ td {
 
 .liverequest-table {
   padding: 2%;
+  overflow-y: auto;
+  max-height: 85vh;
 }
 
 .buttongroup {
@@ -11349,16 +11351,15 @@ button {
 }
 
 .tables-accordion {
-  overflow-y: scroll;
+  overflow-y: auto;
   max-height: 60vh;
 }
 
-#returned-data{
+#returned-data {
   height: 25%;
   width: 25%;
   max-width: 30%;
   max-height: 30%;
-
 }
 .staff-container-scroll {
   overflow-y: auto;

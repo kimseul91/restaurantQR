@@ -19,9 +19,11 @@ function LiveRequest(props) {
           setRequest(requestData);
         };
         fetchData();
+        console.log("HEYYYyYYYYYYYY");
       }, 300000);
       return () => clearInterval(interval);
     }
+    console.log("HELLO");
   }, [props]);
   useEffect(() => {
     if (props.name) {
@@ -34,6 +36,7 @@ function LiveRequest(props) {
         setRequest(requestData);
       };
       fetchData();
+      console.log("yoooooooooooo");
     }
   }, [props, counter]);
   const removeData = async (requests, e) => {

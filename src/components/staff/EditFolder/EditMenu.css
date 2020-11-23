@@ -120,6 +120,10 @@
 }
 
 .menuItemWrapperCard {
-  width: 91%;
+  /* width: 91%; */
   margin: 10px;
+}
+
+.width91 {
+  width: 91%;
 }

@@ -573,7 +573,6 @@ app.post("/translate/fullMenu", async (req, res) => {
   const newMenu = {};
 
   entireMenu.forEach((eachMenuSectionObj) => {
-    console.log(eachMenuSectionObj);
     const name = Object.keys(eachMenuSectionObj)[0];
     const values = Object.values(eachMenuSectionObj)[0];
     newMenu[name] = values;

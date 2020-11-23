@@ -13,42 +13,131 @@ The Customers’ view of the website will have buttons to request drinks/napkins
 
 	Purpose: 
 		Adds an item to your order
-
 	Endpoint: 
 		PUT `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/:restaurantName/customer/table/:id/order`
-
 	URL params wildcards:
 		restaurantName: name of the restaurant from where you're ordering
 		id: table number
-
+	Post Body:
+		request: the name of the ordered item
+		time: the current time
 	Response: 
-		Responds with a status 200.
+		Responds with a status 200 if order is successfully placed
 
 ### Retrieving a Menu
 
 	Purpose: 
 		Retrieves the menu for the given restaurant
-
 	Endpoint: 
 		POST `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/:restaurant/menu`
-
 	URL params wildcards:
 		restaurant: name of the restaurant from where you're ordering
 	Response: 
 		Responds with the full document of data from a given restaurant
 
-### Retrieving a Restaurant Name
+### Getting a Restaurant Name
 
 	Purpose: 
-		Retrieves the menu for the given restaurant
-
+		Sends back the name of the restaurant that is linked to your account
 	Endpoint: 
-		POST `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/:restaurant/menu`
-
-	URL params wildcards:
-		restaurant: name of the restaurant from where you're ordering
-
+		POST `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/restaurant/getName`
+	Post Body:
+		user: the current Firebase user object
 	Response: 
-		Responds with the full document of data from a given restaurant
+		Responds with the name of the restaurant linked to the account
+		
+### Translating a Single Item
+	Purpose: 
+		Translates only the name of a single menu item into a given language
+	Endpoint: 
+		POST `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/translate/item`
+	Post Body:
+		item: the name of the menu item
+		language: the language code for the desired translation
+	Response: 
+		Responds with the translation of the item's name
+### Translating an Entire Menu
+	Purpose: 
+		Translates a restaurant's entire menu into a given language
+	Endpoint: 
+		POST `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/translate/fullMenu`
+	Post Body:
+		menu: a json object with nested fields representing a menu
+			Example: {
+			"Appetizers": {
+					"Quesadillas": {
+						"description": "Cheese Quesadillas",
+						"price": 1.99
+					}
+				}
+			}
+		language: the language code for the desired translation
+		name: the name of the restaurant
+	Response: 
+		Responds with an object that represents the translated menu
 
 # Restaurant Manager/Staff API
+
+### Creating an account
+	Purpose: 
+		Adds your account to the database
+	Endpoint: 
+		POST `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/restaurant/createAccount`
+	Post Body:
+		uid: user id
+		name: the name of the restaurant
+		address: the address of the restaurant
+	Response: 
+		Responds with a status 201
+
+### Adding a Menu Section
+
+	Purpose: 
+		Adds a new menu section to the restaurant's menu
+	Endpoint: 
+		POST `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/restaurant/addNew/section`
+	Post Body:
+		name: the name of the restaurant
+		sectionName: the name of the new menu section
+	Response: 
+		Responds with a status 200
+		
+### Adding a Menu Item
+
+	Purpose: 
+		Add a new menu item to a section to the restaurant's menu
+	Endpoint: 
+		POST `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/restaurant/addNew/item`
+	Post Body:
+		name: the name of the restaurant
+		sectionName: the name of the section that the item will go under
+		itemName: the name of the item
+		description (optional): the description of the item
+		Price (optional): the price of the item
+	Response: 
+		Responds with a status 200
+### Deleting a Menu Section
+
+	Purpose: 
+		Deletes a menu section and all menu items in it
+	Endpoint: 
+		POST `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/restaurant/delete/section`
+	Post Body:
+		name: the name of the restaurant
+		sectionName: the name of the section that the item will go under
+	Response: 
+		Responds with a status 200
+
+### Deleting a Menu Item
+
+	Purpose: 
+		Deletes a menu item under a specific menu section
+	Endpoint: 
+		POST `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/restaurant/delete/item`
+	Post Body:
+		name: the name of the restaurant
+		sectionName: the name of the section that the item will go under
+		itemName: the name of the section that the item will go under
+	Response: 
+		Responds with a status 200
+

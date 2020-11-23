@@ -11,45 +11,44 @@ The Customers’ view of the website will have buttons to request drinks/napkins
 
 ### Ordering
 
-#### Purpose: 
-	Adds an item to your order
+	Purpose: 
+		Adds an item to your order
 
-#### Endpoint: 
-	PUT `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/:restaurantName/customer/table/:id/order`
+	Endpoint: 
+		PUT `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/:restaurantName/customer/table/:id/order`
 
-#### URL Express param wildcards:
-	restaurantName: name of the restaurant from where you're ordering
-	id: table number
+	URL Express param wildcards:
+		restaurantName: name of the restaurant from where you're ordering
+		id: table number
 
-#### Response: 
-	Responds with a status 200.
+	Response: 
+		Responds with a status 200.
 
 ### Retrieving a Menu
 
-#### Purpose: 
-	Retrieves the menu for the given restaurant
+	Purpose: 
+		Retrieves the menu for the given restaurant
 
-#### Endpoint: 
-	POST `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/:restaurant/menu`
+	Endpoint: 
+		POST `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/:restaurant/menu`
 
-#### RL Express param wildcards:
-	restaurant: name of the restaurant from where you're ordering
-
-#### Response: 
-	Responds with the full document of data from a given restaurant
+	URL Express param wildcards:
+		restaurant: name of the restaurant from where you're ordering
+	Response: 
+		Responds with the full document of data from a given restaurant
 
 ### Retrieving a Restaurant Name
 
-#### Purpose: 
-	Retrieves the menu for the given restaurant
+	Purpose: 
+		Retrieves the menu for the given restaurant
 
-#### Endpoint: 
-	POST `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/:restaurant/menu`
+	Endpoint: 
+		POST `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/:restaurant/menu`
 
-#### URL Express param wildcards:
-	restaurant: name of the restaurant from where you're ordering
+	URL Express param wildcards:
+		restaurant: name of the restaurant from where you're ordering
 
-#### Response: 
-	Responds with the full document of data from a given restaurant
+	Response: 
+		Responds with the full document of data from a given restaurant
 
 # Restaurant Manager/Staff API

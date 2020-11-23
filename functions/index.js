@@ -23,18 +23,6 @@ app.get("/", (req, res) => {
   res.send("Yoooooo what up customers!");
 });
 
-app.get("/:restaurantName/home", async (req, res) => {
-  try {
-    const test = await firestore
-      .collection("Restaurant")
-      .where("name", "==", req.params.restaurantName);
-  } catch (error) {
-    res.status(404).send();
-  }
-
-  res.send(test);
-});
-
 // updates a tables request list
 app.put("/:restaurantName/customer/table/:id/order", async (req, res) => {
   const tableID = req.params.id;

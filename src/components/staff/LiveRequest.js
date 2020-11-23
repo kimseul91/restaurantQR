@@ -7,6 +7,7 @@ function LiveRequest(props) {
   const [counter, setCounter] = useState(0);
 
   useEffect(() => {
+    console.log(props.name);
     if (props.name) {
       console.log(props.name);
       const interval = setInterval(() => {
@@ -40,27 +41,34 @@ function LiveRequest(props) {
     }
   }, [props, counter]);
   const removeData = async (requests, e) => {
-    setCounter(counter + 1);
     let element = e.target.closest("#request-row");
     let table = element.getAttribute("table");
     let item = element.getAttribute("item");
     let name = element.getAttribute("name");
+    console.log(item);
+    console.log(item[1]);
+
     let removeItem = requests[table].requests.filter((i) => {
-      return i == item;
-    })[0];
-    if (requests[table].requests.indexOf(removeItem) >= 0)
-      requests[table].requests.splice(
-        requests[table].requests.indexOf(removeItem),
-        1
-      );
+      // console.log(i);
+      return i.item !== item;
+    });
+
+    // if (requests[table].requests.indexOf(removeItem) >= 0)
+    //   requests[table].requests.splice(
+    //     requests[table].requests.indexOf(removeItem),
+    //     1
+    //   );
     const objectsToAxios = {
-      newRequest: requests,
+      newRequest: removeItem,
     };
     await axios.put(
       // `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/${name}/deleterequest/${table}`,
-      `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/${name}/deleterequest/${table}`,
+      // `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/${name}/deleterequest/${table}`,
+      `http://localhost:5001/restaurantqr-73126/us-central1/api/${name}/deleterequest/${table}`,
+
       objectsToAxios
     );
+    setCounter(counter + 1);
   };
   const getLiveRequestTableRow = (tableRequests, name) => {
     const doneWithTask = (event) => {
@@ -81,7 +89,7 @@ function LiveRequest(props) {
           });
         }
       });
-      arrTables.sort((a, b) => b - a);
+      arrTables.sort((a, b) => b[0] - a[0]);
       return (
         <Table striped className="tables-accordion">
           <thead>
@@ -98,7 +106,7 @@ function LiveRequest(props) {
                   id="request-row"
                   name={name}
                   table={item[1].table}
-                  item={item}
+                  item={item[1].item}
                   key={item[1].table + item[1].item + item[0]}
                   onClick={doneWithTask}
                 >

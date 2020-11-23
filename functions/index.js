@@ -297,16 +297,17 @@ app.get("/:restaurant/staff/employees", async (req, res) => {
 });
 
 // removes request
-app.put("/:restaurant/deleterequest/:table/", async (req, res) => {
+app.put("/:restaurant/deleterequest/:table", async (req, res) => {
   const restaurant = req.params.restaurant;
   const table = req.params.table;
 
   console.log(req.body.newRequest);
+
   try {
     const data = await firestore
       .collection("Restaurant")
       .doc(restaurant)
-      .update({ tables: req.body.newRequest });
+      .update({ [`tables.${table}.requests`]: req.body.newRequest });
   } catch (error) {
     res.status(500).send();
   }

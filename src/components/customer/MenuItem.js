@@ -40,7 +40,7 @@ function MenuItem(props) {
           `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/${props.name}/customer/table/${props.tableID}/order`,
           {
             request: translatedItemName,
-            time: Date.now(),
+            time: Math.floor(Date.now() / 1000),
           }
         );
         props.handleOrderSuccess();
@@ -54,7 +54,7 @@ function MenuItem(props) {
           // `http://localhost:5001/restaurantqr-73126/us-central1/api/${props.name}/customer/table/${props.tableID}/order`,
           {
             request: itemName,
-            time: Date.now(),
+            time: Math.floor(Date.now() / 1000),
           }
         );
         props.handleOrderSuccess();

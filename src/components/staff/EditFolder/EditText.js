@@ -9,12 +9,14 @@ function EditText(props) {
           name="section"
           className="editText"
           placeholder="Menu Section Name"
+          maxLength="150"
           onChange={(event) => props.getSectionText(event.target.value)}
         ></input>
         <input
           name="item"
           className="editText"
           placeholder="Menu item name"
+          maxLength="150"
           onChange={(event) => props.getItemText(event.target.value)}
         ></input>
         <input
@@ -29,6 +31,7 @@ function EditText(props) {
         name="description"
         className="textareaEdit"
         placeholder="Description"
+        maxLength="250"
         onChange={(event) => props.getDescription(event.target.value)}
       ></textarea>
     </div>

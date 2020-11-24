@@ -14,7 +14,7 @@ The Customers’ view of the website will have buttons to request drinks/napkins
 	Purpose: 
 		Adds an item to your order
 	Endpoint: 
-		PUT `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/:restaurantName/customer/table/:id/order`
+		PUT https://us-central1-restaurantqr-73126.cloudfunctions.net/api/:restaurantName/customer/table/:id/order
 	URL params wildcards:
 		restaurantName: name of the restaurant from where you're ordering
 		id: table number

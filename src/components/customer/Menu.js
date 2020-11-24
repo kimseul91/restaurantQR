@@ -93,6 +93,12 @@ function Menu(props) {
     })();
   }, []);
 
+  useEffect(() => {
+    if (!itemView) {
+      document.getElementById("inputBoxId").value = searchTerm;
+    }
+  }, [itemView]);
+
   /**
    * transistions to the menu item page
    * sets the item for itemView

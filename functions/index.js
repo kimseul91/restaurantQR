@@ -168,19 +168,6 @@ app.post("/restaurant/delete/item", async (req, res) => {
 });
 
 /**
- *  Purpose:
- *	        Retrieves a list of the most recent Tweets as a JSON array
- *  Endpoint:
- *	        GET  https://comp426-1fa20.cs.unc.edu/a09/tweets
- *  Request Params:
- *          skip (integer) - Optional. If omitted, defaults to 0. Used for pagination.
- *                           Specifies the number of Tweets to skip before seleting
- *  Response:
- *          Responds with an array in JSON format containing the selected Tweets.
- */
-
-
-/**
   * Purpose:
   *         Gets details about of the restaurant
   * Endpoint:
@@ -659,5 +646,15 @@ app.post("/translate/fullMenu", async (req, res) => {
 
   res.send(newMenu);
 });
+
+app.get("/Sushi-o/demoqr", async (req, res) => {
+  const data = await firestore.collection("Restaurant").doc("Sushi-o").get()
+
+  const tablesObj = data.data().tables;
+  const rand = Object.values(tablesObj).filter(table => table.qrcode).map(table => table.qrcode);
+  const ranIndx = Math.floor(rand.length * Math.random());
+
+  res.send(rand[ranIndx]);
+})
 
 exports.api = functions.https.onRequest(app);

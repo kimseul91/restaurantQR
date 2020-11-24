@@ -75,3 +75,20 @@
 .coloredLink {
   color: #1d1145 !important;
 }
+
+.demo-qr {
+  max-height: 150px;
+  max-width: 150px;
+  margin-bottom: 1vh;
+}
+.demo-qr-container {
+  background-color: transparent !important; 
+  background:none;
+  display: flex;
+  flex-direction: column;
+}
+
+.demo-h6 {
+  color:white;
+
+}

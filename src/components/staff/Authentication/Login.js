@@ -1,6 +1,7 @@
 import React from "react";
 import LoginHeader from "./LoginHeader";
 import LoginBox from "./LoginBox";
+import DemoCustomer from "./DemoCustomer";
 import "./Auth.css";
 
 function Login(props) {
@@ -9,6 +10,8 @@ function Login(props) {
     <div className="overallLogin">
       <LoginHeader />
       <LoginBox />
+
+      <DemoCustomer />
     </div>
   );
 }

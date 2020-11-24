@@ -267,9 +267,34 @@ app.post("/restaurant/delete/item", async (req, res) => {
   }
 });
 
+/**
+ *  Purpose:
+ *	        Retrieves a list of the most recent Tweets as a JSON array
+ *  Endpoint:
+ *	        GET  https://comp426-1fa20.cs.unc.edu/a09/tweets
+ *  Request Params:
+ *          skip (integer) - Optional. If omitted, defaults to 0. Used for pagination.
+ *                           Specifies the number of Tweets to skip before seleting
+ *  Response:
+ *          Responds with an array in JSON format containing the selected Tweets.
+ */
+
+
+/**
+  * Purpose:
+  *         Gets details about of the restaurant
+  * Endpoint:
+  *         GET  https://us-central1-restaurantqr-73126.cloudfunctions.net/api/:restaurant/staff/liverequest
+  *         Note: Replace ":restaurant" in the above route with the restaurant name to retrieve
+  * Request Params:
+  *         This route does not accept request params, but the name of the restaurant
+  *         that should be retrieved must be specified in the URL.
+  * Response:
+  *         This route responds with details about the restaurant field data in
+  *         JSON format.
+  */
 app.get("/:restaurant/staff/liverequest", async (req, res) => {
   const restaurantName = req.params.restaurant;
-
   try {
     const data = await firestore
       .collection("Restaurant")
@@ -281,7 +306,19 @@ app.get("/:restaurant/staff/liverequest", async (req, res) => {
   }
 });
 
-// get employees
+/**
+  * Purpose:
+  *         Gets details about all of the employees
+  * Endpoint:
+  *         GET  https://us-central1-restaurantqr-73126.cloudfunctions.net/api/:restaurant/staff/employees
+  *         Note: Replace ":restaurant" in the above route with the restaurant name to retrieve
+  * Request Params:
+  *         This route does not accept request params, but the name of the employees
+  *         that should be retrieved must be specified in the URL.
+  * Response:
+  *         This route responds with details about the employees field data in
+  *         JSON format.
+  */
 app.get("/:restaurant/staff/employees", async (req, res) => {
   const restaurantName = req.params.restaurant;
 
@@ -296,7 +333,18 @@ app.get("/:restaurant/staff/employees", async (req, res) => {
   }
 });
 
-// removes request
+/**
+  * Purpose:
+  *         Permanently deletes a specific request
+  * Endpoint:
+  *         PUT  https://us-central1-restaurantqr-73126.cloudfunctions.net/api/:restaurant/deleterequest/:table
+  *         Note: Replace ":restaurant" in the above route with the restaurant name to delete request
+  *         Note: Replace ":table" in the above route with the table number to deleete request
+  * Request Params:
+  *         body (Object) - Required. The new list of requested list
+  * Response:
+  *         Upon successful request, the route responds with 200 status code
+  */
 app.put("/:restaurant/deleterequest/:table", async (req, res) => {
   const restaurant = req.params.restaurant;
   const table = req.params.table;
@@ -314,7 +362,18 @@ app.put("/:restaurant/deleterequest/:table", async (req, res) => {
   res.status(200).send();
 });
 
-// removes employee
+/**
+  * Purpose:
+  *         Permanently deletes a specific employee
+  * Endpoint:
+  *         PUT  https://us-central1-restaurantqr-73126.cloudfunctions.net/api/:restaurant/staff/remove/:eid
+  *         Note: Replace ":restaurant" in the above route with the restaurant name to delete 
+  *         Note: Replace ":eid" in the above route with the employee id to deleete 
+  * Request Params:
+  *         body (Object) - Required. The whole list of employees list
+  * Response:
+  *         Upon successful request, the route responds with 200 status code
+  */
 app.put("/:restaurant/staff/remove/:eid", async (req, res) => {
   const eid = req.params.eid;
 
@@ -331,7 +390,6 @@ app.put("/:restaurant/staff/remove/:eid", async (req, res) => {
     }
     return;
   });
-  console.log(newEmployees);
 
   try {
     const data = await firestore
@@ -342,18 +400,19 @@ app.put("/:restaurant/staff/remove/:eid", async (req, res) => {
     res.status(500).send();
   }
   res.status(200).send();
-  // try {
-  //   const data = await firestore
-  //     .collection("Restaurant")
-  //     .doc(req.body.restaurant)
-  //     .update({ tables: req.body.newRequest });
-
-  // } catch (error) {
-  //   res.status(500).send();
-  // }
 });
 
-// removes table from the restaurant
+/**
+  * Purpose:
+  *         Permanently deletes a specific table
+  * Endpoint:
+  *         PUT  https://us-central1-restaurantqr-73126.cloudfunctions.net/api/:restaurant/deletetable
+  *         Note: Replace ":restaurant" in the above route with the restaurant name to delete 
+  * Request Params:
+  *         body (Object) - Required. The new list of table list
+  * Response:
+  *         Upon successful request, the route responds with 200 status code
+  */
 app.put("/:restaurant/deletetable/", async (req, res) => {
   const restaurant = req.params.restaurant;
 
@@ -389,27 +448,8 @@ app.post("/restaurant/createAccount", async (req, res) => {
   res.status(201).send();
 });
 
-app.post("/addEmployee", async (req, res) => {
-  // no emmployee name was given
-  if (!req.body || !req.body.name) {
-    res.status(400).send();
-    return;
-  }
-  const { name, restaurantName, currentUser } = req.body;
 
-  if (currentUser)
-    try {
-      await firestore
-        .collection("Restaurant")
-        .doc(restaurantName)
-        .update({
-          employees: admin.firestore.FieldValue.arrayUnion(name),
-        });
-      res.status(201).send();
-    } catch (error) {
-      res.status(400).send();
-    }
-});
+
 
 // reset a table from a restaurant
 app.put("/reset/:tableID", async (req, res) => {
@@ -442,13 +482,23 @@ app.put("/reset/:tableID", async (req, res) => {
   }
 });
 
-// add a table to the restaurant
+/**
+  * Purpose:
+  *         Create a new table in the database
+  * Endpoint:
+  *         PUT  https://us-central1-restaurantqr-73126.cloudfunctions.net/api/:restaurant/staff/edit/table/:id/
+  *         Note: Replace ":restaurant" in the above route with the restaurant name to add 
+  *         Note: Replace ":id" in the above route with the table id to add 
+  * Request Params:
+  *         body (Object) - Required. The new list of added table list
+  * Response:
+  *         Upon successful request, the route responds with 200 status code
+  */
 app.put("/:restaurantName/staff/edit/table/:id/", async (req, res) => {
   const tableID = req.params.id;
   // const { restaurantName } = req.body;
   const restaurantName = req.params.restaurantName;
   const updateString = `tables.table${tableID}.paid`;
-  console.log(updateString);
 
   try {
     // adds a new request to the list
@@ -465,7 +515,17 @@ app.put("/:restaurantName/staff/edit/table/:id/", async (req, res) => {
   res.status(200).send();
 });
 
-// add an employee to the restaurant
+/**
+  * Purpose:
+  *         Create a new employee in the database
+  * Endpoint:
+  *         PUT  https://us-central1-restaurantqr-73126.cloudfunctions.net/api/:restaurant/staff/edit/addemployee
+  *         Note: Replace ":restaurant" in the above route with the restaurant name to add 
+  * Request Params:
+  *         body (Object) - Required. The new list of added employee list
+  * Response:
+  *         Upon successful request, the route responds with 200 status code
+  */
 app.put("/:restaurantName/staff/edit/addemployee", async (req, res) => {
   const restaurantName = req.params.restaurantName;
   const updateString = `employees`;
@@ -485,9 +545,21 @@ app.put("/:restaurantName/staff/edit/addemployee", async (req, res) => {
   res.status(200).send();
 });
 
-// Employee clock in/out
-app.put("/:restaurantName/staff/:clockinout/:eid", async (req, res) => {
-  const restaurantName = req.params.restaurantName;
+/**
+  * Purpose:
+  *         Updates employee's data as clock in/out
+  * Endpoint:
+  *         PUT  https://us-central1-restaurantqr-73126.cloudfunctions.net/api//:restaurant/staff/:clockinout/:eid
+  *         Note: Replace ":restaurant" in the above route with the restaurant name to update
+  *         Note: Replace ":clockinout" in the above route with the approporiate request (in or out) 
+  *         Note: Replace ":eid" in the above route with the employee's eid to update 
+  * Request Params:
+  *         body (Object) - Required. The new list of updated employee list
+  * Response:
+  *         Upon successful request, the route responds with 200 status code
+  */
+app.put("/:restaurant/staff/:clockinout/:eid", async (req, res) => {
+  const restaurant = req.params.restaurant;
   const eid = req.params.employee;
   const updateString = `employees`;
 
@@ -495,7 +567,7 @@ app.put("/:restaurantName/staff/:clockinout/:eid", async (req, res) => {
     // adds a new request to the list
     await firestore
       .collection("Restaurant")
-      .doc(restaurantName)
+      .doc(restaurant)
       .update({
         [updateString]: req.body.employees,
       });

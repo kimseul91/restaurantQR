@@ -6,15 +6,21 @@ function LiveRequest(props) {
   const [liveRequests, setRequest] = useState(null);
   const [counter, setCounter] = useState(0);
 
+  /**
+   * this useEffect uses axios to make a GET request with the restaurant name to the following url: 
+   * https://us-central1-restaurantqr-73126.cloudfunctions.net/api/:restaurantName/staff/liverequest
+   * 
+   * The request is "await"ed and once the response is available, the JavaScript Object is parsed and 
+   * gets stored into the liveRequests state. 
+   * 
+   * this gets called at the beginning of page load and every 15 seconds. 
+   */
   useEffect(() => {
-    console.log(props.name);
     if (props.name) {
-      console.log(props.name);
       const interval = setInterval(() => {
         const fetchData = async () => {
           const liveRequest = await axios.get(
             `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/${props.name}/staff/liverequest`
-            // http://localhost:5001/restaurantqr-73126/us-central1/api/
           );
           const requestData = liveRequest.data.tables;
           setRequest(requestData);
@@ -24,12 +30,21 @@ function LiveRequest(props) {
       return () => clearInterval(interval);
     }
   }, [props]);
+
+  /**
+   * this useEffect uses axios to make a GET request with the restaurant name to the following url: 
+   * https://us-central1-restaurantqr-73126.cloudfunctions.net/api/:restaurantName/staff/liverequest
+   * 
+   * The request is "await"ed and once the response is available, the JavaScript Object is parsed and 
+   * gets stored into the liveRequests state. 
+   * 
+   * this gets called every time the counter changes. 
+   */
   useEffect(() => {
     if (props.name) {
       const fetchData = async () => {
         const liveRequest = await axios.get(
           `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/${props.name}/staff/liverequest`
-          // http://localhost:5001/restaurantqr-73126/us-central1/api/
         );
         const requestData = liveRequest.data.tables;
         setRequest(requestData);
@@ -37,36 +52,42 @@ function LiveRequest(props) {
       fetchData();
     }
   }, [props, counter]);
+
+  /**
+   * this function retrieves input data from the form then removes the specific item from the liveRequest 
+   * this function uses axios to make a PUT request with the restaurant name to the following url: 
+   * https://us-central1-restaurantqr-73126.cloudfunctions.net/api/:restaurantName/deleterequest/:table
+   * parameter being sent is the new list. 
+   * 
+   * The request is "await"ed and once the response is available, it increments counter by 1
+   */
   const removeData = async (requests, e) => {
     let element = e.target.closest("#request-row");
     let table = element.getAttribute("table");
     let item = element.getAttribute("item");
     let name = element.getAttribute("name");
-    console.log(item);
-    console.log(item[1]);
 
     let removeItem = requests[table].requests.filter((i) => {
-      // console.log(i);
       return i.item !== item;
     });
 
-    // if (requests[table].requests.indexOf(removeItem) >= 0)
-    //   requests[table].requests.splice(
-    //     requests[table].requests.indexOf(removeItem),
-    //     1
-    //   );
     const objectsToAxios = {
       newRequest: removeItem,
     };
     await axios.put(
-      // `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/${name}/deleterequest/${table}`,
       `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/${name}/deleterequest/${table}`,
-      // `http://localhost:5001/restaurantqr-73126/us-central1/api/${name}/deleterequest/${table}`,
-
       objectsToAxios
     );
     setCounter(counter + 1);
   };
+
+  /**
+    * this function uses the tableRequests object to populate the table of customer requests
+    * returns html elements. 
+    * 
+    * @param {Object} tableRequests 
+    * @param {String} name 
+    */
   const getLiveRequestTableRow = (tableRequests, name) => {
     const doneWithTask = (event) => {
       removeData(tableRequests, event);

@@ -76,7 +76,7 @@ The Customers’ view of the website will have buttons to request drinks/napkins
 	Response: 
 		Responds with an object that represents the translated menu
 
-# Restaurant Manager/Staff API
+## Restaurant Manager/Staff API
 
 ### Detail about restaurant
 	Purpose:

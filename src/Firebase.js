@@ -20,38 +20,34 @@ class Firebase {
       .get()
       .then((dat) => {
         dat.docs.map((doc) => {
-          console.log(doc.data());
+          return 0;
         });
       });
     return data;
   }
 
   async postData(incomingData) {
-    console.log(incomingData);
-    const data = this.db
+    await this.db
       .collection("Restaurant")
       .doc("Pizza Palace")
       .update({ ["menu"]: incomingData });
   }
 
   async postDataObject(incomingData) {
-    const data = this.db
+    await this.db
       .collection("Restaurant")
       .doc("Snoopy's Hot Dogs")
-      .update({ ["menu"]: incomingData });
+      .update({ menu: incomingData });
   }
 
   async getRequest() {
     const doc = this.db.collection("Restaurant").doc("test_restaurant_3");
     // const data = doc.get();
-    const observer = doc.onSnapshot(
+    doc.onSnapshot(
       (docsnapshot) => {
-        // console.log(`received doc snapshot: ${docsnapshot.data().tables}`);
-        // console.log(docsnapshot.data().tables)
         let result = Object.keys(docsnapshot.data().tables).map((key) => {
           return [key, docsnapshot.data().tables[key]];
         });
-        // console.log(result);
         return result;
       },
       (err) => {

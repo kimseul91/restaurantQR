@@ -11,7 +11,6 @@
   justify-content: center;
   align-items: center;
   display: flex;
-  /* border: 2px solid white; */
   border-radius: 8px;
   background-color: #e76d89;
 }
@@ -34,7 +33,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  /* height: calc(1.5rem - 50%); */
   margin-top: 15vh;
 }
 
@@ -54,8 +52,6 @@
 }
 
 #linkSpan {
-  /* color: #f2a1a1; */
-  /* color: #e76d89; */
   color: white;
   margin: 10px;
   text-align: center;
@@ -67,7 +63,6 @@
   margin-bottom: 2pc;
   background-color: #0db4b9;
   font-family: Lato, sans-serif;
-  /* position: fixed; */
 }
 
 .coloredLink {

@@ -1,36 +1,22 @@
 import React, { useEffect, useState } from "react";
-import Header from "../../customer/Header";
 import MenuDiv from "./MenuDiv";
-import EditMenuButtons from "./EditMenuButtons";
 import axios from "axios";
-
 import "./EditMenu.css";
-import EditText from "./EditText";
 import EditMenuLeftPanel from "./EditMenuLeftPanel";
-import Firebase from "../../../Firebase";
 
 function EditMenu(props) {
+  // main component for editing menus
   const [menu, setMenu] = useState(null);
   const [counter, setCounter] = useState(0);
-  const [currentName, setName] = useState(null);
 
   const update = () => {
+    // used to force a component update
     setCounter(counter + 1);
   };
 
   useEffect(() => {
     (async function () {
-      // const currentInfo = (
-      //   await axios.post(
-      //     "https://us-central1-restaurantqr-73126.cloudfunctions.net/api/restaurant/getName",
-      //     {
-      //       user: Firebase.auth.currentUser,
-      //     }
-      //   )
-      // ).data;
-
-      setName(props.name);
-
+      // sets all of the current menu data
       const menuRequest = await axios.get(
         `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/${encodeURI(
           props.name
@@ -42,8 +28,6 @@ function EditMenu(props) {
   }, [counter]);
   return (
     <div className="editMenuDiv">
-      {/* <Header name={currentName} /> */}
-      {/* <div id="spacer"></div> */}
       <div id="outerCenter">
         <EditMenuLeftPanel update={update} name={props.name} />
         <MenuDiv menu={menu} name={props.name} />

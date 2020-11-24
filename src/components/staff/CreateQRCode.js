@@ -42,7 +42,7 @@ function CreateQRCode(props) {
         "x-rapidapi-host": "qrcode3.p.rapidapi.com",
       },
     };
-    let result = await axios.request(options).then((x) => {
+    await axios.request(options).then((x) => {
       let testimage = URL.createObjectURL(x.data);
       setImage(testimage);
       const uploadFile = Firebase.storage
@@ -89,7 +89,7 @@ function CreateQRCode(props) {
           <Button onClick={sendToSubmit}>Generate</Button>
         </InputGroup.Append>
       </InputGroup>
-      <img id="returned-data" src={image} />
+      <img id="returned-data" src={image} alt="qr" />
     </div>
   );
 }

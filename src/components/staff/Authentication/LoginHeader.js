@@ -1,6 +1,7 @@
 import React from "react";
 import FastfoodIcon from "@material-ui/icons/Fastfood";
 function LoginHeader(props) {
+  // header used for both login and sign up
   return (
     <div id="loginHeader">
       <span id="restaurantName">

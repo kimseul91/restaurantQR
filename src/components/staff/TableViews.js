@@ -1,14 +1,12 @@
 import { Media, Card, Accordion, Button } from "react-bootstrap";
 import axios from "axios";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import CreateQRCode from "./CreateQRCode.js";
 import Firebase from "../../Firebase";
 
 function TableViews(props) {
   const [tables, setTables] = useState(null);
   const [counter, setCounter] = useState(0);
-
-  // const populateTablesVariable = useRef(null);
 
   const [populateTablesVariable, setPop] = useState(null);
 
@@ -81,7 +79,7 @@ function TableViews(props) {
     const objToSend = {
       tables: tables,
     };
-    const del = await axios.put(
+    await axios.put(
       `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/${props.name}/deletetable`,
       objToSend
     );

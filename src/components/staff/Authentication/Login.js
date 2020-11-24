@@ -1,10 +1,10 @@
 import React from "react";
-import FastfoodIcon from "@material-ui/icons/Fastfood";
 import LoginHeader from "./LoginHeader";
 import LoginBox from "./LoginBox";
 import "./Auth.css";
 
 function Login(props) {
+  // main parent component for the login
   return (
     <div className="overallLogin">
       <LoginHeader />

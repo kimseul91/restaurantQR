@@ -3,7 +3,6 @@
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  /* justify-content: space-evenly; */
   height: 100vh;
   width: auto;
   color: white;
@@ -20,7 +19,6 @@
 
 /* 
 Color Theme
-
 Deep Purple: #1d1145
 Trapper Keeper Green: #0db4b9
 Pink boot: #f2a1a1
@@ -28,7 +26,6 @@ Modern Pink Backpack: #e76d89
 */
 
 .menuItemWrapperCard .card-header {
-  /* background-color: #0db4b9 !important; */
   background-color: #63bed4 !important;
   color: white !important;
   font-weight: 600;
@@ -46,27 +43,16 @@ Modern Pink Backpack: #e76d89
     rgba(78, 71, 159, 1) 95%
   );
 }
-/* .menuItemWrapperCard {
-  background: rgb(12, 160, 164);
-  background: linear-gradient(
-    0deg,
-    rgba(12, 160, 164, 0.5) 17%,
-    rgba(78, 71, 159, 1) 95%
-  );
-  padding: 0.5rem;
-} */
+
 .food {
   height: auto;
   width: 60vw;
-  /* padding: 0.5rem; */
 }
 
 .flex-box {
   display: flex;
-  /* justify-content: center; */
   flex-direction: column;
   align-items: center;
-  /* justify-content: space-around;  */
   height: 100%;
   width: auto;
 }
@@ -80,14 +66,8 @@ Modern Pink Backpack: #e76d89
   width: 180px !important;
   justify-content: center;
 }
-/* 
-.dropdownItemDiv {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-} */
+
 .languageButton > button {
-  /* background-color: #0db4b9 !important;  */
   color: white;
   border: none;
 }
@@ -120,10 +100,6 @@ Modern Pink Backpack: #e76d89
 }
 
 #restaurantName {
-  /* line-height: 30px;
-  font-size: 25px; */
-  /* color: #1d1145; */
-  /* color: #0db4b9; */
   color: white;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -140,7 +116,6 @@ Modern Pink Backpack: #e76d89
 #menuCardsDiv {
   overflow-y: scroll;
   color: white;
-  /* margin-top: 5%; */
   max-height: 70vh;
   height: auto;
   justify-content: start !important;
@@ -160,7 +135,6 @@ Modern Pink Backpack: #e76d89
   width: 100vw;
   margin: 1rem;
   padding: 0.5rem;
-  /* margin-bottom: 30%; */
 }
 
 #actualDescription,
@@ -168,10 +142,10 @@ Modern Pink Backpack: #e76d89
   margin: 0;
 }
 
-/* #itemPrice,
-#itemName {
-  margin-bottom: 5%;
-} */
+#actualDescription {
+  padding-left: 1rem !important;
+  padding-right: 1rem !important;
+}
 
 #itemName,
 #itemPrice,
@@ -183,16 +157,8 @@ Modern Pink Backpack: #e76d89
 }
 
 .itemHeaderName {
-  /* font-size: 22px !important; */
   width: 85%;
   font-weight: bold;
-  /* border: 1px solid #1d1145; */
-  /* background-color: #1d1145; */
-  /* background: linear-gradient(
-    0deg,
-    rgba(34, 193, 195, 1) 0%,
-    rgba(253, 187, 45, 1) 100%
-  ); */
   background-image: linear-gradient(
     65.5deg,
     rgba(23, 205, 205, 1) -15.1%,
@@ -204,14 +170,10 @@ Modern Pink Backpack: #e76d89
 
 .itemCard {
   text-align: center;
-  /* height: 75px; */
-  /* border: 1px solid #1d1145; */
   border-radius: 12px;
   margin: 0.5rem;
-  /* background-color: #1d1145; */
   background-color: #63bed4;
   padding: 0.5rem;
-  /* color: #1d1145; */
   color: black;
 }
 
@@ -225,7 +187,6 @@ Modern Pink Backpack: #e76d89
 
 .button-box {
   display: flex;
-  /* margin-top: -5%; */
   flex-direction: row;
   align-items: center;
   justify-content: space-around;
@@ -237,12 +198,8 @@ Modern Pink Backpack: #e76d89
 
 .menuAccordion {
   max-height: calc(100vh - 230px);
-  /* padding-bottom: 400px; */
-  /* height: 70vh; */
   overflow-y: scroll !important;
   padding-bottom: 5vh;
-  /* -ms-overflow-style: none; 
-  scrollbar-width: none;  */
 }
 
 .menuAccordion::-webkit-scrollbar {
@@ -257,7 +214,6 @@ Modern Pink Backpack: #e76d89
 }
 
 .searchDiv {
-  /* display: flex; */
   text-align: center;
   align-items: center;
   justify-content: center;
@@ -280,7 +236,6 @@ Modern Pink Backpack: #e76d89
 
 .wide {
   width: 100vw;
-  /* background-color: #0db4b9; */
   background: rgb(57, 47, 106);
   background: linear-gradient(
     90deg,

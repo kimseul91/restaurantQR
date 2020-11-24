@@ -8,8 +8,7 @@ function CreateQRCode(props) {
   const [tableNumber, setTable] = useState("");
   const [image, setImage] = useState(null);
 
-  useEffect(() => {
-  }, [image]);
+  useEffect(() => {}, [image]);
 
   /**
    * sendToSubmit calls two functions which uses axios
@@ -22,12 +21,12 @@ function CreateQRCode(props) {
   };
 
   /**
-   * this function uses axios to make a PUT request to the following url: 
+   * this function uses axios to make a PUT request to the following url:
    *  https://us-central1-restaurantqr-73126.cloudfunctions.net/api/
-   * with the restaurant name and table number as a parameter. 
-   * 
-   * @param {String} restName 
-   * @param {Number} tableNumber 
+   * with the restaurant name and table number as a parameter.
+   *
+   * @param {String} restName
+   * @param {Number} tableNumber
    */
   const addToFirebase = async (restName, tableNumber) => {
     await axios.put(
@@ -36,16 +35,16 @@ function CreateQRCode(props) {
   };
 
   /**
-   * this function uses axios to make a GET request to the following url: 
+   * this function uses axios to make a GET request to the following url:
    * https://rapidapi.p.rapidapi.com/generateQR"
-   * 
+   *
    * the parameter for the request includes the "text" (in our case is unique url that include restaurant name and table number)
-   * the response type we get back will have to be "blob" in order for us to save the file into firebase storage. 
-   * the header are the requried api key and host. 
-   * 
-   * Once blob is received from the axios call, the file geets sent to corresponding storage location in the firebase. 
-   * 
-   * @param {Number} tableNumber 
+   * the response type we get back will have to be "blob" in order for us to save the file into firebase storage.
+   * the header are the requried api key and host.
+   *
+   * Once blob is received from the axios call, the file geets sent to corresponding storage location in the firebase.
+   *
+   * @param {Number} tableNumber
    */
   async function handleSubmit(tableNumber) {
     let options = {
@@ -68,27 +67,27 @@ function CreateQRCode(props) {
         .put(x.data);
       uploadFile.on(
         "state_changed",
-        (snapshot) => { },
+        (snapshot) => {},
         (error) => {
           console.log(error);
           alert("");
           return;
         },
         () => {
-          (async () =>
-            await Firebase.storage
+          (async () => {
+            const newUrl = await Firebase.storage
               .ref(`restaurants/${props.name}`)
               .child(`${tableNumber}`)
-              .getDownloadURL()
-              .then((url) => {
-                Firebase.db
-                  .collection("Restaurant")
-                  .doc(`${props.name}`)
-                  .update({
-                    [`tables.table${tableNumber}.qrcode`]: url,
-                  });
-                props.update();
-              }))();
+              .getDownloadURL();
+
+            await Firebase.db
+              .collection("Restaurant")
+              .doc(`${props.name}`)
+              .update({
+                [`tables.table${tableNumber}.qrcode`]: newUrl,
+              });
+            props.update();
+          })();
         }
       );
     });
@@ -107,7 +106,7 @@ function CreateQRCode(props) {
           <Button onClick={sendToSubmit}>Generate</Button>
         </InputGroup.Append>
       </InputGroup>
-      <img id="returned-data" src={image} alt="qr" />
+      <img id="returned-data" src={image} alt="" />
     </div>
   );
 }

@@ -1,12 +1,12 @@
 //inspired by Kuhan on stackoverflow
-
+import "./style/custom.css"
 import React from 'react';
 
 class ClockView extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-        time: new Date().toLocaleString()
+            time: new Date().toLocaleString()
         };
     }
     componentDidMount() {
@@ -25,9 +25,9 @@ class ClockView extends React.Component {
     }
     render() {
         return (
-            <p className="App-clock">
-                {this.state.time}.
-            </p>
+            <span className="App-clock">
+                {this.state.time}
+            </span>
         );
     }
 

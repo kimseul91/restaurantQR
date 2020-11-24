@@ -1,0 +1,120 @@
+.centerMenuDiv {
+  width: 40vw;
+  margin-bottom: 5vh;
+  height: 70vh;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  overflow-y: scroll;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.centerMenuDiv::-webkit-scrollbar {
+  display: none !important;
+}
+
+.editMenuDiv {
+  height: 100%;
+  width: 100%;
+  box-sizing: content-box;
+}
+
+#outerCenter {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+#spacer {
+  width: 100vw;
+  height: 40px;
+}
+
+.editCards {
+  height: auto !important;
+  margin: 0 !important;
+}
+
+#editMenuButtonDiv {
+  display: flex;
+  width: 40vw;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  position: sticky;
+}
+
+#editTextBoxDiv {
+  display: flex;
+  width: 40vw;
+  align-items: center;
+  flex-direction: column;
+}
+
+#inputRowForEdits {
+  display: flex;
+  width: 34vw;
+  height: auto;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.editText {
+  width: 15vw;
+  margin: 10px;
+  border-radius: 12px;
+  border: none;
+  line-height: 30px;
+  padding-left: 10px;
+  font-size: 15px;
+}
+
+.textareaEdit {
+  width: 79% !important;
+  margin: 10px;
+  border-radius: 12px;
+  border: none;
+  line-height: 30px;
+  padding-left: 10px;
+  width: calc(34vw - 20px);
+  font-size: 15px;
+  height: auto;
+}
+.textareaEdit:focus {
+  outline: none !important;
+}
+
+.editText:focus {
+  outline: none !important;
+}
+
+.editMenuBtns {
+  width: 15vw;
+  margin: 10px;
+  font-size: 15px !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btnRow {
+  display: flex;
+  width: 34vw;
+  height: auto;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.editInput {
+  background-color: white;
+}
+
+.menuItemWrapperCard {
+  margin: 10px;
+}
+
+.width91 {
+  width: 91%;
+}

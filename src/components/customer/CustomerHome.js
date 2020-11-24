@@ -1,38 +1,31 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { DropdownButton, Container } from "react-bootstrap";
 import "./customer.css";
 import DropdownItem from "react-bootstrap/esm/DropdownItem";
 import FastfoodIcon from "@material-ui/icons/Fastfood";
-import { useParams, Link, Redirect } from "react-router-dom";
-function CustomerHome(props) {
-  // props.name == the restaurant name
-  // const [name, setName] = useState(null);
-  // language array that stores all the languages that we support translation for
-  const languauges = ["English", "Spanish", "French"];
+import { useParams, Redirect } from "react-router-dom";
 
+// landing page for customers at a specific restaurant
+function CustomerHome(props) {
+  // language dictionary that stores all the languages that we support translation for
   const languageDictionary = {
     English: "en",
     Spanish: "es",
     French: "fr",
+    Korean: "ko",
+    Portuguese: "pt",
+    German: "de",
   };
+
+  const languauges = Object.keys(languageDictionary);
 
   const [redirectLocation, setRedirect] = useState(null);
 
   // extracts these variables from the page routing
   const { restaurantName, tableID } = useParams();
 
-  // console.log(restaurantName, tableID);
-
-  // sends the name and table id back to app so that the menu has access
-  useEffect(() => {
-    props.updateApp(restaurantName, tableID);
-  });
-
-  // spanish language code is es
-
   const handleClick = (language) => {
     // Route to menu page with given langauge
-    props.updateLanguage(language);
     setRedirect(
       <Redirect
         to={`/customer/${restaurantName}/${tableID}/menu?lang=${languageDictionary[language]}`}
@@ -45,12 +38,12 @@ function CustomerHome(props) {
     return redirectLocation;
   }
 
-  // we can use route parameters to get the restaurant name and table number
-
   return (
     <div className="Home">
       <div className="headerDiv wide">
-        <span id="restaurantName">{`Welcome to ${restaurantName}`}</span>
+        <span id="restaurantName">{`Welcome to ${decodeURI(
+          restaurantName
+        )}`}</span>
       </div>
       <Container className="flex-box">
         <div id="homeImgDiv">
@@ -63,12 +56,11 @@ function CustomerHome(props) {
           <DropdownButton
             className="languageButton"
             title="Select language"
-            // variant="primary"
             size="lg"
           >
             <div className="dropdownItemDiv">
               {languauges.map((language) => (
-                // Add onClick function to route you to the menu
+                // onClick function to route you to the menu
                 // with the language you clicked on enabled
                 <DropdownItem
                   className="languageItem"

@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import "./Auth.css";
-import { Container, InputGroup, Button, Form, Row, Col } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 import { Link, Redirect } from "react-router-dom";
 import Firebase from "../../../Firebase";
 function LoginBox(props) {
   const [redirect, setRedirect] = useState(null);
+
   const handleSubmit = async (event) => {
+    // takes in your form event data and submits to firebase for authentication
     event.preventDefault();
     // extracts the email and password from the form
     const { preEmail, prePassword } = event.target.elements;
@@ -22,9 +24,13 @@ function LoginBox(props) {
 
     // redirect to staff if successful login
     if (success) {
-      setRedirect(<Redirect to="/staff" />);
+      setRedirect(
+        // inspiration from https://stackoverflow.com/questions/52064303/reactjs-pass-props-with-redirect-component
+        <Redirect to="staff" />
+      );
     }
   };
+  // the login box component that contains the inputs and submit button
   return (
     <div className="outerLogin">
       <Form className="loginForm" onSubmit={(event) => handleSubmit(event)}>

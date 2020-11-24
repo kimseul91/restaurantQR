@@ -10,8 +10,8 @@ function MenuHeaderAndBox(props) {
     item[0].toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  // items = items.filter((item) => item[0].includes(searchTerm))
-
+  // creates an accordion component for a specific menu section
+  // creates the items under each section
   return (
     items.length !== 0 && (
       <Card className="menuItemWrapperCard">
@@ -27,7 +27,6 @@ function MenuHeaderAndBox(props) {
                   className="itemCard"
                   onClick={() => props.getMenuItem(item)}
                 >
-                  {/* <span className="itemText">{`${item[0]}: ${item[1].description}`}</span> */}
                   <span className="itemText">{`${item[0]}`}</span>
                   <span className="smallDescriptionText">{`${
                     item[1].description !== "" ? ": " : ""

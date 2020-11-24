@@ -11,9 +11,13 @@
   justify-content: center;
   align-items: center;
   display: flex;
-  /* border: 2px solid white; */
   border-radius: 8px;
-  background-color: #e76d89;
+  background: rgb(12, 160, 164);
+  background: linear-gradient(
+    280deg,
+    rgba(12, 160, 164, 0.5) 17%,
+    rgba(78, 71, 159, 0.5) 95%
+  );
 }
 
 .inputText {
@@ -34,8 +38,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  /* height: calc(1.5rem - 50%); */
-  margin-top: 15vh;
+  margin-top: 10vh;
 }
 
 .overallLogin {
@@ -45,17 +48,17 @@
 
 .loginBtn {
   margin: 5px;
-  background-color: #0db4b9;
+  background-color: #63bed4;
   border: none;
 }
 
 .loginBtn:hover {
-  background-color: #1d1145 !important;
+  text-align: center;
+  color: rgb(38, 38, 160);
+  font-size: large;
 }
 
 #linkSpan {
-  /* color: #f2a1a1; */
-  /* color: #e76d89; */
   color: white;
   margin: 10px;
   text-align: center;
@@ -65,11 +68,35 @@
   padding: 1.5rem;
   text-align: center;
   margin-bottom: 2pc;
-  background-color: #0db4b9;
+  background: rgb(57, 47, 106);
+  background: linear-gradient(
+    90deg,
+    rgba(57, 47, 106, 1) 41%,
+    rgba(0, 0, 0, 1) 100%
+  );
   font-family: Lato, sans-serif;
-  /* position: fixed; */
 }
 
 .coloredLink {
   color: #1d1145 !important;
+}
+
+.demo-qr {
+  max-height: 150px;
+  max-width: 150px;
+  margin-bottom: 1vh;
+}
+.demo-qr-container {
+  background-color: transparent !important;
+  background: none;
+  display: flex;
+  flex-direction: column;
+  min-height: revert;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.demo-h6 {
+  color: white;
 }

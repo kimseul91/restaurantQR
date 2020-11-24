@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./customer.css";
 import Header from "./Header.js";
 import MenuItem from "./MenuItem.js";
@@ -8,43 +8,33 @@ import Accordion from "react-bootstrap/Accordion";
 import AutoComplete from "./AutoComplete";
 import { useParams } from "react-router-dom";
 import { Spinner } from "react-bootstrap";
+import { Snackbar } from "@material-ui/core";
+import MuiAlert from "@material-ui/lab/Alert";
 
+// main component for the customer view
 function Menu(props) {
-  // props.name == the restaurant name;
-  // props.menuItems == array of menu items
-  // props.language == the language to translate the menu
   const [fullMenu, setMenu] = useState(null);
-  const [originalMenu, setOriginalMenu] = useState(null);
   const [itemView, setItemView] = useState(false);
   const [currentItem, setItem] = useState(null);
   const [searchTerm, setSearch] = useState("");
-  const [menuLanguage, setMenulanguage] = useState("en");
   const [menuSearchTerms, setMenuSearchTerms] = useState([]);
-  const languageDictionary = {
-    English: "en",
-    Spanish: "es",
-    French: "fr",
-  };
+  const [open, setOpen] = useState(false);
+  const currentLanguage = useRef("en");
 
+  // extracts the restaurant name and table number from the URL
   const { restaurantName, tableID } = useParams();
 
-  // const languageCode = props.langauge;
-
-  // console.log(props.location.search);
-
   useEffect(() => {
-    // used for animation purposes
-
     (async function () {
+      // retrieves the menu
       const menuRequest = await axios.get(
-        // `http://localhost:5001/restaurantqr-73126/us-central1/api/${
-        //   name ? name : "null"
-        // }/menu/${id ? id : "null"}`
-        `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/${restaurantName}/menu`
+        `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/${decodeURI(
+          restaurantName
+        )}/menu`
       );
 
       const menuData = menuRequest.data.menu;
-      // const translatedMenu = menuData.
+      // adds service data to the menu
       menuData["Service Items"] = {
         Napkins: { description: "Your sever will bring you more napkins" },
         "Refill Drinks": {
@@ -56,59 +46,49 @@ function Menu(props) {
         Check: { description: "Your sever will bring you the check" },
       };
 
-      let currentLanguage;
       // gets the language code from the url
       // inspiration from https://medium.com/better-programming/using-url-parameters-and-query-strings-with-react-router-fffdcea7a8e9
       if (props.location && props.location.search) {
         const queryString = new URLSearchParams(props.location.search);
-        currentLanguage = queryString.get("lang");
-        console.log(currentLanguage);
-
-        if (currentLanguage) {
-          // setMenulanguage(currentLanguage);
+        if (!queryString.get("lang")) {
+          currentLanguage.current = "en";
+        } else {
+          currentLanguage.current = queryString.get("lang");
         }
       }
       // use currentLanguage to reference the translated language
 
-      console.log(menuData);
+      let translatedMenu = menuData;
 
-      if (currentLanguage && currentLanguage !== "en") {
+      if (currentLanguage.current && currentLanguage.current !== "en") {
         // need to translate
+        // translate the full menu into the language of your choice
+        translatedMenu = await axios.post(
+          "https://us-central1-restaurantqr-73126.cloudfunctions.net/api/translate/fullMenu",
+          {
+            menu: menuData,
+            language: currentLanguage.current,
+            name: decodeURI(restaurantName),
+          }
+        );
       }
 
-      // const translatedMenu = await axios.post(
-      //   "http://localhost:5001/restaurantqr-73126/us-central1/api/translate",
-      //   {
-      //     menu: menuData,
-      //   }
-      // );
-      // console.log(translatedMenu);
-
+      // adds a small delay for animation purposes
       setTimeout(() => {
-        setMenu(menuData);
-        setOriginalMenu(menuData);
-        // console.log(menuData);
-        // console.log(Object.entries(menuData));
-
+        setMenu(
+          currentLanguage.current === "en" ? menuData : translatedMenu.data
+        );
         const tempArr = [];
         // adds all of the menu items to the search term list
-        Object.values(menuData).forEach((eachList) => {
-          // console.log(eachList);
+        Object.values(
+          currentLanguage.current === "en" ? menuData : translatedMenu.data
+        ).forEach((eachList) => {
           Object.keys(eachList).forEach((eachItem) => {
             tempArr.push(eachItem);
           });
         });
 
-        // const bro = await axios.post(
-        //   "http://localhost:5001/restaurantqr-73126/us-central1/api/test_restaurant_3/menu",
-        //   {
-        //     data: tempArr,
-        //   }
-        // );
-
         setMenuSearchTerms(tempArr);
-
-        // const termList = Object.values(menuData).reduce((acc, curr) => {}, []);
       }, 1200);
     })();
   }, []);
@@ -133,6 +113,22 @@ function Menu(props) {
     setSearch(text);
   };
 
+  // order success notification
+  const handleClick = () => {
+    setOpen(true);
+  };
+
+  // switches back to main menu view and shows success notification
+  const handleOrderSuccess = () => {
+    changeToMenuView();
+    handleClick();
+  };
+
+  // closes the notication
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   // changes to the item view if you click on an item
   if (itemView) {
     return (
@@ -141,22 +137,11 @@ function Menu(props) {
         tableID={tableID}
         item={currentItem}
         goBackToMenu={changeToMenuView}
+        handleOrderSuccess={handleOrderSuccess}
+        language={currentLanguage.current ? currentLanguage.current : "en"}
       />
     );
   }
-  /**
-   * menuSectionObj look like this
-   * header: {
-   *    tacos: {
-   *        description: "yo"
-   *        price: 9.00
-   *     },
-   *     enchiladas: {
-   *        description: "yo"
-   *        price: 9.00
-   *     },
-   * }
-   */
 
   return (
     <div id="outerFullMenuDiv">
@@ -189,6 +174,17 @@ function Menu(props) {
           <span id="spinnerText">Loading Menu...</span>
         </div>
       )}
+      <Snackbar
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        open={open}
+        autoHideDuration={3000}
+        onClose={handleClose}
+        key={"topcenter"}
+      >
+        <MuiAlert elevation={6} variant="filled" severity="success">
+          Your order has been placed!
+        </MuiAlert>
+      </Snackbar>
     </div>
   );
 }

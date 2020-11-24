@@ -106,6 +106,7 @@ function LiveRequest(props) {
             ]);
           });
         }
+        return 0;
       });
       arrTables.sort((a, b) => b[0] - a[0]);
       return (

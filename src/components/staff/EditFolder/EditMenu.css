@@ -1,6 +1,5 @@
 .centerMenuDiv {
   width: 40vw;
-  /* margin-top: 40px; */
   margin-bottom: 5vh;
   height: 70vh;
   -ms-overflow-style: none; /* IE and Edge */
@@ -16,9 +15,7 @@
 .editMenuDiv {
   height: 100%;
   width: 100%;
-  /* padding-right: 17px; */
   box-sizing: content-box;
-  /* overflow-y: scroll; */
 }
 
 #outerCenter {
@@ -39,9 +36,7 @@
 #editMenuButtonDiv {
   display: flex;
   width: 40vw;
-  /* max-height: 40vw; */
   flex-direction: column;
-  /* flex-wrap: wrap; */
   justify-content: flex-start;
   align-items: center;
   position: sticky;
@@ -96,9 +91,6 @@
 .editMenuBtns {
   width: 15vw;
   margin: 10px;
-  /* margin-left: 30px; */
-  /* margin-right: 30px; */
-  /* max-height: 40px !important; */
   font-size: 15px !important;
   display: flex;
   justify-content: center;
@@ -120,7 +112,6 @@
 }
 
 .menuItemWrapperCard {
-  /* width: 91%; */
   margin: 10px;
 }
 

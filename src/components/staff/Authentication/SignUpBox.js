@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import "./Auth.css";
-import { Container, InputGroup, Button, Form, Row, Col } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 import { Link, Redirect } from "react-router-dom";
 import Firebase from "../../../Firebase";
 import axios from "axios";
 function SignUpBox(props) {
   const [redirect, setRedirect] = useState(null);
+
   const handleSubmit = async (event) => {
+    // submits info to firebase to create a new account
     event.preventDefault();
     // extracts the email and password from the form
     const {
@@ -42,16 +44,18 @@ function SignUpBox(props) {
 
       await Firebase.auth.signInWithEmailAndPassword(email, password);
 
+      // adds a record to the datbase for your account
       await axios
         .post(
           "https://us-central1-restaurantqr-73126.cloudfunctions.net/api/restaurant/createAccount",
           { name: name, uid: Firebase.auth.currentUser.uid, address: address }
         )
         .catch((err) => console.log(err));
-      // redirect
+      // redirects to the staff main page
       setRedirect(<Redirect to="/staff" />);
     }
   };
+  // sign up box contains the input boxes and the button for signing up
   return (
     <div className="outerLogin">
       <Form className="loginForm" onSubmit={(event) => handleSubmit(event)}>

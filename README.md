@@ -29,7 +29,7 @@ The Customers’ view of the website will have buttons to request drinks/napkins
 	Purpose: 
 		Retrieves the menu for the given restaurant
 	Endpoint: 
-		GET `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/:restaurant/menu`
+		GET https://us-central1-restaurantqr-73126.cloudfunctions.net/api/:restaurant/menu
 	URL params wildcards:
 		restaurant: name of the restaurant from where you're ordering
 	Response: 
@@ -40,7 +40,7 @@ The Customers’ view of the website will have buttons to request drinks/napkins
 	Purpose: 
 		Sends back the name of the restaurant that is linked to your account
 	Endpoint: 
-		POST `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/restaurant/getName`
+		POST https://us-central1-restaurantqr-73126.cloudfunctions.net/api/restaurant/getName
 	Post Body:
 		user: the current Firebase user object
 	Response: 
@@ -50,7 +50,7 @@ The Customers’ view of the website will have buttons to request drinks/napkins
 	Purpose: 
 		Translates only the name of a single menu item into a given language
 	Endpoint: 
-		POST `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/translate/item`
+		POST https://us-central1-restaurantqr-73126.cloudfunctions.net/api/translate/item
 	Post Body:
 		item: the name of the menu item
 		language: the language code for the desired translation
@@ -60,7 +60,7 @@ The Customers’ view of the website will have buttons to request drinks/napkins
 	Purpose: 
 		Translates a restaurant's entire menu into a given language
 	Endpoint: 
-		POST `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/translate/fullMenu`
+		POST https://us-central1-restaurantqr-73126.cloudfunctions.net/api/translate/fullMenu
 	Post Body:
 		menu: a json object with nested fields representing a menu
 			Example: {
@@ -82,7 +82,7 @@ The Customers’ view of the website will have buttons to request drinks/napkins
 	Purpose: 
 		Adds your account to the database
 	Endpoint: 
-		POST `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/restaurant/createAccount`
+		POST https://us-central1-restaurantqr-73126.cloudfunctions.net/api/restaurant/createAccount
 	Post Body:
 		uid: user id
 		name: the name of the restaurant
@@ -95,7 +95,7 @@ The Customers’ view of the website will have buttons to request drinks/napkins
 	Purpose: 
 		Adds a new menu section to the restaurant's menu
 	Endpoint: 
-		POST `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/restaurant/addNew/section`
+		POST https://us-central1-restaurantqr-73126.cloudfunctions.net/api/restaurant/addNew/section
 	Post Body:
 		name: the name of the restaurant
 		sectionName: the name of the new menu section
@@ -107,7 +107,7 @@ The Customers’ view of the website will have buttons to request drinks/napkins
 	Purpose: 
 		Add a new menu item to a section to the restaurant's menu
 	Endpoint: 
-		POST `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/restaurant/addNew/item`
+		POST https://us-central1-restaurantqr-73126.cloudfunctions.net/api/restaurant/addNew/item
 	Post Body:
 		name: the name of the restaurant
 		sectionName: the name of the section that the item will go under
@@ -121,7 +121,7 @@ The Customers’ view of the website will have buttons to request drinks/napkins
 	Purpose: 
 		Deletes a menu section and all menu items in it
 	Endpoint: 
-		POST `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/restaurant/delete/section`
+		POST https://us-central1-restaurantqr-73126.cloudfunctions.net/api/restaurant/delete/section
 	Post Body:
 		name: the name of the restaurant
 		sectionName: the name of the section that the item will go under
@@ -133,7 +133,7 @@ The Customers’ view of the website will have buttons to request drinks/napkins
 	Purpose: 
 		Deletes a menu item under a specific menu section
 	Endpoint: 
-		POST `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/restaurant/delete/item`
+		POST https://us-central1-restaurantqr-73126.cloudfunctions.net/api/restaurant/delete/item
 	Post Body:
 		name: the name of the restaurant
 		sectionName: the name of the section that the item will go under

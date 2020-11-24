@@ -10,7 +10,6 @@ function Login(props) {
     <div className="overallLogin">
       <LoginHeader />
       <LoginBox />
-
       <DemoCustomer />
     </div>
   );

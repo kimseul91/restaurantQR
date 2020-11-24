@@ -14,7 +14,6 @@ class Firebase {
   }
 
   async getData() {
-    console.log("In async getData()");
     const data = this.db
       .collection("Restaurant")
       .get()
@@ -30,7 +29,7 @@ class Firebase {
     await this.db
       .collection("Restaurant")
       .doc("Pizza Palace")
-      .update({ ["menu"]: incomingData });
+      .update({ menu: incomingData });
   }
 
   async postDataObject(incomingData) {
@@ -42,7 +41,6 @@ class Firebase {
 
   async getRequest() {
     const doc = this.db.collection("Restaurant").doc("test_restaurant_3");
-    // const data = doc.get();
     doc.onSnapshot(
       (docsnapshot) => {
         let result = Object.keys(docsnapshot.data().tables).map((key) => {

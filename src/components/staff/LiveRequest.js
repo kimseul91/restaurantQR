@@ -7,13 +7,13 @@ function LiveRequest(props) {
   const [counter, setCounter] = useState(0);
 
   /**
-   * this useEffect uses axios to make a GET request with the restaurant name to the following url: 
+   * this useEffect uses axios to make a GET request with the restaurant name to the following url:
    * https://us-central1-restaurantqr-73126.cloudfunctions.net/api/:restaurantName/staff/liverequest
-   * 
-   * The request is "await"ed and once the response is available, the JavaScript Object is parsed and 
-   * gets stored into the liveRequests state. 
-   * 
-   * this gets called at the beginning of page load and every 15 seconds. 
+   *
+   * The request is "await"ed and once the response is available, the JavaScript Object is parsed and
+   * gets stored into the liveRequests state.
+   *
+   * this gets called at the beginning of page load and every 15 seconds.
    */
   useEffect(() => {
     if (props.name) {
@@ -32,13 +32,13 @@ function LiveRequest(props) {
   }, [props]);
 
   /**
-   * this useEffect uses axios to make a GET request with the restaurant name to the following url: 
+   * this useEffect uses axios to make a GET request with the restaurant name to the following url:
    * https://us-central1-restaurantqr-73126.cloudfunctions.net/api/:restaurantName/staff/liverequest
-   * 
-   * The request is "await"ed and once the response is available, the JavaScript Object is parsed and 
-   * gets stored into the liveRequests state. 
-   * 
-   * this gets called every time the counter changes. 
+   *
+   * The request is "await"ed and once the response is available, the JavaScript Object is parsed and
+   * gets stored into the liveRequests state.
+   *
+   * this gets called every time the counter changes.
    */
   useEffect(() => {
     if (props.name) {
@@ -54,11 +54,11 @@ function LiveRequest(props) {
   }, [props, counter]);
 
   /**
-   * this function retrieves input data from the form then removes the specific item from the liveRequest 
-   * this function uses axios to make a PUT request with the restaurant name to the following url: 
+   * this function retrieves input data from the form then removes the specific item from the liveRequest
+   * this function uses axios to make a PUT request with the restaurant name to the following url:
    * https://us-central1-restaurantqr-73126.cloudfunctions.net/api/:restaurantName/deleterequest/:table
-   * parameter being sent is the new list. 
-   * 
+   * parameter being sent is the new list.
+   *
    * The request is "await"ed and once the response is available, it increments counter by 1
    */
   const removeData = async (requests, e) => {
@@ -82,12 +82,12 @@ function LiveRequest(props) {
   };
 
   /**
-    * this function uses the tableRequests object to populate the table of customer requests
-    * returns html elements. 
-    * 
-    * @param {Object} tableRequests 
-    * @param {String} name 
-    */
+   * this function uses the tableRequests object to populate the table of customer requests
+   * returns html elements.
+   *
+   * @param {Object} tableRequests
+   * @param {String} name
+   */
   const getLiveRequestTableRow = (tableRequests, name) => {
     const doneWithTask = (event) => {
       removeData(tableRequests, event);
@@ -129,7 +129,7 @@ function LiveRequest(props) {
                   key={item[1].table + item[1].item + item[0]}
                   onClick={doneWithTask}
                 >
-                  <td>{item[1].table}</td>
+                  <td>{`Table ${item[1].table.split("e")[1]}`}</td>
                   <td>{item[1].item}</td>
                   <td>
                     {new Date(arrTables[indx][0] * 1000)

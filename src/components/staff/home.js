@@ -1,6 +1,4 @@
 import React from "react";
-// import "./home.css";
-// import ".././custom.css";
 import "./style/custom.css";
 import { Navbar, Button, Container, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
@@ -17,6 +15,18 @@ class Home extends React.Component {
       name: null,
     };
   }
+
+  /**
+   * this useEffect uses axios to make a POST request to the following url: 
+   * https://us-central1-restaurantqr-73126.cloudfunctions.net/api/restaurant/getName
+   * 
+   * the parameter is the current user/restaurant
+   * 
+   * The request is "await"ed and once the response is available, the JavaScript Object is parsed and 
+   * gets stored into the name state. 
+   * 
+   * this gets called at the beginning of page load and every time the counter changes. 
+   */
   async componentDidMount() {
     const currentInfo = (
       await axios.post(

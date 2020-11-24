@@ -6,18 +6,33 @@ function Employees(props) {
   const [employees, setEmployees] = useState(null);
   const [counter, setCounter] = useState(0);
 
+  /**
+   * this useEffect uses axios to make a GET request with the restaurant name to the following url: 
+   * https://us-central1-restaurantqr-73126.cloudfunctions.net/api/:restaurantName/staff/liverequest
+   * 
+   * The request is "await"ed and once the response is available, the JavaScript Object is parsed and 
+   * gets stored into the function state. 
+   * 
+   * this gets called at the beginning of page load and every time the counter changes. 
+   */
   useEffect(() => {
     const fetchData = async () => {
       const axiosCall = await axios.get(
-        `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/${props.name}/staff/employees`
+        `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/${props.name}/staff/liverequest`
       );
-      // console.log(axiosCall);
       const employeeList = axiosCall.data.employees;
       setEmployees(employeeList);
     };
     fetchData();
   }, [props, counter]);
 
+  /**
+   * this function retrieves input data from the form then formats to fit the data structure in firebase. 
+   * this function uses axios to make a PUT request with the restaurant name to the following url: 
+   * https://us-central1-restaurantqr-73126.cloudfunctions.net/api/:restaurantName/staff/edit/addemployee
+   * 
+   * The request is "await"ed and once the response is available, it increments counter by 1
+   */
   const handleSubmit = async () => {
     let fName = document.getElementById("firstName").value;
     let lName = document.getElementById("lastName").value;
@@ -39,14 +54,17 @@ function Employees(props) {
     };
 
     await axios.put(
-      // `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/${name}/deleterequest/${table}`,
       `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/${props.name}/staff/edit/addemployee`,
-      // `http://localhost:5001/restaurantqr-73126/us-central1/api/test_add_employee/staff/edit/addemployee`,
       objectsToAxios
     );
     setCounter(counter + 1);
   };
 
+  /**
+   * this function uses the accordion with input forms to create a form for a manager/employer to create a new employee. 
+   * returns html elements. 
+   * @param {Object} empLists 
+   */
   const newEmployee = () => {
     return (
       <Card key="add-new-employee">
@@ -87,6 +105,18 @@ function Employees(props) {
     );
   };
 
+  /**
+   * this function handles the "delete" feature on employees. 
+   * it finds the employee id who needs to get removed
+   * 
+   * this function uses axios to make a PUT request with the restaurant name and employee id to the following url: 
+   * https://us-central1-restaurantqr-73126.cloudfunctions.net/api/:restaurant/staff/remove/:eid
+   * 
+   * the parameter of the axios call is the object of employees 
+   * 
+   * then it increments counter by 1. 
+   * @param {Object} event 
+   */
   const removeEmployee = async (event) => {
     const eid = event.target.getAttribute("eid");
     const objectsToAxios = {
@@ -94,13 +124,24 @@ function Employees(props) {
     };
     await axios
       .put(
-        // `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/${name}/deleterequest/${table}`,
         `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/${props.name}/staff/remove/${eid}`,
         objectsToAxios
       )
       .then(() => setCounter(counter + 1));
   };
 
+  /**
+   * this function handles the "clock out" feature. 
+   * it finds the employee id who wishes to clock out.
+   * 
+   * this function uses axios to make a PUT request with the restaurant name and employee id to the following url: 
+   * https://us-central1-restaurantqr-73126.cloudfunctions.net/api/:restaurantName/staff/out/:eid
+   * 
+   * the parameter of the axios call is the object of employees 
+   * 
+   * then it increments counter by 1. 
+   * @param {Object} event 
+   */
   const handleClockOut = async (event) => {
     const eid = event.target.getAttribute("eid");
 
@@ -115,12 +156,24 @@ function Employees(props) {
     };
     await axios
       .put(
-        // `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/${name}/deleterequest/${table}`,
         `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/${props.name}/staff/out/${eid}`,
         objectsToAxios
       )
       .then(() => setCounter(counter + 1));
   };
+
+  /**
+   * this function handles the "clock in" feature. 
+   * it finds the employee id who wishes to clock in. 
+   * 
+   * this function uses axios to make a PUT request with the restaurant name and employee id to the following url: 
+   * https://us-central1-restaurantqr-73126.cloudfunctions.net/api/:restaurantName/staff/in/:eid
+   * 
+   * the parameter of the axios call is the object of employees 
+   * 
+   * then it increments counter by 1. 
+   * @param {Object} event 
+   */
   const handleClockIn = async (event) => {
     const eid = event.target.getAttribute("eid");
     Object.keys(employees).map((employee) => {
@@ -133,21 +186,25 @@ function Employees(props) {
       employees: employees,
     };
     await axios.put(
-      // `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/${name}/deleterequest/${table}`,
       `https://us-central1-restaurantqr-73126.cloudfunctions.net/api/${props.name}/staff/in/${eid}`,
       objectsToAxios
     );
     setCounter(counter + 1);
   };
-  const populateEmployeesList = (tableLists) => {
-    if (tableLists != null) {
-      const arrTables = Object.keys(tableLists)
+
+  /**
+   * this function uses the empLists object to populate the accordion for the main restaurant page. 
+   * returns html elements. 
+   * @param {Object} empLists 
+   */
+  const populateEmployeesList = (empLists) => {
+    if (empLists != null) {
+      const arrTables = Object.keys(empLists)
         .map((key, val) => {
-          return [key, tableLists[key]];
+          return [key, empLists[key]];
         })
         .sort();
       return (
-        // Object.keys(tableLists).map((employee, indx) => {
         arrTables.map((employee, indx) => {
           return (
             <Card key={employee[0] + indx}>
@@ -161,21 +218,21 @@ function Employees(props) {
               <Accordion.Collapse eventKey={employee[0]}>
                 <Card.Body className="media-body">
                   <Card.Subtitle>Employee ID</Card.Subtitle>
-                  <Card.Text>{tableLists[employee[0]].eid}</Card.Text>
+                  <Card.Text>{empLists[employee[0]].eid}</Card.Text>
                   <Card.Subtitle>Clock In</Card.Subtitle>
                   <Card.Text>
-                    {tableLists[employee[0]]["Clock In"] ? (
+                    {empLists[employee[0]]["Clock In"] ? (
                       <span>
-                        {new Date(tableLists[employee[0]]["Clock In"] * 1000)
+                        {new Date(empLists[employee[0]]["Clock In"] * 1000)
                           .toLocaleDateString("en-US")
                           .toString()}
                         <br />
-                        {new Date(tableLists[employee[0]]["Clock In"] * 1000)
+                        {new Date(empLists[employee[0]]["Clock In"] * 1000)
                           .toLocaleTimeString("en-US")
                           .toString()}
                         <br />
                         <Button
-                          eid={tableLists[employee[0]].eid}
+                          eid={empLists[employee[0]].eid}
                           onClick={handleClockOut}
                         >
                           {" "}
@@ -183,22 +240,22 @@ function Employees(props) {
                         </Button>
                       </span>
                     ) : (
-                      <Button
-                        eid={tableLists[employee[0]].eid}
-                        onClick={handleClockIn}
-                      >
-                        Clock In
-                      </Button>
-                    )}
+                        <Button
+                          eid={empLists[employee[0]].eid}
+                          onClick={handleClockIn}
+                        >
+                          Clock In
+                        </Button>
+                      )}
                   </Card.Text>
                   <Card.Subtitle>Date of Employment</Card.Subtitle>
                   <Card.Text>
-                    {new Date(tableLists[employee[0]]["Employment"] * 1000)
+                    {new Date(empLists[employee[0]]["Employment"] * 1000)
                       .toLocaleDateString("en-US")
                       .toString()}
                   </Card.Text>
                   <Button
-                    eid={tableLists[employee[0]].eid}
+                    eid={empLists[employee[0]].eid}
                     onClick={removeEmployee}
                   >
                     Delete

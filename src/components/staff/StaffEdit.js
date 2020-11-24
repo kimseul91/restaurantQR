@@ -19,7 +19,6 @@ import axios from "axios";
 import EditMenu from "./EditFolder/EditMenu";
 
 class StaffEdit extends React.Component {
-  // function Home(props) {
   constructor(props) {
     super(props);
     this.state = {
@@ -27,6 +26,18 @@ class StaffEdit extends React.Component {
       name: null,
     };
   }
+
+  /**
+   * this useEffect uses axios to make a POST request to the following url: 
+   * https://us-central1-restaurantqr-73126.cloudfunctions.net/api/restaurant/getName
+   * 
+   * the parameter is the current user/restaurant
+   * 
+   * The request is "await"ed and once the response is available, the JavaScript Object is parsed and 
+   * gets stored into the name state. 
+   * 
+   * this gets called at the beginning of page load and every time the counter changes. 
+   */
   async componentDidMount() {
     const currentInfo = (
       await axios.post(
@@ -47,6 +58,11 @@ class StaffEdit extends React.Component {
     const getParentState = () => {
       return this.state.value;
     };
+
+    /**
+     * this function creates toggleable buttons for easy access to different components without 
+     * the page reloading
+     */
     function ToggleButtonGroup() {
       const [radioValue, setRadioValue] = useState(getParentState());
       const radios = [
@@ -75,8 +91,6 @@ class StaffEdit extends React.Component {
               </ToggleButton>
             ))}
           </ButtonGroup>
-
-          {/* <Button className="admin-setting"> Setting </Button> */}
         </div>
       );
     }
@@ -96,9 +110,6 @@ class StaffEdit extends React.Component {
                 </Navbar.Text>
               </Navbar.Collapse>
             </Container>
-            {/* <Link onClick={getMenuItems}>
-                        <Button> Get Data</Button>
-                    </Link> */}
             <Link to="/staff">
               <Button> Main Screen</Button>
             </Link>
@@ -123,15 +134,15 @@ class StaffEdit extends React.Component {
     );
   }
 
+  /**
+   * this function renders the correct component by changing the component within the page 
+   * which allows the user to toggle through multiple components without website being reloaded
+   */
   RenderCorrectComponents = () => {
     switch (this.state.value) {
       case "Tables":
-        // return <RecruitersListComponent title={this.state.value} />;
         return (
-          // <div style={{ backgroundColor: "#0DB4B9", marginTop: "1vw" }}>
-
           <TableViews name={this.state.name} />
-          // </div>
         );
       case "Employees":
         return <Employees name={this.state.name} />;
